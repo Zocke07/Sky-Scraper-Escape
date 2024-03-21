@@ -124,7 +124,7 @@ namespace game_framework {
 
 	/////////////////////////////////////////////////////////////////////////////
 	// This class is the Base class for the various states of the game (an abstract class)
-	// You must understand the usage of each Public Interface, but you don¡¦t need to understand Implementation.
+	// You must understand the usage of each Public Interface, but you donÂ¡Â¦t need to understand Implementation.
 	/////////////////////////////////////////////////////////////////////////////
 
 	class CGameState {

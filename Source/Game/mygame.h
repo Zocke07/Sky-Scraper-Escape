@@ -87,10 +87,15 @@ namespace game_framework {
 		void OnLButtonUp(UINT nFlags, CPoint point);	// Handling mouse movements
 		void OnMouseMove(UINT nFlags, CPoint point);	// Handling mouse movements 
 		void OnRButtonDown(UINT nFlags, CPoint point);  // Handling mouse movements
-		void OnRButtonUp(UINT nFlags, CPoint point);	// Handling mouse movements
+		void OnRButtonUp(UINT nFlags, CPoint point);	// Handling mouse 
+		void load_background();
+		void load_object();
 	protected:
 		void OnMove();									// Moving game element
 		void OnShow();									// Shows this state of the game's screen
+	private:
+		CMovingBitmap background;
+		CMovingBitmap flying_object;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

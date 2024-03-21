@@ -32,7 +32,8 @@ void CGameStateRun::OnMove()							// Moving game element
 
 void CGameStateRun::OnInit()  								// Game initial values and graphics settings
 {
-	
+	load_background();
+	load_object();
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -67,4 +68,19 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// Handling mouse mov
 
 void CGameStateRun::OnShow()
 {
+	background.ShowBitmap();
+	flying_object.ShowBitmap();
 }
+
+void CGameStateRun::load_background()
+{
+	background.LoadBitmap("Resources/Background.bmp");
+	background.SetTopLeft(0, 0);
+}
+///
+void CGameStateRun::load_object()
+{
+	flying_object.LoadBitmap("Resources/Plane.bmp", RGB(0, 100, 0));
+	flying_object.SetTopLeft(120, 280);
+}
+///

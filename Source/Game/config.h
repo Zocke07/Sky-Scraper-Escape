@@ -4,9 +4,9 @@
 
 #define GAME_TITLE           "Game"
 //! Set the resolution (width) of the game screen
-#define SIZE_X				 1400	
+#define SIZE_X				 1192
 //! Set the resolution (height) of the game screen
-#define SIZE_Y				 900
+#define SIZE_Y				 670
 //! Whether to open the game in full screen mode
 #define OPEN_AS_FULLSCREEN	 false		
 //! Whether to display the progress of loading (OnInit)

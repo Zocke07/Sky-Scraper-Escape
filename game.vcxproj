@@ -276,6 +276,9 @@
     <Image Include="resources\icon1.ico" />
     <Image Include="resources\Toolbar.bmp" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Background.bmp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

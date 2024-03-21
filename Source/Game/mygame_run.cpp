@@ -38,6 +38,22 @@ void CGameStateRun::OnInit()  								// Game initial values and graphics settin
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
+	if (nChar == VK_LEFT)
+	{
+		flying_object.SetTopLeft(flying_object.GetLeft()-30, flying_object.GetTop());
+	}
+	if (nChar == VK_RIGHT)
+	{
+		flying_object.SetTopLeft(flying_object.GetLeft()+30, flying_object.GetTop());
+	}
+	if (nChar == VK_UP)
+	{
+		flying_object.SetTopLeft(flying_object.GetLeft(), flying_object.GetTop()-30);
+	}
+	if (nChar == VK_DOWN)
+	{
+		flying_object.SetTopLeft(flying_object.GetLeft(), flying_object.GetTop()+30);
+	}
 	
 }
 
@@ -77,10 +93,9 @@ void CGameStateRun::load_background()
 	background.LoadBitmap("Resources/Background.bmp");
 	background.SetTopLeft(0, 0);
 }
-///
+
 void CGameStateRun::load_object()
 {
 	flying_object.LoadBitmap("Resources/Plane.bmp", RGB(0, 100, 0));
 	flying_object.SetTopLeft(120, 280);
 }
-///

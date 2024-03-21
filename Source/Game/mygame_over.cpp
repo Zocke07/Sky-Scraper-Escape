@@ -34,7 +34,7 @@ void CGameStateOver::OnInit()
 	//
 	ShowInitProgress(66, "Initialize...");	// Continuing the progress of the previous state, the progress here is regarded as 66%
 	//
-	// 開始載入資料
+	// Start loading data
 	//
 	Sleep(1000);				// Slow down to see the progress clearly. Please delete this Sleep for the actual game
 	//

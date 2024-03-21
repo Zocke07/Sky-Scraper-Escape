@@ -25,6 +25,7 @@ void CGameStateInit::OnInit()
 	ShowInitProgress(0, "Start Initialize...");	// The initial loading progress is 0%
 	//
 	// Start loading data
+	load_background();
 	//
 	Sleep(1000);				// Slow down to see the progress clearly. Please delete this Sleep for the actual game
 	//
@@ -48,4 +49,11 @@ void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 
 void CGameStateInit::OnShow()
 {
+	background.ShowBitmap();
+}
+
+void CGameStateInit::load_background()
+{
+	background.LoadBitmapByString({"Resources/background.bmp"});
+	background.SetTopLeft(0, 0);
 }

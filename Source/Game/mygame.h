@@ -64,8 +64,10 @@ namespace game_framework {
 		void OnLButtonDown(UINT nFlags, CPoint point);  // Handling mouse movements
 	protected:
 		void OnShow();									// Shows this state of the game's screen
+		void load_background();
 	private:
 		CMovingBitmap logo;								// The logo of csie
+		CMovingBitmap background;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

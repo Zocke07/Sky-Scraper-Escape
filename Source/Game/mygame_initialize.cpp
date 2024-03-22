@@ -39,21 +39,33 @@ void CGameStateInit::OnBeginState()
 
 void CGameStateInit::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-
+	GotoGameState(GAME_STATE_RUN);		// Switch to GAME_STATE_RUN
 }
 
 void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 {
-	GotoGameState(GAME_STATE_RUN);		// Switch to GAME_STATE_RUN
+
 }
 
 void CGameStateInit::OnShow()
 {
 	background.ShowBitmap();
+	draw_text();
 }
 
 void CGameStateInit::load_background()
 {
 	background.LoadBitmapByString({"Resources/background.bmp"});
 	background.SetTopLeft(0, 0);
+}
+
+void CGameStateInit::draw_text()
+{
+	CDC *pDC = CDDraw::GetBackCDC();
+
+	/* Print title */
+	CTextDraw::ChangeFontLog(pDC, 36, "Arial", RGB(255, 255, 255));
+	CTextDraw::Print(pDC, 315, 87, "Press any key to continue");
+
+	CDDraw::ReleaseBackCDC();
 }

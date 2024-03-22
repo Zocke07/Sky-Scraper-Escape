@@ -65,6 +65,7 @@ namespace game_framework {
 	protected:
 		void OnShow();									// Shows this state of the game's screen
 		void load_background();
+		void draw_text();
 	private:
 		CMovingBitmap logo;								// The logo of csie
 		CMovingBitmap background;
@@ -96,6 +97,7 @@ namespace game_framework {
 	private:
 		CMovingBitmap background;
 		CMovingBitmap flying_object;
+		bool isUpHold;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

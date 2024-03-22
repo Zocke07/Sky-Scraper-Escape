@@ -76,7 +76,7 @@ namespace game_framework {
 
 	/////////////////////////////////////////////////////////////////////////////
 	// This class provides dynamic (movable) graphics
-	// You must understand the usage of each Public Interface, but you don¡¦t need to understand Implementation.
+	// You must understand the usage of each Public Interface, but you don't need to understand Implementation.
 	/////////////////////////////////////////////////////////////////////////////
 
 	class CMovingBitmap {

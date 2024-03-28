@@ -2,7 +2,7 @@
 // Define the environment and conditions that the game can set
 /////////////////////////////////////////////////////////////////////////////
 
-#define GAME_TITLE           "Game"
+#define GAME_TITLE           "Sky Scraper Escape"
 //! Set the resolution (width) of the game screen
 #define SIZE_X				 1192
 //! Set the resolution (height) of the game screen

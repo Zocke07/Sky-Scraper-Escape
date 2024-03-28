@@ -2,6 +2,8 @@
 #include "../Core/Resource.h"
 #include <mmsystem.h>
 #include <ddraw.h>
+#include <experimental/filesystem>
+
 #include "../Library/audio.h"
 #include "../Library/gameutil.h"
 #include "../Library/gamecore.h"
@@ -27,31 +29,68 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()							// Moving game element
 {
-	
+	int x = character.getX();
+	int y = character.getYactual();
+	int velocityY = character.getVelocityY();			// 正往下, 負往上
+	int velocityX = character.getVelocityX();
+
+	/*if (velocityY > 0) {	// Y速度向下
+		character.setBottomCollision(gameMap.bottomCollision(x, y, CHARACTER_WIDTH, CHARACTER_HEIGHT, velocityY));
+		character.setTopCollision(gameMap.topCollision(x, y, CHARACTER_WIDTH, 1));
+	}
+	else {					// Y速度向上
+		character.setBottomCollision(gameMap.bottomCollision(x, y, CHARACTER_WIDTH, CHARACTER_HEIGHT, 1));
+		character.setTopCollision(gameMap.topCollision(x, y, CHARACTER_WIDTH, -1*velocityY));
+	}
+		
+	if (velocityX > 0) {
+		character.setRightCollision(gameMap.rightCollision(x, y, CHARACTER_WIDTH, CHARACTER_HEIGHT, velocityX));
+		character.setLeftCollision(gameMap.leftCollision(x, y, CHARACTER_HEIGHT, 1));
+	}
+	else {
+		character.setRightCollision(gameMap.rightCollision(x, y, CHARACTER_WIDTH, CHARACTER_HEIGHT, 1));
+		character.setLeftCollision(gameMap.leftCollision(x, y, CHARACTER_HEIGHT, (-1*velocityX)));
+	}*/
 }
 
 void CGameStateRun::OnInit()  								// Game initial values and graphics settings
 {
 	load_background();
+	character.init();
 	load_object();
+	
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	if (nChar == VK_UP && flying_object.GetTop() >= 30)
+	if (nChar == VK_UP)
 	{
-		flying_object.SetTopLeft(flying_object.GetLeft(), flying_object.GetTop()-30);
+		character.setMoveUp(true);
 	}
-	if (nChar == VK_DOWN && flying_object.GetTop() <= 670-120)
+	if (nChar == VK_DOWN)
 	{
-		flying_object.SetTopLeft(flying_object.GetLeft(), flying_object.GetTop()+30);
+		character.setMoveDown(true);
 	}
-	
+	if (nChar == VK_SPACE)
+	{
+		character.jumpCharge(true);
+	}
 }
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	
+	if (nChar == VK_UP)
+	{
+		character.setMoveUp(false);
+	}
+	if (nChar == VK_DOWN)
+	{
+		character.setMoveDown(false);
+	}
+	if (nChar == VK_SPACE)
+	{
+		character.jumpCharge(false);
+	}
 }
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // Handling mouse movements
@@ -76,8 +115,10 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// Handling mouse mov
 
 void CGameStateRun::OnShow()
 {
+	character.onShow();
 	background.ShowBitmap();
-	flying_object.ShowBitmap();
+	plane.SetTopLeft(character.getX(), character.getYshow());
+	plane.ShowBitmap(1.5);
 }
 
 void CGameStateRun::load_background()
@@ -88,6 +129,6 @@ void CGameStateRun::load_background()
 
 void CGameStateRun::load_object()
 {
-	flying_object.LoadBitmap("Resources/Plane.bmp", RGB(0, 100, 0));
-	flying_object.SetTopLeft(120, 280);
+	plane.LoadBitmapByString({"Resources/Plane.bmp"}, RGB(0, 100, 0));
+	plane.SetTopLeft(character.getX(), character.getYshow());
 }

@@ -37,7 +37,6 @@
  *      2. Replace the demonstration of animation as a new bouncing ball.
  *      3. Use ShowInitProgress(percent) to display loading progress.
 */
-#include "flyObject.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -96,7 +95,6 @@ namespace game_framework {
 		void OnShow();									// Shows this state of the game's screen
 	private:
 		CMovingBitmap background;
-		flyObject character;
 		CMovingBitmap plane;
 	};
 

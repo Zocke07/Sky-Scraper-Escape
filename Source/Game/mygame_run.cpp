@@ -29,68 +29,20 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()							// Moving game element
 {
-	int x = character.getX();
-	int y = character.getYactual();
-	int velocityY = character.getVelocityY();			// 正往下, 負往上
-	int velocityX = character.getVelocityX();
-
-	/*if (velocityY > 0) {	// Y速度向下
-		character.setBottomCollision(gameMap.bottomCollision(x, y, CHARACTER_WIDTH, CHARACTER_HEIGHT, velocityY));
-		character.setTopCollision(gameMap.topCollision(x, y, CHARACTER_WIDTH, 1));
-	}
-	else {					// Y速度向上
-		character.setBottomCollision(gameMap.bottomCollision(x, y, CHARACTER_WIDTH, CHARACTER_HEIGHT, 1));
-		character.setTopCollision(gameMap.topCollision(x, y, CHARACTER_WIDTH, -1*velocityY));
-	}
-		
-	if (velocityX > 0) {
-		character.setRightCollision(gameMap.rightCollision(x, y, CHARACTER_WIDTH, CHARACTER_HEIGHT, velocityX));
-		character.setLeftCollision(gameMap.leftCollision(x, y, CHARACTER_HEIGHT, 1));
-	}
-	else {
-		character.setRightCollision(gameMap.rightCollision(x, y, CHARACTER_WIDTH, CHARACTER_HEIGHT, 1));
-		character.setLeftCollision(gameMap.leftCollision(x, y, CHARACTER_HEIGHT, (-1*velocityX)));
-	}*/
 }
 
 void CGameStateRun::OnInit()  								// Game initial values and graphics settings
 {
 	load_background();
-	character.init();
 	load_object();
-	
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	if (nChar == VK_UP)
-	{
-		character.setMoveUp(true);
-	}
-	if (nChar == VK_DOWN)
-	{
-		character.setMoveDown(true);
-	}
-	if (nChar == VK_SPACE)
-	{
-		character.jumpCharge(true);
-	}
 }
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	if (nChar == VK_UP)
-	{
-		character.setMoveUp(false);
-	}
-	if (nChar == VK_DOWN)
-	{
-		character.setMoveDown(false);
-	}
-	if (nChar == VK_SPACE)
-	{
-		character.jumpCharge(false);
-	}
 }
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // Handling mouse movements
@@ -115,10 +67,8 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// Handling mouse mov
 
 void CGameStateRun::OnShow()
 {
-	character.onShow();
 	background.ShowBitmap();
-	plane.SetTopLeft(character.getX(), character.getYshow());
-	plane.ShowBitmap(1.5);
+	plane.ShowBitmap();
 }
 
 void CGameStateRun::load_background()
@@ -130,5 +80,5 @@ void CGameStateRun::load_background()
 void CGameStateRun::load_object()
 {
 	plane.LoadBitmapByString({"Resources/Plane.bmp"}, RGB(0, 100, 0));
-	plane.SetTopLeft(character.getX(), character.getYshow());
+	plane.SetTopLeft(240, 120);
 }

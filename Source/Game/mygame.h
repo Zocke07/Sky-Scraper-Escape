@@ -37,7 +37,6 @@
  *      2. Replace the demonstration of animation as a new bouncing ball.
  *      3. Use ShowInitProgress(percent) to display loading progress.
 */
-#include "flyObject.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -91,12 +90,17 @@ namespace game_framework {
 		void OnRButtonUp(UINT nFlags, CPoint point);	// Handling mouse 
 		void load_background();
 		void load_object();
+		int gravityConst = 4;
+		int jumpConst = 50;
+		bool isJumping = false;
+		int currentJump;
 	protected:
 		void OnMove();									// Moving game element
 		void OnShow();									// Shows this state of the game's screen
+		void Gravity();
+		void Jump();
 	private:
 		CMovingBitmap background;
-		flyObject character;
 		CMovingBitmap plane;
 	};
 

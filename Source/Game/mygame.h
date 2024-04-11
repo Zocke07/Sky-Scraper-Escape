@@ -94,14 +94,20 @@ namespace game_framework {
 		int jumpConst = 50;
 		bool isJumping = false;
 		int currentJump;
+		int pathHeight = 60;
+		int pathLocation = 300;
+		int obstacleMovementConst = 3;
 	protected:
 		void OnMove();									// Moving game element
 		void OnShow();									// Shows this state of the game's screen
 		void Gravity();
 		void Jump();
+		void moveObstacle();
 	private:
 		CMovingBitmap background;
 		CMovingBitmap plane;
+		CMovingBitmap building;
+		CMovingBitmap cloud;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

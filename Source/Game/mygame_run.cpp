@@ -31,6 +31,7 @@ void CGameStateRun::OnMove()							// Moving game element
 {
 	Gravity();
 	Jump();
+	moveObstacle();
 }
 
 void CGameStateRun::OnInit()  								// Game initial values and graphics settings
@@ -76,6 +77,14 @@ void CGameStateRun::OnShow()
 {
 	background.ShowBitmap();
 	plane.ShowBitmap();
+	building.ShowBitmap();
+	cloud.ShowBitmap();
+
+	// Temp Overlap Implementation
+	if (CMovingBitmap::IsOverlap(plane, cloud) || CMovingBitmap::IsOverlap(plane, building))
+	{
+		isJumping = true;
+	}
 }
 
 void CGameStateRun::load_background()
@@ -88,6 +97,12 @@ void CGameStateRun::load_object()
 {
 	plane.LoadBitmapByString({"Resources/Plane.bmp"}, RGB(0, 100, 0));
 	plane.SetTopLeft(180, 120);
+
+	building.LoadBitmapByString({"Resources/Building1.bmp"}, RGB(0, 100, 0));
+	building.SetTopLeft(1193, 652 - pathLocation + pathHeight/2);
+
+	cloud.LoadBitmapByString({"Resources/Cloud1.bmp"}, RGB(0, 100, 0));
+	cloud.SetTopLeft(1193, 0 - pathLocation - pathHeight/2);
 }
 
 void CGameStateRun::Gravity()
@@ -111,4 +126,10 @@ void CGameStateRun::Jump()
 			isJumping = false;
 		}
 	}
+}
+
+void CGameStateRun::moveObstacle()
+{
+	cloud.SetTopLeft(cloud.GetLeft() - obstacleMovementConst, cloud.GetTop());
+	building.SetTopLeft(building.GetLeft() - obstacleMovementConst, building.GetTop());
 }

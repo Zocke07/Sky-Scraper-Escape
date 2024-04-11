@@ -98,12 +98,16 @@ void CGameStateRun::load_object()
 	plane.LoadBitmapByString({"Resources/Plane.bmp"}, RGB(0, 100, 0));
 	plane.SetTopLeft(180, 120);
 
-	building.LoadBitmapByString({"Resources/Building1.bmp"}, RGB(0, 100, 0));
-	building.SetTopLeft(1193, 652 - pathLocation + pathHeight/2);
+	for (int i = 1; i < 3, i++)
+	{
+		std::string buildingString = "Resources/Building" + std::to_string(i) + ".bmp";
+		building.LoadBitmapByString({buildingString}, RGB(0, 100, 0));
+		building.SetTopLeft(1193, 652 - pathLocation + pathHeight/2);
 
-	cloud.LoadBitmapByString({"Resources/Cloud1.bmp"}, RGB(0, 100, 0));
-	cloud.SetTopLeft(1193, 0 - pathLocation - pathHeight/2);
-}
+		std::string cloudString = "Resources/Cloud" + std::to_string(i) + ".bmp";
+		cloud.LoadBitmapByString({cloudString}, RGB(0, 100, 0));
+		cloud.SetTopLeft(1193, 0 - pathLocation - pathHeight/2);
+	}
 
 void CGameStateRun::Gravity()
 {

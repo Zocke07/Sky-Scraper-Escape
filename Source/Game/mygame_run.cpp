@@ -29,6 +29,8 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()							// Moving game element
 {
+	Gravity();
+	Jump();
 }
 
 void CGameStateRun::OnInit()  								// Game initial values and graphics settings
@@ -39,6 +41,11 @@ void CGameStateRun::OnInit()  								// Game initial values and graphics settin
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
+	if (nChar == VK_SPACE)
+	{
+		currentJump = plane.GetTop() - jumpConst;
+		isJumping = true;
+	}
 }
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -80,5 +87,28 @@ void CGameStateRun::load_background()
 void CGameStateRun::load_object()
 {
 	plane.LoadBitmapByString({"Resources/Plane.bmp"}, RGB(0, 100, 0));
-	plane.SetTopLeft(240, 120);
+	plane.SetTopLeft(180, 120);
+}
+
+void CGameStateRun::Gravity()
+{
+	if (plane.GetTop() < 590 && isJumping == false) {
+		plane.SetTopLeft(plane.GetLeft(), plane.GetTop() + gravityConst);
+	}
+}
+
+void CGameStateRun::Jump()
+{
+	const int maxJumpHeight = 0;
+	if (isJumping == true)
+	{
+		if (plane.GetTop() > maxJumpHeight && plane.GetTop() > currentJump)
+		{
+			plane.SetTopLeft(plane.GetLeft(), plane.GetTop() - gravityConst);
+		}
+		else
+		{
+			isJumping = false;
+		}
+	}
 }

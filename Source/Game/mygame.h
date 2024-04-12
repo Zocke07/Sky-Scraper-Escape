@@ -94,9 +94,13 @@ namespace game_framework {
 		int jumpConst = 50;
 		bool isJumping = false;
 		int currentJump;
-		int pathHeight = 60;
+		int pathHeight = 150;
 		int pathLocation = 300;
 		int obstacleMovementConst = 3;
+		int counter = 1;
+		int obstacleNum = 5;
+		int time = 0;
+		bool isPause = false;
 	protected:
 		void OnMove();									// Moving game element
 		void OnShow();									// Shows this state of the game's screen
@@ -106,8 +110,9 @@ namespace game_framework {
 	private:
 		CMovingBitmap background;
 		CMovingBitmap plane;
-		CMovingBitmap building;
-		CMovingBitmap cloud;
+		CMovingBitmap explosion;
+		vector<CMovingBitmap> building = vector<CMovingBitmap>(obstacleNum);
+		vector<CMovingBitmap> cloud = vector<CMovingBitmap>(obstacleNum);
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

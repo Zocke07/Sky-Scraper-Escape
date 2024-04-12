@@ -4,6 +4,7 @@
 #include <ddraw.h>
 #include <experimental/filesystem>
 
+#include "config.h"
 #include "../Library/audio.h"
 #include "../Library/gameutil.h"
 #include "../Library/gamecore.h"
@@ -29,9 +30,12 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()							// Moving game element
 {
-	Gravity();
-	Jump();
-	moveObstacle();
+	if (isPause == false)
+	{
+		Gravity();
+		Jump();
+		moveObstacle();
+	}
 }
 
 void CGameStateRun::OnInit()  								// Game initial values and graphics settings
@@ -77,13 +81,23 @@ void CGameStateRun::OnShow()
 {
 	background.ShowBitmap();
 	plane.ShowBitmap();
-	building.ShowBitmap();
-	cloud.ShowBitmap();
+
+	for (int i = 0; i < obstacleNum; i++)
+	{
+		building[i].ShowBitmap();
+		cloud[i].ShowBitmap();
+	}
 
 	// Temp Overlap Implementation
-	if (CMovingBitmap::IsOverlap(plane, cloud) || CMovingBitmap::IsOverlap(plane, building))
+	for (int i = 0; i < obstacleNum; i++)
 	{
-		isJumping = true;
+		if (CMovingBitmap::IsOverlap(plane, cloud[i]) || CMovingBitmap::IsOverlap(plane, building[i]))
+		{
+			explosion.SetTopLeft(plane.GetLeft() + 60, plane.GetTop());
+			explosion.ShowBitmap();
+			// GotoGameState(GAME_STATE_OVER);
+			isPause = true;
+		}
 	}
 }
 
@@ -98,16 +112,17 @@ void CGameStateRun::load_object()
 	plane.LoadBitmapByString({"Resources/Plane.bmp"}, RGB(0, 100, 0));
 	plane.SetTopLeft(180, 120);
 
-	for (int i = 1; i < 3, i++)
-	{
-		std::string buildingString = "Resources/Building" + std::to_string(i) + ".bmp";
-		building.LoadBitmapByString({buildingString}, RGB(0, 100, 0));
-		building.SetTopLeft(1193, 652 - pathLocation + pathHeight/2);
+	explosion.LoadBitmapByString({"Resources/Explosion1.bmp"}, RGB(0, 100, 0));
 
-		std::string cloudString = "Resources/Cloud" + std::to_string(i) + ".bmp";
-		cloud.LoadBitmapByString({cloudString}, RGB(0, 100, 0));
-		cloud.SetTopLeft(1193, 0 - pathLocation - pathHeight/2);
+	for (int i = 0; i < obstacleNum; i++)
+	{
+		building[i].LoadBitmapByString({"Resources/Building1.bmp"}, RGB(0, 100, 0));
+		building[i].SetTopLeft(1193, 652 - pathLocation + pathHeight/2);
+
+		cloud[i].LoadBitmapByString({"Resources/Cloud1.bmp"}, RGB(0, 100, 0));
+		cloud[i].SetTopLeft(1193, 0 - pathLocation - pathHeight/2);
 	}
+}
 
 void CGameStateRun::Gravity()
 {
@@ -134,6 +149,15 @@ void CGameStateRun::Jump()
 
 void CGameStateRun::moveObstacle()
 {
-	cloud.SetTopLeft(cloud.GetLeft() - obstacleMovementConst, cloud.GetTop());
-	building.SetTopLeft(building.GetLeft() - obstacleMovementConst, building.GetTop());
+	time += 1;
+	if (time % 90 == 0 && counter < obstacleNum)
+	{
+		counter += 1;
+		time = 0; 
+	}
+	for (int i = 0; i < counter; i++)
+	{
+		cloud[i].SetTopLeft(cloud[i].GetLeft() - obstacleMovementConst, cloud[i].GetTop());
+		building[i].SetTopLeft(building[i].GetLeft() - obstacleMovementConst, building[i].GetTop());
+	}
 }

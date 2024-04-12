@@ -279,9 +279,8 @@
   <ItemGroup>
     <Content Include="Resources\Background.bmp" />
     <Content Include="Resources\Building1.bmp" />
-    <Content Include="Resources\Building2.bmp" />
     <Content Include="Resources\Cloud1.bmp" />
-    <Content Include="Resources\Cloud2.bmp" />
+    <Content Include="Resources\Explosion1.bmp" />
     <Content Include="Resources\GAME.ico" />
     <Content Include="Resources\Plane.bmp" />
   </ItemGroup>

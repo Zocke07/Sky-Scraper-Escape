@@ -26,6 +26,7 @@ void CGameStateInit::OnInit()
 	//
 	// Start loading data
 	load_background();
+	load_icons();
 	//
 	Sleep(1000);				// Slow down to see the progress clearly. Please delete this Sleep for the actual game
 	//
@@ -39,7 +40,34 @@ void CGameStateInit::OnBeginState()
 
 void CGameStateInit::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	GotoGameState(GAME_STATE_RUN);		// Switch to GAME_STATE_RUN
+	if (nChar == VK_RETURN)
+	{
+		phase = 2;
+	}
+
+	if (phase == 2)
+	{
+		if (nChar == VK_DOWN)
+		{
+			if (selector < 2)
+			{
+				selector += 1;
+				selectArrow.SetTopLeft(selectArrow.GetLeft(), selectArrow.GetTop() + 40);
+			}
+		}
+		else if (nChar == VK_UP) {
+			if (selector > 1) {
+				selector -= 1;
+				selectArrow.SetTopLeft(selectArrow.GetLeft(), selectArrow.GetTop() - 40);
+			}
+		}
+
+		// For now, only play button works
+		if (selectArrow.GetTop() == 450 && nChar == VK_SPACE)
+		{
+			GotoGameState(GAME_STATE_RUN);
+		}
+	}
 }
 
 void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
@@ -50,7 +78,16 @@ void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 void CGameStateInit::OnShow()
 {
 	background.ShowBitmap();
-	draw_text();
+
+	if (phase == 1)
+	{
+		draw_text1();
+	}
+	else if (phase == 2)
+	{
+		draw_text2();
+		selectArrow.ShowBitmap();
+	}
 }
 
 void CGameStateInit::load_background()
@@ -59,13 +96,34 @@ void CGameStateInit::load_background()
 	background.SetTopLeft(0, 0);
 }
 
-void CGameStateInit::draw_text()
+void CGameStateInit::load_icons()
+{
+	selectArrow.LoadBitmapByString({"Resources/SelectionArrow.bmp"}, RGB(0, 100, 0));
+	selectArrow.SetTopLeft(400, 450);
+}
+
+
+void CGameStateInit::draw_text1()
 {
 	CDC *pDC = CDDraw::GetBackCDC();
 
-	/* Print title */
+	/* Print phase 1 */
 	CTextDraw::ChangeFontLog(pDC, 36, "Arial", RGB(255, 255, 255));
-	CTextDraw::Print(pDC, 315, 87, "Press any key to continue");
+	CTextDraw::Print(pDC, 360, 380, "Press enter key to continue");
+
+	CDDraw::ReleaseBackCDC();
+}
+
+void CGameStateInit::draw_text2()
+{
+	CDC *pDC = CDDraw::GetBackCDC();
+
+	/* Print phase 2*/
+	CTextDraw::ChangeFontLog(pDC, 24, "Arial", RGB(255, 255, 255));
+	CTextDraw::Print(pDC, 320, 400, "Use arrow up, arrow down, and space to select");
+	CTextDraw::ChangeFontLog(pDC, 36, "Arial", RGB(255, 255, 255));
+	CTextDraw::Print(pDC, 500, 448, "Play");
+	CTextDraw::Print(pDC, 500, 488, "Select Level");
 
 	CDDraw::ReleaseBackCDC();
 }

@@ -31,6 +31,8 @@ void CGameStateRun::OnBeginState()
 	isPause = false;
 	collide = false;
 	selector = 1;
+	counter = 1;
+	time = 0;
 	load_background();
 	load_object();
 }

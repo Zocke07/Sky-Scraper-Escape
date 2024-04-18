@@ -103,9 +103,9 @@ namespace game_framework {
 		int pathLocation;
 		int obstacleDistance;
 		int obstacleMovementConst = 3;
-		int counter = 1;
+		int counter;
 		int obstacleNum = 20;
-		int time = 0;
+		int time;
 		bool isPause = false;
 		int point;
 		bool collide = false;

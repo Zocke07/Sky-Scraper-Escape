@@ -101,13 +101,13 @@ namespace game_framework {
 		int currentJump;
 		int pathHeight;
 		int pathLocation;
-		int obstacleDistance = 1193;
+		int obstacleDistance;
 		int obstacleMovementConst = 3;
 		int counter = 1;
 		int obstacleNum = 20;
 		int time = 0;
 		bool isPause = false;
-		int point = 0;
+		int point;
 		bool collide = false;
 		int selector = 1;
 	protected:

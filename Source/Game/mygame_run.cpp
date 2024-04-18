@@ -40,6 +40,8 @@ void CGameStateRun::OnMove()							// Moving game element
 
 void CGameStateRun::OnInit()  								// Game initial values and graphics settings
 {
+	point = 0;
+	obstacleDistance = 1193;
 	load_background();
 	load_object();
 }
@@ -79,6 +81,16 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 			GotoGameState(GAME_STATE_INIT);
 		}
 	}
+	if (nChar == VK_ESCAPE)
+	{
+		if (isPause == false) {
+			isPause = true;
+		}
+		else {
+			isPause = false;
+		}
+	}
+
 }
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -139,7 +151,7 @@ void CGameStateRun::OnShow()
 			
 			
 		}
-		if (building[i].GetLeft() == (plane.GetLeft()-127)) {
+		if (building[i].GetLeft() >= (plane.GetLeft()-128) && building[i].GetLeft() <= (plane.GetLeft() - 126)) {
 			point += 1;
 		}
 	}

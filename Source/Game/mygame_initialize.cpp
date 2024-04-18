@@ -65,6 +65,8 @@ void CGameStateInit::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 		// For now, only play button works
 		if (selectArrow.GetTop() == 450 && nChar == VK_SPACE)
 		{
+			phase = 1;
+			selector = 1;
 			GotoGameState(GAME_STATE_RUN);
 		}
 	}

@@ -284,6 +284,7 @@
     <Content Include="Resources\Cloud2.bmp" />
     <Content Include="Resources\GAME.ico" />
     <Content Include="Resources\Plane.bmp" />
+    <Content Include="Resources\SelectionArrow.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -64,10 +64,15 @@ namespace game_framework {
 	protected:
 		void OnShow();									// Shows this state of the game's screen
 		void load_background();
-		void draw_text();
+		void load_icons();
+		void draw_text1();
+		void draw_text2();
 	private:
+		int phase = 1;
+		int selector = 1;
 		CMovingBitmap logo;								// The logo of csie
 		CMovingBitmap background;
+		CMovingBitmap selectArrow;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

@@ -65,10 +65,8 @@ namespace game_framework {
 		void OnShow();									// Shows this state of the game's screen
 		void load_background();
 		void load_icons();
-		void draw_text1();
-		void draw_text2();
+		void draw_text();
 	private:
-		int phase = 1;
 		int selector = 1;
 		CMovingBitmap logo;								// The logo of csie
 		CMovingBitmap background;
@@ -110,6 +108,7 @@ namespace game_framework {
 		int point;
 		bool collide = false;
 		int selector = 1;
+		bool congrats;
 	protected:
 		void OnMove();									// Moving game element
 		void OnShow();									// Shows this state of the game's screen

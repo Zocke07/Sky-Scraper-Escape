@@ -30,6 +30,7 @@ void CGameStateRun::OnBeginState()
 	obstacleDistance = 1193;
 	isPause = false;
 	collide = false;
+	congrats = false;
 	selector = 1;
 	counter = 1;
 	time = 0;
@@ -61,9 +62,9 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 			isJumping = true;
 		}
 	}
-	else if (collide == true)
+	else if (collide == true) // When plane crashes
 	{
-		if (nChar == VK_DOWN)
+		if (nChar == VK_DOWN) // Move arrow down
 		{
 			if (selector < 2)
 			{
@@ -71,7 +72,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 				selectArrow.SetTopLeft(selectArrow.GetLeft(), selectArrow.GetTop() + 40);
 			}
 		}
-		else if (nChar == VK_UP)
+		else if (nChar == VK_UP) // Move arrow up
 		{
 			if (selector > 1) {
 				selector -= 1;
@@ -79,18 +80,50 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 			}
 		}
 		
-		if (selectArrow.GetTop() == 360 && nChar == VK_SPACE)
+		if (selectArrow.GetTop() == 360 && nChar == VK_RETURN) // Try again
 		{
 			selectArrow.SetTopLeft(390, 360);
 			GotoGameState(GAME_STATE_RUN);
 		}
 		
-		else if (selectArrow.GetTop() == 400 && nChar == VK_SPACE)
+		else if (selectArrow.GetTop() == 400 && nChar == VK_RETURN) // Back to menu
 		{
 			selectArrow.SetTopLeft(390, 360);
 			GotoGameState(GAME_STATE_INIT);
 		}
 	}
+	if (congrats == true) // When plane reaches target point
+	{
+		if (nChar == VK_DOWN) // Move arrow down
+		{
+			if (selector < 2)
+			{
+				selector += 1;
+				selectArrow.SetTopLeft(selectArrow.GetLeft(), selectArrow.GetTop() + 40);
+			}
+		}
+		else if (nChar == VK_UP) // Move arrow up
+		{
+			if (selector > 1) {
+				selector -= 1;
+				selectArrow.SetTopLeft(selectArrow.GetLeft(), selectArrow.GetTop() - 40);
+			}
+		}
+		if (selectArrow.GetTop() == 360 && nChar == VK_RETURN) // Go to next stage button
+		{
+			/*
+			selectArrow.SetTopLeft(390, 360);
+			GotoGameState(GAME_STATE_RUN);
+			*/
+		}
+		
+		else if (selectArrow.GetTop() == 400 && nChar == VK_RETURN) // Go to main menu button
+		{
+			selectArrow.SetTopLeft(390, 360);
+			GotoGameState(GAME_STATE_INIT);
+		}
+	}
+	
 	if (nChar == VK_ESCAPE)
 	{
 		if (isPause == false) {
@@ -138,7 +171,7 @@ void CGameStateRun::OnShow()
 		cloud[i].ShowBitmap();
 	}
 
-	drawText("Altitude:" + std::to_string(670-plane.GetTop()-78), 20, 50, 20, {0, 0, 0});
+	drawText("Altitude:" + std::to_string(670-plane.GetTop()-80), 20, 50, 20, {0, 0, 0});
 	drawText("Point:" + std::to_string(point), 20, 70, 20, {0, 0, 0});
 
 	// Temp Overlap Implementation
@@ -156,12 +189,22 @@ void CGameStateRun::OnShow()
 		if (building[i].GetLeft() >= (plane.GetLeft()-128) && building[i].GetLeft() <= (plane.GetLeft() - 126)) {
 			point += 1;
 		}
-		
+
+		// Game Over Menu
 		if (collide == true)
 		{
-			// Game Over Menu
 			drawText("GAME OVER", 490, 320, 32, {255, 255, 255});
 			drawText("Try again", 540, 360, 24, {255, 255, 255});
+			drawText("Back to Main Menu", 490, 400, 24, {255, 255, 255});
+			selectArrow.ShowBitmap();
+		}
+
+		// Congratulations Pop Up
+		if (point == obstacleNum)
+		{
+			congrats = true;
+			drawText("Congratulations", 490, 320, 32, {255, 255, 255});
+			drawText("Next stage", 540, 360, 24, {255, 255, 255});
 			drawText("Back to Main Menu", 490, 400, 24, {255, 255, 255});
 			selectArrow.ShowBitmap();
 		}
@@ -177,7 +220,7 @@ void CGameStateRun::load_background()
 void CGameStateRun::load_object()
 {
 	plane.LoadBitmapByString({"Resources/Plane.bmp"}, RGB(0, 100, 0));
-	plane.SetTopLeft(180, 120);
+	plane.SetTopLeft(180, 270);
 
 	explosion.LoadBitmapByString({"Resources/Explosion1.bmp"}, RGB(0, 100, 0));
 

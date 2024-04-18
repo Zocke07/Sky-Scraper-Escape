@@ -102,12 +102,14 @@ namespace game_framework {
 		int obstacleNum = 20;
 		int time = 0;
 		bool isPause = false;
+		int point = 0;
 	protected:
 		void OnMove();									// Moving game element
 		void OnShow();									// Shows this state of the game's screen
 		void Gravity();
 		void Jump();
 		void moveObstacle();
+		void drawText(string text, int x, int y);
 	private:
 		CMovingBitmap background;
 		CMovingBitmap plane;

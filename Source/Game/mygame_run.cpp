@@ -88,6 +88,9 @@ void CGameStateRun::OnShow()
 		cloud[i].ShowBitmap();
 	}
 
+	drawText("Altitude:" + std::to_string(670-plane.GetTop()), 20, 50);
+	drawText("Point:" + std::to_string(point), 20, 70);
+
 	// Temp Overlap Implementation
 	for (int i = 0; i < obstacleNum; i++)
 	{
@@ -97,6 +100,9 @@ void CGameStateRun::OnShow()
 			explosion.ShowBitmap();
 			// GotoGameState(GAME_STATE_OVER);
 			isPause = true;
+		}
+		if (building[i].GetLeft() == (plane.GetLeft()-127)) {
+			point += 1;
 		}
 	}
 }
@@ -167,4 +173,13 @@ void CGameStateRun::moveObstacle()
 		cloud[i].SetTopLeft(cloud[i].GetLeft() - obstacleMovementConst, cloud[i].GetTop());
 		building[i].SetTopLeft(building[i].GetLeft() - obstacleMovementConst, building[i].GetTop());
 	}
+}
+
+void CGameStateRun::drawText(string text, int x, int y) {
+
+	CDC* pDC = CDDraw::GetBackCDC();
+
+	CTextDraw::ChangeFontLog(pDC, 20, "·L³n¥¿¶ÂÅé", RGB(0, 0, 0));
+	CTextDraw::Print(pDC, x, y, text);
+	CDDraw::ReleaseBackCDC();
 }

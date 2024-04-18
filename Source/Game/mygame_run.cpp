@@ -40,6 +40,8 @@ void CGameStateRun::OnMove()							// Moving game element
 
 void CGameStateRun::OnInit()  								// Game initial values and graphics settings
 {
+	point = 0;
+	obstacleDistance = 1193;
 	load_background();
 	load_object();
 }

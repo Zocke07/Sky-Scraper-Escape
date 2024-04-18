@@ -26,6 +26,13 @@ CGameStateRun::~CGameStateRun()
 
 void CGameStateRun::OnBeginState()
 {
+	point = 0;
+	obstacleDistance = 1193;
+	isPause = false;
+	collide = false;
+	selector = 1;
+	load_background();
+	load_object();
 }
 
 void CGameStateRun::OnMove()							// Moving game element
@@ -40,10 +47,6 @@ void CGameStateRun::OnMove()							// Moving game element
 
 void CGameStateRun::OnInit()  								// Game initial values and graphics settings
 {
-	point = 0;
-	obstacleDistance = 1193;
-	load_background();
-	load_object();
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -74,9 +77,14 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 			}
 		}
 		
-		if (selectArrow.GetTop() == 400 && nChar == VK_SPACE)
+		if (selectArrow.GetTop() == 360 && nChar == VK_SPACE)
 		{
-			selector = 1;
+			selectArrow.SetTopLeft(390, 360);
+			GotoGameState(GAME_STATE_RUN);
+		}
+		
+		else if (selectArrow.GetTop() == 400 && nChar == VK_SPACE)
+		{
 			selectArrow.SetTopLeft(390, 360);
 			GotoGameState(GAME_STATE_INIT);
 		}
@@ -141,18 +149,19 @@ void CGameStateRun::OnShow()
 			// GotoGameState(GAME_STATE_OVER);
 			collide = true;
 			isPause = true;
-
+		}
+		
+		if (building[i].GetLeft() >= (plane.GetLeft()-128) && building[i].GetLeft() <= (plane.GetLeft() - 126)) {
+			point += 1;
+		}
+		
+		if (collide == true)
+		{
 			// Game Over Menu
 			drawText("GAME OVER", 490, 320, 32, {255, 255, 255});
 			drawText("Try again", 540, 360, 24, {255, 255, 255});
 			drawText("Back to Main Menu", 490, 400, 24, {255, 255, 255});
 			selectArrow.ShowBitmap();
-
-			
-			
-		}
-		if (building[i].GetLeft() >= (plane.GetLeft()-128) && building[i].GetLeft() <= (plane.GetLeft() - 126)) {
-			point += 1;
 		}
 	}
 }

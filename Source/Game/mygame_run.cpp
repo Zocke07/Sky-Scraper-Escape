@@ -116,11 +116,18 @@ void CGameStateRun::load_object()
 
 	for (int i = 0; i < obstacleNum; i++)
 	{
+		pathLocation = (std::rand() % 20 + 5) * 20;
+		pathHeight = (std::rand() % 4 + 8) * 20;
+
+		if (i > 0) {
+			obstacleDistance += (pathLocation/3 +pathHeight/3);
+		}
 		building[i].LoadBitmapByString({"Resources/Building1.bmp"}, RGB(0, 100, 0));
-		building[i].SetTopLeft(1193, 652 - pathLocation + pathHeight/2);
+		building[i].SetTopLeft(obstacleDistance, 652 - pathLocation + pathHeight/2);
 
 		cloud[i].LoadBitmapByString({"Resources/Cloud1.bmp"}, RGB(0, 100, 0));
-		cloud[i].SetTopLeft(1193, 0 - pathLocation - pathHeight/2);
+		cloud[i].SetTopLeft(obstacleDistance, 0 - pathLocation - pathHeight/2);
+
 	}
 }
 

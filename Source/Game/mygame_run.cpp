@@ -51,6 +51,16 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		currentJump = plane.GetTop() - jumpConst;
 		isJumping = true;
 	}
+	if (nChar == VK_ESCAPE)
+	{
+		if (isPause == false) {
+			isPause = true;
+		}
+		else {
+			isPause = false;
+		}
+	}
+
 }
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -101,7 +111,7 @@ void CGameStateRun::OnShow()
 			// GotoGameState(GAME_STATE_OVER);
 			isPause = true;
 		}
-		if (building[i].GetLeft() == (plane.GetLeft()-127)) {
+		if (building[i].GetLeft() >= (plane.GetLeft()-128) && building[i].GetLeft() <= (plane.GetLeft() - 126)) {
 			point += 1;
 		}
 	}

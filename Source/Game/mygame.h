@@ -103,24 +103,27 @@ namespace game_framework {
 		int pathLocation;
 		int obstacleDistance;
 		int obstacleMovementConst = 3;
-		int counter = 1;
+		int counter;
 		int obstacleNum = 20;
-		int time = 0;
+		int time;
 		bool isPause = false;
 		int point;
+		bool collide = false;
+		int selector = 1;
 	protected:
 		void OnMove();									// Moving game element
 		void OnShow();									// Shows this state of the game's screen
 		void Gravity();
 		void Jump();
 		void moveObstacle();
-		void drawText(string text, int x, int y);
+		void drawText(string text, int x, int y, int size, vector<int> rgbValue);
 	private:
 		CMovingBitmap background;
 		CMovingBitmap plane;
 		CMovingBitmap explosion;
 		vector<CMovingBitmap> building = vector<CMovingBitmap>(obstacleNum);
 		vector<CMovingBitmap> cloud = vector<CMovingBitmap>(obstacleNum);
+		CMovingBitmap selectArrow;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

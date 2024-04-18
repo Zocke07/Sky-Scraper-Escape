@@ -26,6 +26,15 @@ CGameStateRun::~CGameStateRun()
 
 void CGameStateRun::OnBeginState()
 {
+	point = 0;
+	obstacleDistance = 1193;
+	isPause = false;
+	collide = false;
+	selector = 1;
+	counter = 1;
+	time = 0;
+	load_background();
+	load_object();
 }
 
 void CGameStateRun::OnMove()							// Moving game element
@@ -40,18 +49,47 @@ void CGameStateRun::OnMove()							// Moving game element
 
 void CGameStateRun::OnInit()  								// Game initial values and graphics settings
 {
-	point = 0;
-	obstacleDistance = 1193;
-	load_background();
-	load_object();
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	if (nChar == VK_SPACE)
+	if (collide == false)
 	{
-		currentJump = plane.GetTop() - jumpConst;
-		isJumping = true;
+		if (nChar == VK_SPACE)
+		{
+			currentJump = plane.GetTop() - jumpConst;
+			isJumping = true;
+		}
+	}
+	else if (collide == true)
+	{
+		if (nChar == VK_DOWN)
+		{
+			if (selector < 2)
+			{
+				selector += 1;
+				selectArrow.SetTopLeft(selectArrow.GetLeft(), selectArrow.GetTop() + 40);
+			}
+		}
+		else if (nChar == VK_UP)
+		{
+			if (selector > 1) {
+				selector -= 1;
+				selectArrow.SetTopLeft(selectArrow.GetLeft(), selectArrow.GetTop() - 40);
+			}
+		}
+		
+		if (selectArrow.GetTop() == 360 && nChar == VK_SPACE)
+		{
+			selectArrow.SetTopLeft(390, 360);
+			GotoGameState(GAME_STATE_RUN);
+		}
+		
+		else if (selectArrow.GetTop() == 400 && nChar == VK_SPACE)
+		{
+			selectArrow.SetTopLeft(390, 360);
+			GotoGameState(GAME_STATE_INIT);
+		}
 	}
 	if (nChar == VK_ESCAPE)
 	{
@@ -100,8 +138,8 @@ void CGameStateRun::OnShow()
 		cloud[i].ShowBitmap();
 	}
 
-	drawText("Altitude:" + std::to_string(670-plane.GetTop()), 20, 50);
-	drawText("Point:" + std::to_string(point), 20, 70);
+	drawText("Altitude:" + std::to_string(670-plane.GetTop()-78), 20, 50, 20, {0, 0, 0});
+	drawText("Point:" + std::to_string(point), 20, 70, 20, {0, 0, 0});
 
 	// Temp Overlap Implementation
 	for (int i = 0; i < obstacleNum; i++)
@@ -111,10 +149,21 @@ void CGameStateRun::OnShow()
 			explosion.SetTopLeft(plane.GetLeft() + 60, plane.GetTop());
 			explosion.ShowBitmap();
 			// GotoGameState(GAME_STATE_OVER);
+			collide = true;
 			isPause = true;
 		}
+		
 		if (building[i].GetLeft() >= (plane.GetLeft()-128) && building[i].GetLeft() <= (plane.GetLeft() - 126)) {
 			point += 1;
+		}
+		
+		if (collide == true)
+		{
+			// Game Over Menu
+			drawText("GAME OVER", 490, 320, 32, {255, 255, 255});
+			drawText("Try again", 540, 360, 24, {255, 255, 255});
+			drawText("Back to Main Menu", 490, 400, 24, {255, 255, 255});
+			selectArrow.ShowBitmap();
 		}
 	}
 }
@@ -132,6 +181,9 @@ void CGameStateRun::load_object()
 
 	explosion.LoadBitmapByString({"Resources/Explosion1.bmp"}, RGB(0, 100, 0));
 
+	selectArrow.LoadBitmapByString({"Resources/SelectionArrow.bmp"}, RGB(0, 100, 0));
+	selectArrow.SetTopLeft(390, 360);
+	
 	for (int i = 0; i < obstacleNum; i++)
 	{
 		pathLocation = (std::rand() % 20 + 5) * 20;
@@ -187,11 +239,11 @@ void CGameStateRun::moveObstacle()
 	}
 }
 
-void CGameStateRun::drawText(string text, int x, int y) {
+void CGameStateRun::drawText(string text, int x, int y, int size, vector<int> rgbValue) {
 
 	CDC* pDC = CDDraw::GetBackCDC();
 
-	CTextDraw::ChangeFontLog(pDC, 20, "微軟正黑體", RGB(0, 0, 0));
+	CTextDraw::ChangeFontLog(pDC, size, "微軟正黑體", RGB(rgbValue[0], rgbValue[1], rgbValue[2]));
 	CTextDraw::Print(pDC, x, y, text);
 	CDDraw::ReleaseBackCDC();
 }

@@ -28,6 +28,7 @@ void CGameStateRun::OnBeginState()
 {
 	point = 0;
 	obstacleDistance = 1193;
+	pathDifference = 0;
 	isPause = false;
 	collide = false;
 	congrats = false;
@@ -231,9 +232,10 @@ void CGameStateRun::load_object()
 	{
 		pathLocation = (std::rand() % 20 + 5) * 20;
 		pathHeight = (std::rand() % 4 + 8) * 20;
+		pathDifference = abs(pathDifference - pathLocation);
 
 		if (i > 0) {
-			obstacleDistance += (pathLocation/3 +pathHeight/3);
+			obstacleDistance += (pathDifference-pathHeight/10);
 		}
 		building[i].LoadBitmapByString({"Resources/Building1.bmp"}, RGB(0, 100, 0));
 		building[i].SetTopLeft(obstacleDistance, 652 - pathLocation + pathHeight/2);
@@ -241,6 +243,7 @@ void CGameStateRun::load_object()
 		cloud[i].LoadBitmapByString({"Resources/Cloud1.bmp"}, RGB(0, 100, 0));
 		cloud[i].SetTopLeft(obstacleDistance, 0 - pathLocation - pathHeight/2);
 
+		pathDifference = pathLocation;
 	}
 }
 

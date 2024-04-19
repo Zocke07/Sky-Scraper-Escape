@@ -100,6 +100,7 @@ namespace game_framework {
 		int pathHeight;
 		int pathLocation;
 		int obstacleDistance;
+		int pathDifference;
 		int obstacleMovementConst = 3;
 		int counter;
 		int obstacleNum = 20;

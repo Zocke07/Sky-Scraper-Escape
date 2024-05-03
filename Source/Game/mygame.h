@@ -38,6 +38,8 @@
  *      3. Use ShowInitProgress(percent) to display loading progress.
 */
 
+#include "flyObject.h"
+
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 	// Constants
@@ -93,10 +95,6 @@ namespace game_framework {
 		void OnRButtonUp(UINT nFlags, CPoint point);	// Handling mouse 
 		void load_background();
 		void load_object();
-		int gravityConst = 4;
-		int jumpConst = 50;
-		bool isJumping = false;
-		int currentJump;
 		int pathHeight;
 		int pathLocation;
 		int obstacleDistance;
@@ -107,14 +105,11 @@ namespace game_framework {
 		int time;
 		bool isPause = false;
 		int point;
-		bool collide = false;
 		int selector = 1;
 		bool congrats;
 	protected:
 		void OnMove();									// Moving game element
 		void OnShow();									// Shows this state of the game's screen
-		void Gravity();
-		void Jump();
 		void moveObstacle();
 		void drawText(string text, int x, int y, int size, vector<int> rgbValue);
 	private:
@@ -124,6 +119,7 @@ namespace game_framework {
 		vector<CMovingBitmap> building = vector<CMovingBitmap>(obstacleNum);
 		vector<CMovingBitmap> cloud = vector<CMovingBitmap>(obstacleNum);
 		CMovingBitmap selectArrow;
+		flyObject character;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

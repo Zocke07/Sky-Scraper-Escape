@@ -27,6 +27,8 @@ CGameStateRun::~CGameStateRun()
 void CGameStateRun::OnBeginState()
 {
 	point = 0;
+	pointSpeedDeficit = 0;
+	obstacleSpeed = 0;
 	obstacleDistance = 1193;
 	pathDifference = 0;
 	isPause = false;
@@ -44,6 +46,7 @@ void CGameStateRun::OnMove()							// Moving game element
 {
 	if (isPause == false)
 	{
+
 		character.gravity();
 		character.jump();
 		moveObstacle();
@@ -56,14 +59,17 @@ void CGameStateRun::OnInit()  								// Game initial values and graphics settin
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
+
 	if (character.isCollide() == false)
 	{
 		if (nChar == VK_SPACE)
 		{
+
 			character.getCurrentJump();
 			character.setJumping(true);
 		}
 	}
+
 	else if (character.isCollide() == true) // When plane crashes
 	{
 		if (nChar == VK_DOWN) // Move arrow down
@@ -165,6 +171,7 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// Handling mouse mov
 void CGameStateRun::OnShow()
 {
 	background.ShowBitmap();
+
 	character.ShowBitmap();
 
 	for (int i = 0; i < obstacleNum; i++)
@@ -173,26 +180,31 @@ void CGameStateRun::OnShow()
 		cloud[i].ShowBitmap();
 	}
 
+
 	drawText("Altitude:" + std::to_string(670-character.GetTop()-80), 20, 50, 20, {0, 0, 0});
 	drawText("Point:" + std::to_string(point), 20, 70, 20, {0, 0, 0});
 
 	// Temp Overlap Implementation
 	for (int i = 0; i < obstacleNum; i++)
 	{
+
 		if (CMovingBitmap::IsOverlap(character, cloud[i]) || CMovingBitmap::IsOverlap(character, building[i]))
 		{
+
 			explosion.SetTopLeft(character.GetLeft() + 60, character.GetTop());
 			explosion.ShowBitmap();
 			// GotoGameState(GAME_STATE_OVER);
+
 			character.setCollide(true);
 			isPause = true;
 		}
 		
-		if (building[i].GetLeft() >= (character.GetLeft()-128) && building[i].GetLeft() <= (character.GetLeft() - 126)) {
+		if (building[i].GetLeft() >= (character.GetLeft()-128-pointSpeedDeficit) && building[i].GetLeft() <= (character.GetLeft() - 126+pointSpeedDeficit)) {
 			point += 1;
 		}
 
 		// Game Over Menu
+
 		if (character.isCollide() == true)
 		{
 			drawText("GAME OVER", 490, 320, 32, {255, 255, 255});
@@ -205,11 +217,16 @@ void CGameStateRun::OnShow()
 		if (point == obstacleNum)
 		{
 			congrats = true;
-			drawText("Congratulations", 490, 320, 32, {255, 255, 255});
-			drawText("Next stage", 540, 360, 24, {255, 255, 255});
-			drawText("Back to Main Menu", 490, 400, 24, {255, 255, 255});
-			selectArrow.ShowBitmap();
+
+			break;
 		}
+	}
+	if (congrats == true) {
+		isPause = true;
+		drawText("Congratulations", 490, 320, 32, { 255, 255, 255 });
+		drawText("Next stage", 540, 360, 24, { 255, 255, 255 });
+		drawText("Back to Main Menu", 490, 400, 24, { 255, 255, 255 });
+		selectArrow.ShowBitmap();
 	}
 }
 
@@ -221,6 +238,7 @@ void CGameStateRun::load_background()
 
 void CGameStateRun::load_object()
 {
+
 	explosion.LoadBitmapByString({"Resources/Explosion1.bmp"}, RGB(0, 100, 0));
 
 	selectArrow.LoadBitmapByString({"Resources/SelectionArrow.bmp"}, RGB(0, 100, 0));
@@ -251,12 +269,20 @@ void CGameStateRun::moveObstacle()
 	if (time % 90 == 0 && counter < obstacleNum)
 	{
 		counter += 1;
-		time = 0; 
+	}
+	if (time % 180 == 0)
+	{
+		obstacleSpeed += accelerationConst;
+	}
+	if (time % 330 == 0)
+	{
+		pointSpeedDeficit += accelerationConst;
 	}
 	for (int i = 0; i < counter; i++)
 	{
-		cloud[i].SetTopLeft(cloud[i].GetLeft() - obstacleMovementConst, cloud[i].GetTop());
-		building[i].SetTopLeft(building[i].GetLeft() - obstacleMovementConst, building[i].GetTop());
+
+		cloud[i].SetTopLeft(cloud[i].GetLeft() - obstacleMovementConst - obstacleSpeed, cloud[i].GetTop());
+		building[i].SetTopLeft(building[i].GetLeft() - obstacleMovementConst - obstacleSpeed, building[i].GetTop());
 	}
 }
 

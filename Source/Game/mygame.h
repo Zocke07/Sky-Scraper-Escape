@@ -95,16 +95,19 @@ namespace game_framework {
 		void OnRButtonUp(UINT nFlags, CPoint point);	// Handling mouse 
 		void load_background();
 		void load_object();
+		int accelerationConst = 1;
 		int pathHeight;
 		int pathLocation;
 		int obstacleDistance;
 		int pathDifference;
 		int obstacleMovementConst = 3;
+		int obstacleSpeed = 0;
 		int counter;
 		int obstacleNum = 20;
 		int time;
 		bool isPause = false;
 		int point;
+		int pointSpeedDeficit;
 		int selector = 1;
 		bool congrats;
 	protected:

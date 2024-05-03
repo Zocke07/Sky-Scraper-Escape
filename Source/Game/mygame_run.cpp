@@ -32,21 +32,23 @@ void CGameStateRun::OnBeginState()
 	obstacleDistance = 1193;
 	pathDifference = 0;
 	isPause = false;
-	collide = false;
 	congrats = false;
 	selector = 1;
 	counter = 1;
 	time = 0;
+	character.init();
 	load_background();
 	load_object();
+	character.load();
 }
 
 void CGameStateRun::OnMove()							// Moving game element
 {
 	if (isPause == false)
 	{
-		Gravity();
-		Jump();
+
+		character.gravity();
+		character.jump();
 		moveObstacle();
 	}
 }
@@ -57,15 +59,18 @@ void CGameStateRun::OnInit()  								// Game initial values and graphics settin
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	if (collide == false)
+
+	if (character.isCollide() == false)
 	{
 		if (nChar == VK_SPACE)
 		{
-			currentJump = plane.GetTop() - jumpConst;
-			isJumping = true;
+
+			character.getCurrentJump();
+			character.setJumping(true);
 		}
 	}
-	else if (collide == true) // When plane crashes
+
+	else if (character.isCollide() == true) // When plane crashes
 	{
 		if (nChar == VK_DOWN) // Move arrow down
 		{
@@ -166,7 +171,8 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// Handling mouse mov
 void CGameStateRun::OnShow()
 {
 	background.ShowBitmap();
-	plane.ShowBitmap();
+
+	character.ShowBitmap();
 
 	for (int i = 0; i < obstacleNum; i++)
 	{
@@ -174,29 +180,32 @@ void CGameStateRun::OnShow()
 		cloud[i].ShowBitmap();
 	}
 
-	drawText("Altitude:" + std::to_string(670-plane.GetTop()-80), 20, 50, 20, {0, 0, 0});
+
+	drawText("Altitude:" + std::to_string(670-character.GetTop()-80), 20, 50, 20, {0, 0, 0});
 	drawText("Point:" + std::to_string(point), 20, 70, 20, {0, 0, 0});
 
 	// Temp Overlap Implementation
 	for (int i = 0; i < obstacleNum; i++)
 	{
-		if (CMovingBitmap::IsOverlap(plane, cloud[i]) || CMovingBitmap::IsOverlap(plane, building[i]))
+
+		if (CMovingBitmap::IsOverlap(character, cloud[i]) || CMovingBitmap::IsOverlap(character, building[i]))
 		{
-			explosion.SetTopLeft(plane.GetLeft() + 60, plane.GetTop());
+
+			explosion.SetTopLeft(character.GetLeft() + 60, character.GetTop());
 			explosion.ShowBitmap();
 			// GotoGameState(GAME_STATE_OVER);
-			collide = true;
+
+			character.setCollide(true);
 			isPause = true;
 		}
 		
-		if (isPause == false) {
-			if (building[i].GetLeft() >= (plane.GetLeft()-128-pointSpeedDeficit) && building[i].GetLeft() <= (plane.GetLeft()-126+pointSpeedDeficit)) {
-				point += 1;
-			}
+		if (building[i].GetLeft() >= (character.GetLeft()-128-pointSpeedDeficit) && building[i].GetLeft() <= (character.GetLeft() - 126+pointSpeedDeficit)) {
+			point += 1;
 		}
 
 		// Game Over Menu
-		if (collide == true)
+
+		if (character.isCollide() == true)
 		{
 			drawText("GAME OVER", 490, 320, 32, {255, 255, 255});
 			drawText("Try again", 540, 360, 24, {255, 255, 255});
@@ -208,6 +217,7 @@ void CGameStateRun::OnShow()
 		if (point == obstacleNum)
 		{
 			congrats = true;
+
 			break;
 		}
 	}
@@ -228,8 +238,6 @@ void CGameStateRun::load_background()
 
 void CGameStateRun::load_object()
 {
-	plane.LoadBitmapByString({"Resources/Plane.bmp"}, RGB(0, 100, 0));
-	plane.SetTopLeft(180, 270);
 
 	explosion.LoadBitmapByString({"Resources/Explosion1.bmp"}, RGB(0, 100, 0));
 
@@ -255,29 +263,6 @@ void CGameStateRun::load_object()
 	}
 }
 
-void CGameStateRun::Gravity()
-{
-	if (plane.GetTop() < 590 && isJumping == false) {
-		plane.SetTopLeft(plane.GetLeft(), plane.GetTop() + gravityConst);
-	}
-}
-
-void CGameStateRun::Jump()
-{
-	const int maxJumpHeight = 0;
-	if (isJumping == true)
-	{
-		if (plane.GetTop() > maxJumpHeight && plane.GetTop() > currentJump)
-		{
-			plane.SetTopLeft(plane.GetLeft(), plane.GetTop() - gravityConst);
-		}
-		else
-		{
-			isJumping = false;
-		}
-	}
-}
-
 void CGameStateRun::moveObstacle()
 {
 	time += 1;
@@ -295,6 +280,7 @@ void CGameStateRun::moveObstacle()
 	}
 	for (int i = 0; i < counter; i++)
 	{
+
 		cloud[i].SetTopLeft(cloud[i].GetLeft() - obstacleMovementConst - obstacleSpeed, cloud[i].GetTop());
 		building[i].SetTopLeft(building[i].GetLeft() - obstacleMovementConst - obstacleSpeed, building[i].GetTop());
 	}

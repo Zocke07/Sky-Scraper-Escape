@@ -94,6 +94,7 @@ namespace game_framework {
 		void load_background();
 		void load_object();
 		int gravityConst = 4;
+		int accelerationConst = 1;
 		int jumpConst = 50;
 		bool isJumping = false;
 		int currentJump;
@@ -102,11 +103,13 @@ namespace game_framework {
 		int obstacleDistance;
 		int pathDifference;
 		int obstacleMovementConst = 3;
+		int obstacleSpeed = 0;
 		int counter;
 		int obstacleNum = 20;
 		int time;
 		bool isPause = false;
 		int point;
+		int pointSpeedDeficit;
 		bool collide = false;
 		int selector = 1;
 		bool congrats;

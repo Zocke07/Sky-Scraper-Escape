@@ -27,6 +27,8 @@ CGameStateRun::~CGameStateRun()
 void CGameStateRun::OnBeginState()
 {
 	point = 0;
+	pointSpeedDeficit = 0;
+	obstacleSpeed = 0;
 	obstacleDistance = 1193;
 	pathDifference = 0;
 	isPause = false;
@@ -187,8 +189,10 @@ void CGameStateRun::OnShow()
 			isPause = true;
 		}
 		
-		if (building[i].GetLeft() >= (plane.GetLeft()-128) && building[i].GetLeft() <= (plane.GetLeft() - 126)) {
-			point += 1;
+		if (isPause == false) {
+			if (building[i].GetLeft() >= (plane.GetLeft()-128-pointSpeedDeficit) && building[i].GetLeft() <= (plane.GetLeft()-126+pointSpeedDeficit)) {
+				point += 1;
+			}
 		}
 
 		// Game Over Menu
@@ -204,11 +208,15 @@ void CGameStateRun::OnShow()
 		if (point == obstacleNum)
 		{
 			congrats = true;
-			drawText("Congratulations", 490, 320, 32, {255, 255, 255});
-			drawText("Next stage", 540, 360, 24, {255, 255, 255});
-			drawText("Back to Main Menu", 490, 400, 24, {255, 255, 255});
-			selectArrow.ShowBitmap();
+			break;
 		}
+	}
+	if (congrats == true) {
+		isPause = true;
+		drawText("Congratulations", 490, 320, 32, { 255, 255, 255 });
+		drawText("Next stage", 540, 360, 24, { 255, 255, 255 });
+		drawText("Back to Main Menu", 490, 400, 24, { 255, 255, 255 });
+		selectArrow.ShowBitmap();
 	}
 }
 
@@ -276,12 +284,19 @@ void CGameStateRun::moveObstacle()
 	if (time % 90 == 0 && counter < obstacleNum)
 	{
 		counter += 1;
-		time = 0; 
+	}
+	if (time % 180 == 0)
+	{
+		obstacleSpeed += accelerationConst;
+	}
+	if (time % 330 == 0)
+	{
+		pointSpeedDeficit += accelerationConst;
 	}
 	for (int i = 0; i < counter; i++)
 	{
-		cloud[i].SetTopLeft(cloud[i].GetLeft() - obstacleMovementConst, cloud[i].GetTop());
-		building[i].SetTopLeft(building[i].GetLeft() - obstacleMovementConst, building[i].GetTop());
+		cloud[i].SetTopLeft(cloud[i].GetLeft() - obstacleMovementConst - obstacleSpeed, cloud[i].GetTop());
+		building[i].SetTopLeft(building[i].GetLeft() - obstacleMovementConst - obstacleSpeed, building[i].GetTop());
 	}
 }
 

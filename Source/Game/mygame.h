@@ -40,6 +40,8 @@
 
 #include "flyObject.h"
 
+#define obstacleNum 20
+
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 	// Constants
@@ -95,15 +97,17 @@ namespace game_framework {
 		void OnRButtonUp(UINT nFlags, CPoint point);	// Handling mouse 
 		void load_background();
 		void load_object();
-		int accelerationConst = 1;
-		int pathHeight;
-		int pathLocation;
-		int obstacleDistance;
-		int pathDifference;
+		int xMax = 1193;
+		int yMax = 652;
+		int obstacleXDimension = 103;
+		int obstacleYDimension = 667;
+		int accelerationConst = 0;
+		int pathHeight[obstacleNum];
+		int pathLocation[obstacleNum];
+		int obstacleDistance[obstacleNum];
 		int obstacleMovementConst = 3;
 		int obstacleSpeed = 0;
 		int counter;
-		int obstacleNum = 20;
 		int time;
 		bool isPause = false;
 		int point;

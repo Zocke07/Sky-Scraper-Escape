@@ -29,8 +29,6 @@ void CGameStateRun::OnBeginState()
 	point = 0;
 	pointSpeedDeficit = 0;
 	obstacleSpeed = 0;
-	obstacleDistance = 1193;
-	pathDifference = 0;
 	isPause = false;
 	congrats = false;
 	selector = 1;
@@ -238,7 +236,6 @@ void CGameStateRun::load_background()
 
 void CGameStateRun::load_object()
 {
-
 	explosion.LoadBitmapByString({"Resources/Explosion1.bmp"}, RGB(0, 100, 0));
 
 	selectArrow.LoadBitmapByString({"Resources/SelectionArrow.bmp"}, RGB(0, 100, 0));
@@ -246,20 +243,17 @@ void CGameStateRun::load_object()
 	
 	for (int i = 0; i < obstacleNum; i++)
 	{
-		pathLocation = (std::rand() % 20 + 5) * 20;
-		pathHeight = (std::rand() % 4 + 8) * 20;
-		pathDifference = abs(pathDifference - pathLocation);
-
+		pathLocation[i] = (std::rand() % 20 + 5) * 20;
+		pathHeight[i] = (std::rand() % 4 + 8) * 20;
 		if (i > 0) {
-			obstacleDistance += (pathDifference-pathHeight/10);
+			obstacleDistance[i] = abs(pathLocation[i-1] - pathLocation[i]) - (pathHeight[i] / 10) + obstacleXDimension;
 		}
-		building[i].LoadBitmapByString({"Resources/Building1.bmp"}, RGB(0, 100, 0));
-		building[i].SetTopLeft(obstacleDistance, 652 - pathLocation + pathHeight/2);
 
-		cloud[i].LoadBitmapByString({"Resources/Cloud1.bmp"}, RGB(0, 100, 0));
-		cloud[i].SetTopLeft(obstacleDistance, 0 - pathLocation - pathHeight/2);
+		building[i].LoadBitmapByString({ "Resources/Building1.bmp" }, RGB(0, 100, 0));
+		building[i].SetTopLeft(xMax, yMax - pathLocation[i] + pathHeight[i] / 2);
 
-		pathDifference = pathLocation;
+		cloud[i].LoadBitmapByString({ "Resources/Cloud1.bmp" }, RGB(0, 100, 0));
+		cloud[i].SetTopLeft(xMax, 0 - pathLocation[i] - pathHeight[i] / 2);
 	}
 }
 
@@ -278,11 +272,19 @@ void CGameStateRun::moveObstacle()
 	{
 		pointSpeedDeficit += accelerationConst;
 	}
-	for (int i = 0; i < counter; i++)
-	{
 
-		cloud[i].SetTopLeft(cloud[i].GetLeft() - obstacleMovementConst - obstacleSpeed, cloud[i].GetTop());
-		building[i].SetTopLeft(building[i].GetLeft() - obstacleMovementConst - obstacleSpeed, building[i].GetTop());
+	for (int i = 0; i < obstacleNum; i++) {
+		if (i == 0) {
+			cloud[i].SetTopLeft(cloud[i].GetLeft() - obstacleMovementConst - obstacleSpeed, cloud[i].GetTop());
+			building[i].SetTopLeft(building[i].GetLeft() - obstacleMovementConst - obstacleSpeed, building[i].GetTop());
+		}
+		else {
+			if ((xMax - building[i-1].GetLeft()) >= obstacleDistance[i]) {
+				cloud[i].SetTopLeft(cloud[i].GetLeft() - obstacleMovementConst - obstacleSpeed, cloud[i].GetTop());
+				building[i].SetTopLeft(building[i].GetLeft() - obstacleMovementConst - obstacleSpeed, building[i].GetTop());
+			}
+		}
+
 	}
 }
 

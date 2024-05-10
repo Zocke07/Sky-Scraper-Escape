@@ -72,6 +72,7 @@ namespace game_framework {
 		int selector = 1;
 		CMovingBitmap logo;								// The logo of csie
 		CMovingBitmap background;
+		CMovingBitmap title;
 		CMovingBitmap selectArrow;
 	};
 

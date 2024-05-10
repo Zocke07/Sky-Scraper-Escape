@@ -101,13 +101,12 @@ namespace game_framework {
 		int yMax = 652;
 		int obstacleXDimension = 103;
 		int obstacleYDimension = 667;
-		int accelerationConst = 0;
+		int accelerationConst = 1;
 		int pathHeight[obstacleNum];
 		int pathLocation[obstacleNum];
 		int obstacleDistance[obstacleNum];
 		int obstacleMovementConst = 3;
 		int obstacleSpeed = 0;
-		int counter;
 		int time;
 		bool isPause = false;
 		int point;

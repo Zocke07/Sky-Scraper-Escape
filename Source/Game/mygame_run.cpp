@@ -32,7 +32,6 @@ void CGameStateRun::OnBeginState()
 	isPause = false;
 	congrats = false;
 	selector = 1;
-	counter = 1;
 	time = 0;
 	character.init();
 	load_background();
@@ -248,6 +247,9 @@ void CGameStateRun::load_object()
 		if (i > 0) {
 			obstacleDistance[i] = abs(pathLocation[i-1] - pathLocation[i]) - (pathHeight[i] / 10) + obstacleXDimension;
 		}
+		else {
+			obstacleDistance[i] = 0;
+		}
 
 		building[i].LoadBitmapByString({ "Resources/Building1.bmp" }, RGB(0, 100, 0));
 		building[i].SetTopLeft(xMax, yMax - pathLocation[i] + pathHeight[i] / 2);
@@ -260,10 +262,6 @@ void CGameStateRun::load_object()
 void CGameStateRun::moveObstacle()
 {
 	time += 1;
-	if (time % 90 == 0 && counter < obstacleNum)
-	{
-		counter += 1;
-	}
 	if (time % 180 == 0)
 	{
 		obstacleSpeed += accelerationConst;
@@ -279,7 +277,7 @@ void CGameStateRun::moveObstacle()
 			building[i].SetTopLeft(building[i].GetLeft() - obstacleMovementConst - obstacleSpeed, building[i].GetTop());
 		}
 		else {
-			if ((xMax - building[i-1].GetLeft()) >= obstacleDistance[i]) {
+			if ((building[i-1].GetLeft() + obstacleXDimension) <= xMax-obstacleDistance[i]) {
 				cloud[i].SetTopLeft(cloud[i].GetLeft() - obstacleMovementConst - obstacleSpeed, cloud[i].GetTop());
 				building[i].SetTopLeft(building[i].GetLeft() - obstacleMovementConst - obstacleSpeed, building[i].GetTop());
 			}

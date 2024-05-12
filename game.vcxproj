@@ -243,6 +243,7 @@
     <ClCompile Include="Source\Core\StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Source\Game\menu.cpp" />
     <ClCompile Include="Source\Game\flyObject.cpp" />
     <ClCompile Include="Source\Game\level1.cpp" />
     <ClCompile Include="Source\Game\levelInit.cpp" />
@@ -261,6 +262,7 @@
     <ClInclude Include="Source\Core\Resource.h" />
     <ClInclude Include="Source\Core\StdAfx.h" />
     <ClInclude Include="Source\Game\config.h" />
+    <ClInclude Include="Source\Game\menu.h" />
     <ClInclude Include="Source\Game\flyObject.h" />
     <ClInclude Include="Source\Game\level1.h" />
     <ClInclude Include="Source\Game\levelInit.h" />
@@ -274,11 +276,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="resources\bitmap1.bmp" />
-    <Image Include="Resources\Game Framework.png" />
     <Image Include="resources\game.ico" />
     <Image Include="resources\gameDoc.ico" />
     <Image Include="Resources\GAME_FRAMEWORK.bmp" />
-    <Image Include="Resources\GAME_FRAMEWORK.ico" />
     <Image Include="resources\icon1.ico" />
     <Image Include="resources\Toolbar.bmp" />
   </ItemGroup>
@@ -286,11 +286,16 @@
     <Content Include="Resources\Background.bmp" />
     <Content Include="Resources\Building1.bmp" />
     <Content Include="Resources\Cloud1.bmp" />
+    <Content Include="Resources\Congrats.bmp" />
     <Content Include="Resources\Explosion1.bmp" />
     <Content Include="Resources\GAME.ico" />
+    <Content Include="Resources\GameOver.bmp" />
+    <Content Include="Resources\MainMenu.bmp" />
+    <Content Include="Resources\NextLevel.bmp" />
     <Content Include="Resources\Plane.bmp" />
     <Content Include="Resources\SelectionArrow.bmp" />
     <Content Include="Resources\Title.bmp" />
+    <Content Include="Resources\TryAgain.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

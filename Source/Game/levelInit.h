@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 
+#include "menu.h"
 #include "flyObject.h"
 
 using namespace std;
@@ -30,12 +31,16 @@ namespace levels
     public:
         vector<writeText> getText();
         int getPoint();
+        bool getPause();
+        void resetPoint();
+        void addPoint();
+        void setPause(bool flag);
         void OnBeginState();
         void OnMove();
         void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
         void OnShow();
-        void load_object();
-        void load_background();
+        void loadObject();
+        void loadBackground();
         void moveObstacle();
         bool getToInit();
     protected:
@@ -56,11 +61,11 @@ namespace levels
         int selector = 1;
         bool congrats = false;
         game_framework::CMovingBitmap background;
-        game_framework::CMovingBitmap plane;
         game_framework::CMovingBitmap explosion;
         game_framework::CMovingBitmap selectArrow;
-        object::flyObject character;
+        game_framework::flyObject character;
         vector<game_framework::CMovingBitmap> building = vector<game_framework::CMovingBitmap>(obstacleNum);
         vector<game_framework::CMovingBitmap> cloud = vector<game_framework::CMovingBitmap>(obstacleNum);
+        game_framework::menu theMenu;
     };
 }

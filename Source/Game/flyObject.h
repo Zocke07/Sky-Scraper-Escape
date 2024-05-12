@@ -1,9 +1,9 @@
 ﻿#pragma once
 #include "../Library/gameutil.h"
 
-namespace object
+namespace game_framework
 {
-    class flyObject : public game_framework::CMovingBitmap
+    class flyObject : public CMovingBitmap
     {
     public:
         flyObject(); // Constructor

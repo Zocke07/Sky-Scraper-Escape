@@ -1,6 +1,8 @@
 ﻿#include "stdafx.h"
 #include "levelInit.h"
 
+#include "level1.h"
+
 using namespace levels;
 
 void levelInit::OnBeginState()
@@ -16,14 +18,15 @@ void levelInit::OnBeginState()
     counter = 1;
     time = 0;
     character.init();
-    load_background();
-    load_object();
+    loadBackground();
+    loadObject();
     character.load();
+    theMenu.loadObject();
 }
 
 void levelInit::OnMove()
 {
-    if (isPause == false)
+    if (this->getPause() == false)
     {
         character.gravity();
         character.jump();
@@ -106,11 +109,11 @@ void levelInit::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	
     if (nChar == VK_ESCAPE)
     {
-        if (isPause == false) {
-            isPause = true;
+        if (this->getPause() == false) {
+            setPause(true);
         }
         else {
-            isPause = false;
+            setPause(false);
         }
     }
 }
@@ -145,20 +148,18 @@ void levelInit::OnShow()
             // GotoGameState(GAME_STATE_OVER);
 
             character.setCollide(true);
-            isPause = true;
+            setPause(true);
         }
 		
         if (building[i].GetLeft() >= (character.GetLeft()-128-pointSpeedDeficit) && building[i].GetLeft() <= (character.GetLeft() - 126+pointSpeedDeficit)) {
-            point += 1;
+            addPoint();
         }
 
         // Game Over Menu
 
         if (character.isCollide() == true)
         {
-            // drawText("GAME OVER", 490, 320, 32, {255, 255, 255});
-            // drawText("Try again", 540, 360, 24, {255, 255, 255});
-            // drawText("Back to Main Menu", 490, 400, 24, {255, 255, 255});
+            theMenu.ShowGameOver();
             selectArrow.ShowBitmap();
         }
 
@@ -171,15 +172,13 @@ void levelInit::OnShow()
         }
     }
     if (congrats == true) {
-        isPause = true;
-        // drawText("Congratulations", 490, 320, 32, { 255, 255, 255 });
-        // drawText("Next stage", 540, 360, 24, { 255, 255, 255 });
-        // drawText("Back to Main Menu", 490, 400, 24, { 255, 255, 255 });
+        setPause(true);
+        theMenu.ShowCongrats();
         selectArrow.ShowBitmap();
     }
 }
 
-void levelInit::load_object()
+void levelInit::loadObject()
 {
     explosion.LoadBitmapByString({"Resources/Explosion1.bmp"}, RGB(0, 100, 0));
 
@@ -188,8 +187,8 @@ void levelInit::load_object()
 	
     for (int i = 0; i < obstacleNum; i++)
     {
-        pathLocation = (std::rand() % 20 + 5) * 20;
-        pathHeight = (std::rand() % 4 + 8) * 20;
+        pathLocation = (rand() % 20 + 5) * 20;
+        pathHeight = (rand() % 4 + 8) * 20;
         pathDifference = abs(pathDifference - pathLocation);
 
         if (i > 0) {
@@ -205,7 +204,7 @@ void levelInit::load_object()
     }
 }
 
-void levelInit::load_background()
+void levelInit::loadBackground()
 {
     background.LoadBitmap("Resources/Background.bmp");
     background.SetTopLeft(0, 0);
@@ -238,11 +237,31 @@ std::vector<writeText> levelInit::getText()
 {
     vector<writeText> texts;
     texts.push_back({"Altitude: " + to_string(670-character.GetTop()-80), {20, 50}, RGB(0, 0, 0), 20});
-    texts.push_back({"Point: " + to_string(getPoint()), {20, 70}, RGB(0, 0, 0), 20});
+    texts.push_back({"Point   : " + to_string(getPoint()), {20, 70}, RGB(0, 0, 0), 20});
     return texts;
 }
 
 int levelInit::getPoint()
 {
     return point;
+}
+
+bool levelInit::getPause()
+{
+    return isPause;
+}
+
+void levelInit::setPause(bool flag)
+{
+    isPause = flag;
+}
+
+void levelInit::resetPoint()
+{
+    point = 0;
+}
+
+void levelInit::addPoint()
+{
+    point += 1;
 }

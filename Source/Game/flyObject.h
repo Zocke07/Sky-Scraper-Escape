@@ -1,9 +1,9 @@
 ﻿#pragma once
 #include "../Library/gameutil.h"
 
-namespace object
+namespace game_framework
 {
-    class flyObject : public game_framework::CMovingBitmap
+    class flyObject : public CMovingBitmap
     {
     public:
         flyObject(); // Constructor
@@ -19,7 +19,7 @@ namespace object
     private:
         bool jumping;
         bool collide;
-        int currentJump = 0;
+        int currentJump;
         int gravityConst = 4;
         int maxJumpHeight = 0;
         int jumpConst = 50;

@@ -37,7 +37,7 @@ namespace game_framework {
 		gameStateTable[GAME_STATE_INIT] = new CGameStateInit(this);
 		gameStateTable[GAME_STATE_RUN] = new CGameStateRun(this);
 		gameStateTable[GAME_STATE_OVER] = new CGameStateOver(this);
-		gameState = nullptr;
+		gameState = NULL;
 	}
 
 	CGame::~CGame()
@@ -308,11 +308,11 @@ namespace game_framework {
 
 	CDDraw::CDDraw()
 	{
-		pCView = nullptr;
-		lpClipperPrimary = lpClipperBack = nullptr;
-		lpDDSPrimary = lpDDSBack = nullptr;
+		pCView = NULL;
+		lpClipperPrimary = lpClipperBack = NULL;
+		lpDDSPrimary = lpDDSBack = NULL;
 		fullscreen = OPEN_AS_FULLSCREEN;
-		lpDD = nullptr;
+		lpDD = NULL;
 	}
 
 	CDDraw::~CDDraw()
@@ -320,9 +320,9 @@ namespace game_framework {
 		ReleaseSurface();
 		if (lpDD)
 			lpDD->Release();
-		pCView = nullptr; lpDD = nullptr;
-		lpClipperPrimary = lpClipperBack = nullptr;
-		lpDDSPrimary = lpDDSBack = nullptr;
+		pCView = NULL; lpDD = NULL;
+		lpClipperPrimary = lpClipperBack = NULL;
+		lpDDSPrimary = lpDDSBack = NULL;
 		TRACE("~CDDraw()\n");
 	}
 
@@ -334,7 +334,7 @@ namespace game_framework {
 			DDBLTFX ddbltfx;
 			ddbltfx.dwSize = sizeof(ddbltfx);
 			ddbltfx.dwFillColor = MatchColorKey(lpDDSBack, color);
-			ddrval = lpDDSBack->Blt(nullptr, nullptr, nullptr, DDBLT_COLORFILL | DDBLT_WAIT, &ddbltfx);
+			ddrval = lpDDSBack->Blt(NULL, NULL, NULL, DDBLT_COLORFILL | DDBLT_WAIT, &ddbltfx);
 			CheckDDFail("BltBackColor: blitting failed");
 		}
 	}
@@ -350,7 +350,7 @@ namespace game_framework {
 				RestoreSurface();
 			if (lpDDSPrimary->IsLost())
 				RestoreSurface();
-			ddrval = lpDDSPrimary->Blt(ClientRect, lpDDSBack, ClientRect, DDBLTFAST_WAIT, nullptr);
+			ddrval = lpDDSPrimary->Blt(ClientRect, lpDDSBack, ClientRect, DDBLTFAST_WAIT, NULL);
 			CheckDDFail("Blt Back to primary failed");
 		}
 		else {
@@ -364,7 +364,7 @@ namespace game_framework {
 			pCView->GetWindowRect(&WindowRect);
 			WindowRect.right = WindowRect.left + size_x;
 			WindowRect.bottom = WindowRect.top + size_y;
-			ddrval = lpDDSPrimary->Blt(WindowRect, lpDDSBack, ClientRect, DDBLTFAST_WAIT, nullptr);
+			ddrval = lpDDSPrimary->Blt(WindowRect, lpDDSBack, ClientRect, DDBLTFAST_WAIT, NULL);
 			CheckDDFail("Blt Back to primary failed");
 		}
 	}
@@ -389,7 +389,7 @@ namespace game_framework {
 		if (lpDDS[SurfaceID]->IsLost())
 			RestoreSurface();
 
-		ddrval = lpDDSBack->Blt(TargetRect, lpDDS[SurfaceID], nullptr, blt_flag, nullptr);
+		ddrval = lpDDSBack->Blt(TargetRect, lpDDS[SurfaceID], NULL, blt_flag, NULL);
 		CheckDDFail("Blt Bitmap to Back Failed");
 	}
 
@@ -416,7 +416,7 @@ namespace game_framework {
 			RestoreSurface();
 		if (lpDDS[SurfaceID]->IsLost())
 			RestoreSurface();
-		ddrval = lpDDSBack->Blt(TargetRect, lpDDS[SurfaceID], nullptr, blt_flag, nullptr);
+		ddrval = lpDDSBack->Blt(TargetRect, lpDDS[SurfaceID], NULL, blt_flag, NULL);
 		CheckDDFail("Blt Bitmap to Back Failed");
 	}
 
@@ -432,7 +432,7 @@ namespace game_framework {
 			RestoreSurface();
 		if (lpDDS[TargetID]->IsLost())
 			RestoreSurface();
-		ddrval = lpDDS[TargetID]->BltFast(x, y, lpDDS[SourceID], nullptr, blt_flag);
+		ddrval = lpDDS[TargetID]->BltFast(x, y, lpDDS[SourceID], NULL, blt_flag);
 		CheckDDFail("Blt Bitmap to Back Failed");
 	}
 
@@ -482,13 +482,13 @@ namespace game_framework {
 		ddsd.dwSize = sizeof(ddsd);
 		ddsd.dwFlags = DDSD_CAPS;
 		ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE;
-		ddrval = lpDD->CreateSurface(&ddsd, &lpDDSPrimary, nullptr);
+		ddrval = lpDD->CreateSurface(&ddsd, &lpDDSPrimary, NULL);
 		CheckDDFail("Create Primary Surface failed");
 
 		// Create clippers for the primary and back surfaces
 		// ddrval = lpDD->CreateClipper(0, &lpClipperPrimary, NULL);
 		// CheckDDFail("Create Primay Surface Clipper FAILED"); 
-		ddrval = lpDD->CreateClipper(0, &lpClipperBack, nullptr);
+		ddrval = lpDD->CreateClipper(0, &lpClipperBack, NULL);
 		CheckDDFail("Create Back Surface Clipper FAILED");
 
 		typedef struct {
@@ -511,7 +511,7 @@ namespace game_framework {
 		ddsd.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH;
 		ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN;
 		ddsd.dwHeight = size_y; ddsd.dwWidth = size_x;
-		ddrval = lpDD->CreateSurface(&ddsd, &lpDDSBack, nullptr);
+		ddrval = lpDD->CreateSurface(&ddsd, &lpDDSBack, NULL);
 		CheckDDFail("Can not create back plain");
 
 		// In fullscreen mode, the clipper for primary surafce is fixed to screen size
@@ -538,13 +538,13 @@ namespace game_framework {
 		ddsd.dwSize = sizeof(ddsd);
 		ddsd.dwFlags = DDSD_CAPS;
 		ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE;
-		ddrval = lpDD->CreateSurface(&ddsd, &lpDDSPrimary, nullptr);
+		ddrval = lpDD->CreateSurface(&ddsd, &lpDDSPrimary, NULL);
 		CheckDDFail("Create Primary Surface failed");
 
 		// Create clippers for the primary and back surfaces
-		ddrval = lpDD->CreateClipper(0, &lpClipperPrimary, nullptr);
+		ddrval = lpDD->CreateClipper(0, &lpClipperPrimary, NULL);
 		CheckDDFail("Create Primay Surface Clipper FAILED");
-		ddrval = lpDD->CreateClipper(0, &lpClipperBack, nullptr);
+		ddrval = lpDD->CreateClipper(0, &lpClipperBack, NULL);
 		CheckDDFail("Create Back Surface Clipper FAILED");
 
 		ddrval = lpClipperPrimary->SetHWnd(0, AfxGetMainWnd()->m_hWnd);
@@ -570,7 +570,7 @@ namespace game_framework {
 		ddsd.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH;
 		ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN;
 		ddsd.dwHeight = size_y; ddsd.dwWidth = size_x;
-		ddrval = lpDD->CreateSurface(&ddsd, &lpDDSBack, nullptr);
+		ddrval = lpDD->CreateSurface(&ddsd, &lpDDSBack, NULL);
 		CheckDDFail("Can not create back plain");
 
 		ddrval = lpDDSPrimary->SetClipper(lpClipperPrimary);
@@ -598,7 +598,7 @@ namespace game_framework {
 		size_x = RESOLUTION_X, size_y = RESOLUTION_Y;
 		// init lpDD
 		LPDIRECTDRAW lpDD0;
-		ddrval = DirectDrawCreate(nullptr, &lpDD0, nullptr);
+		ddrval = DirectDrawCreate(NULL, &lpDD0, NULL);
 		CheckDDFail("DDraw create failed");
 		ddrval = lpDD0->QueryInterface(IID_IDirectDraw2, (void **)&lpDD);
 		CheckDDFail("DDraw surface 2 create failed");
@@ -623,7 +623,7 @@ namespace game_framework {
 		CBitmap bitmap;
 		bitmap.LoadBitmap(IDB_BITMAP);
 		CDC mDC;
-		mDC.CreateCompatibleDC(nullptr);
+		mDC.CreateCompatibleDC(NULL);
 		CBitmap* pOldBitmap = mDC.SelectObject(&bitmap);
 		BITMAP bitmapSize;
 		bitmap.GetBitmap(&bitmapSize);
@@ -634,7 +634,7 @@ namespace game_framework {
 		ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN;
 		BitmapRect[i].bottom = ddsd.dwHeight = bitmapSize.bmHeight;
 		BitmapRect[i].right = ddsd.dwWidth = bitmapSize.bmWidth;
-		ddrval = lpDD->CreateSurface(&ddsd, &lpDDS[i], nullptr);
+		ddrval = lpDD->CreateSurface(&ddsd, &lpDDS[i], NULL);
 		CheckDDFail("Create Bitmap Surface Failed");
 		HDC hdc;
 		ddrval = lpDDS[i]->GetDC(&hdc);
@@ -659,7 +659,7 @@ namespace game_framework {
 		GAME_ASSERT(hbitmap != NULL, "Load bitmap failed !!! Please check bitmap ID (IDB_XXX).");
 		CBitmap *bmp = CBitmap::FromHandle(hbitmap); // will be deleted automatically
 		CDC mDC;
-		mDC.CreateCompatibleDC(nullptr);
+		mDC.CreateCompatibleDC(NULL);
 		CBitmap* pOldBitmap = mDC.SelectObject(bmp);
 		BITMAP bitmapSize;
 		bmp->GetBitmap(&bitmapSize);
@@ -670,7 +670,7 @@ namespace game_framework {
 		ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN;
 		BitmapRect[i].bottom = ddsd.dwHeight = bitmapSize.bmHeight;
 		BitmapRect[i].right = ddsd.dwWidth = bitmapSize.bmWidth;
-		ddrval = lpDD->CreateSurface(&ddsd, &lpDDS[i], nullptr);
+		ddrval = lpDD->CreateSurface(&ddsd, &lpDDS[i], NULL);
 		CheckDDFail("Create Bitmap Surface Failed");
 		HDC hdc;
 		ddrval = lpDDS[i]->GetDC(&hdc);
@@ -694,7 +694,7 @@ namespace game_framework {
 		GAME_ASSERT(hbitmap != NULL, "Load bitmap failed !!! Please check bitmap ID (IDB_XXX).");
 		CBitmap *bmp = CBitmap::FromHandle(hbitmap); // will be deleted automatically
 		CDC mDC;
-		mDC.CreateCompatibleDC(nullptr);
+		mDC.CreateCompatibleDC(NULL);
 		CBitmap* pOldBitmap = mDC.SelectObject(bmp);
 		BITMAP bitmapSize;
 		bmp->GetBitmap(&bitmapSize);
@@ -705,7 +705,7 @@ namespace game_framework {
 		ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN;
 		BitmapRect[i].bottom = ddsd.dwHeight = bitmapSize.bmHeight;
 		BitmapRect[i].right = ddsd.dwWidth = bitmapSize.bmWidth;
-		ddrval = lpDD->CreateSurface(&ddsd, &lpDDS[i], nullptr);
+		ddrval = lpDD->CreateSurface(&ddsd, &lpDDS[i], NULL);
 		CheckDDFail("Create Bitmap Surface Failed");
 		HDC hdc;
 		ddrval = lpDDS[i]->GetDC(&hdc);
@@ -737,13 +737,13 @@ namespace game_framework {
 				lpDDSurface->ReleaseDC(hdc);
 			}
 			ddsd.dwSize = sizeof(ddsd);
-			while ((hres = lpDDSurface->Lock(nullptr, &ddsd, 0, nullptr)) == DDERR_WASSTILLDRAWING);
+			while ((hres = lpDDSurface->Lock(NULL, &ddsd, 0, NULL)) == DDERR_WASSTILLDRAWING);
 			if (hres == DD_OK) {
 				dw = *(DWORD *)ddsd.lpSurface;          // get (0,0) data
 				if (ddsd.ddpfPixelFormat.dwRGBBitCount < 32)
 					mask = (1 << ddsd.ddpfPixelFormat.dwRGBBitCount) - 1;
 				dw &= mask;								// mask it to bpp
-				lpDDSurface->Unlock(nullptr);
+				lpDDSurface->Unlock(NULL);
 			}
 			if (lpDDSurface->GetDC(&hdc) == DD_OK) {
 				SetPixel(hdc, 0, 0, rgbT);				// restore (0,0) pixel value
@@ -776,7 +776,7 @@ namespace game_framework {
 		BitmapName.push_back("");
 		BitmapColorKey.push_back(ColorKey);
 		BitmapRect.push_back(CRect(0, 0, 0, 0));
-		lpDDS.push_back(nullptr);
+		lpDDS.push_back(NULL);
 		LoadBitmap(i, IDB_BITMAP);
 		SetColorKey(i, ColorKey);
 		return i;
@@ -795,7 +795,7 @@ namespace game_framework {
 		BitmapName.push_back(filename);
 		BitmapColorKey.push_back(ColorKey);
 		BitmapRect.push_back(CRect(0, 0, 0, 0));
-		lpDDS.push_back(nullptr);
+		lpDDS.push_back(NULL);
 		LoadBitmap(i, filename);
 		SetColorKey(i, ColorKey);
 		return i;
@@ -811,7 +811,7 @@ namespace game_framework {
 		BitmapName.push_back("");
 		BitmapColorKey.push_back(CLR_INVALID);
 		BitmapRect.push_back(CRect(0, 0, 0, 0));
-		lpDDS.push_back(nullptr);
+		lpDDS.push_back(NULL);
 		LoadBitmapFromExistHBITMAP(i, bitmap);
 		SetColorKey(i, CLR_INVALID);
 		return i;
@@ -831,17 +831,17 @@ namespace game_framework {
 			for (unsigned i = 0; i < lpDDS.size(); i++)
 				if (lpDDS[i]) {
 					lpDDS[i]->Release();
-					lpDDS[i] = nullptr;
+					lpDDS[i] = NULL;
 				}
 			if (lpDDSBack)
 			{
 				lpDDSBack->Release();
-				lpDDSBack = nullptr;
+				lpDDSBack = NULL;
 			}
 			if (lpDDSPrimary)
 			{
 				lpDDSPrimary->Release();
-				lpDDSPrimary = nullptr;
+				lpDDSPrimary = NULL;
 			}
 		}
 	}
@@ -852,7 +852,7 @@ namespace game_framework {
 		// Since all surfaces are restored and reloaded, this operation can be very slow.
 		//
 		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_WAIT));
-		if (lpDD != nullptr)
+		if (lpDD != NULL)
 		{
 			CreateSurface();
 			while (lpDDSBack->IsLost() || lpDDSPrimary->IsLost()) {

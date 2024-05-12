@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 #include "flyObject.h"
 
-using namespace object;
+using namespace game_framework;
 
 flyObject::flyObject() {}
 

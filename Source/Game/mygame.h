@@ -38,10 +38,7 @@
  *      3. Use ShowInitProgress(percent) to display loading progress.
 */
 
-#pragma once
 #include "flyObject.h"
-#include "level1.h"
-#include "levelInit.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -62,15 +59,15 @@ namespace game_framework {
 	class CGameStateInit : public CGameState {
 	public:
 		CGameStateInit(CGame *g);
-		void OnInit() override;  								// Game initial values and graphics settings
-		void OnBeginState() override;							// Set variables required for each replay
-		void OnKeyUp(UINT, UINT, UINT) override; 				// Handle keyboard Up action
-		void OnLButtonDown(UINT nFlags, CPoint point) override;  // Handling mouse movements
+		void OnInit();  								// Game initial values and graphics settings
+		void OnBeginState();							// Set variables required for each replay
+		void OnKeyUp(UINT, UINT, UINT); 				// Handle keyboard Up action
+		void OnLButtonDown(UINT nFlags, CPoint point);  // Handling mouse movements
+	protected:
+		void OnShow();									// Shows this state of the game's screen
 		void load_background();
 		void load_icons();
 		void draw_text();
-	protected:
-		void OnShow() override;									// Shows this state of the game's screen
 	private:
 		int selector = 1;
 		CMovingBitmap logo;								// The logo of csie
@@ -87,21 +84,46 @@ namespace game_framework {
 	class CGameStateRun : public CGameState {
 	public:
 		CGameStateRun(CGame *g);
-		~CGameStateRun() override;
-		void OnBeginState() override;							// Set variables required for each replay
-		void OnInit() override;  								// Game initial values and graphics settings
-		void OnKeyDown(UINT, UINT, UINT) override;
-		void OnKeyUp(UINT, UINT, UINT) override;
-		void OnLButtonDown(UINT nFlags, CPoint point) override;  // Handling mouse movements
-		void OnLButtonUp(UINT nFlags, CPoint point) override;	// Handling mouse movements
-		void OnMouseMove(UINT nFlags, CPoint point) override;	// Handling mouse movements 
-		void OnRButtonDown(UINT nFlags, CPoint point) override;  // Handling mouse movements
-		void OnRButtonUp(UINT nFlags, CPoint point) override;	// Handling mouse 
+		~CGameStateRun();
+		void OnBeginState();							// Set variables required for each replay
+		void OnInit();  								// Game initial values and graphics settings
+		void OnKeyDown(UINT, UINT, UINT);
+		void OnKeyUp(UINT, UINT, UINT);
+		void OnLButtonDown(UINT nFlags, CPoint point);  // Handling mouse movements
+		void OnLButtonUp(UINT nFlags, CPoint point);	// Handling mouse movements
+		void OnMouseMove(UINT nFlags, CPoint point);	// Handling mouse movements 
+		void OnRButtonDown(UINT nFlags, CPoint point);  // Handling mouse movements
+		void OnRButtonUp(UINT nFlags, CPoint point);	// Handling mouse 
+		void load_background();
+		void load_object();
+		int accelerationConst = 1;
+		int pathHeight;
+		int pathLocation;
+		int obstacleDistance;
+		int pathDifference;
+		int obstacleMovementConst = 3;
+		int obstacleSpeed = 0;
+		int counter;
+		int obstacleNum = 20;
+		int time;
+		bool isPause = false;
+		int point;
+		int pointSpeedDeficit;
+		int selector = 1;
+		bool congrats;
 	protected:
-		void OnMove() override;									// Moving game element
-		void OnShow() override;									// Shows this state of the game's screen
+		void OnMove();									// Moving game element
+		void OnShow();									// Shows this state of the game's screen
+		void moveObstacle();
+		void drawText(string text, int x, int y, int size, vector<int> rgbValue);
 	private:
-		levels::level1 theLevel1;
+		CMovingBitmap background;
+		CMovingBitmap plane;
+		CMovingBitmap explosion;
+		vector<CMovingBitmap> building = vector<CMovingBitmap>(obstacleNum);
+		vector<CMovingBitmap> cloud = vector<CMovingBitmap>(obstacleNum);
+		CMovingBitmap selectArrow;
+		flyObject character;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -112,11 +134,11 @@ namespace game_framework {
 	class CGameStateOver : public CGameState {
 	public:
 		CGameStateOver(CGame *g);
-		void OnBeginState() override;							// Set variables required for each replay
-		void OnInit() override;
+		void OnBeginState();							// Set variables required for each replay
+		void OnInit();
 	protected:
-		void OnMove() override;									// Moving game element
-		void OnShow() override;									// Shows this state of the game's screen
+		void OnMove();									// Moving game element
+		void OnShow();									// Shows this state of the game's screen
 	private:
 		int counter;	// Countdown counter
 	};

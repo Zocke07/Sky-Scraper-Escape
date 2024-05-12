@@ -42,6 +42,7 @@ namespace levels
         void loadObject();
         void loadBackground();
         void moveObstacle();
+        void setToInit(bool flag);
         bool getToInit();
     protected:
         int point = 0;
@@ -54,7 +55,7 @@ namespace levels
         int obstacleMovementConst = 3;
         int obstacleSpeed = 0;
         int counter = 0;
-        int obstacleNum = 20;
+        int obstacleNum = 1;
         int time = 0;
         bool isPause = false;
         int pointSpeedDeficit = 0;

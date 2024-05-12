@@ -52,27 +52,27 @@ void levelInit::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
             if (selector < 2)
             {
                 selector += 1;
-                selectArrow.SetTopLeft(selectArrow.GetLeft(), selectArrow.GetTop() + 40);
+                selectArrow.SetTopLeft(selectArrow.GetLeft(), selectArrow.GetTop() + 66);
             }
         }
         else if (nChar == VK_UP) // Move arrow up
         {
             if (selector > 1) {
                 selector -= 1;
-                selectArrow.SetTopLeft(selectArrow.GetLeft(), selectArrow.GetTop() - 40);
+                selectArrow.SetTopLeft(selectArrow.GetLeft(), selectArrow.GetTop() - 66);
             }
         }
 		
-        if (selectArrow.GetTop() == 360 && nChar == VK_RETURN) // Try again
+        if (selectArrow.GetTop() == 312 && nChar == VK_RETURN) // Try again
         {
             selectArrow.SetTopLeft(390, 360);
-            isToInit = true;
+            setToInit(true);
         }
 		
-        else if (selectArrow.GetTop() == 400 && nChar == VK_RETURN) // Back to menu
+        else if (selectArrow.GetTop() == 378 && nChar == VK_RETURN) // Back to menu
         {
             selectArrow.SetTopLeft(390, 360);
-            isToInit = true;
+            setToInit(true);
         }
     }
     if (congrats == true) // When plane reaches target point
@@ -82,17 +82,17 @@ void levelInit::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
             if (selector < 2)
             {
                 selector += 1;
-                selectArrow.SetTopLeft(selectArrow.GetLeft(), selectArrow.GetTop() + 40);
+                selectArrow.SetTopLeft(selectArrow.GetLeft(), selectArrow.GetTop() + 66);
             }
         }
         else if (nChar == VK_UP) // Move arrow up
         {
             if (selector > 1) {
                 selector -= 1;
-                selectArrow.SetTopLeft(selectArrow.GetLeft(), selectArrow.GetTop() - 40);
+                selectArrow.SetTopLeft(selectArrow.GetLeft(), selectArrow.GetTop() - 66);
             }
         }
-        if (selectArrow.GetTop() == 360 && nChar == VK_RETURN) // Go to next stage button
+        if (selectArrow.GetTop() == 312 && nChar == VK_RETURN) // Go to next stage button
         {
             /*
             selectArrow.SetTopLeft(390, 360);
@@ -100,10 +100,10 @@ void levelInit::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
             */
         }
 		
-        else if (selectArrow.GetTop() == 400 && nChar == VK_RETURN) // Go to main menu button
+        else if (selectArrow.GetTop() == 378 && nChar == VK_RETURN) // Go to main menu button
         {
             selectArrow.SetTopLeft(390, 360);
-            isToInit = true;
+            setToInit(true);
         }
     }
 	
@@ -183,7 +183,7 @@ void levelInit::loadObject()
     explosion.LoadBitmapByString({"Resources/Explosion1.bmp"}, RGB(0, 100, 0));
 
     selectArrow.LoadBitmapByString({"Resources/SelectionArrow.bmp"}, RGB(0, 100, 0));
-    selectArrow.SetTopLeft(390, 360);
+    selectArrow.SetTopLeft(300, 312);
 	
     for (int i = 0; i < obstacleNum; i++)
     {
@@ -264,4 +264,9 @@ void levelInit::resetPoint()
 void levelInit::addPoint()
 {
     point += 1;
+}
+
+void levelInit::setToInit(bool flag)
+{
+    isToInit = flag;
 }

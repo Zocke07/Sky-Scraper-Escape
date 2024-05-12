@@ -15,11 +15,11 @@ void menu::loadObject()
 
 void menu::ShowCongrats()
 {
-    congratulations.SetTopLeft(490, 200);
+    congratulations.SetTopLeft(340, 180);
     congratulations.ShowBitmap();
-    nextLevel.SetTopLeft(652, 320);
+    nextLevel.SetTopLeft(400, 300);
     nextLevel.ShowBitmap();
-    mainMenu.SetTopLeft(655, 386);
+    mainMenu.SetTopLeft(405, 366);
     mainMenu.ShowBitmap();
 }
 

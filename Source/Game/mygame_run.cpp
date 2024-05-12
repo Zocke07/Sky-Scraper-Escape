@@ -35,6 +35,7 @@ void CGameStateRun::OnMove()							// Moving game element
 	theLevel1.OnMove();
 	if (theLevel1.getToInit() == true)
 	{
+		theLevel1.setToInit(false);
 		GotoGameState(GAME_STATE_INIT);
 	}
 }

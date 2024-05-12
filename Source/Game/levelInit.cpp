@@ -66,7 +66,7 @@ void levelInit::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
         if (selectArrow.GetTop() == 312 && nChar == VK_RETURN) // Try again
         {
             selectArrow.SetTopLeft(390, 360);
-            setToInit(true);
+            setRetry(true);
         }
 		
         else if (selectArrow.GetTop() == 378 && nChar == VK_RETURN) // Back to menu
@@ -75,7 +75,7 @@ void levelInit::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
             setToInit(true);
         }
     }
-    if (congrats == true) // When plane reaches target point
+    if (getCongrats() == true) // When plane reaches target point
     {
         if (nChar == VK_DOWN) // Move arrow down
         {
@@ -135,6 +135,11 @@ void levelInit::OnShow()
         building[i].ShowBitmap();
         cloud[i].ShowBitmap();
     }
+
+    if (getPause() == true && character.isCollide() == false && getCongrats() == false)
+    {
+        theMenu.ShowGamePaused();
+    }
     
     // Temp Overlap Implementation
     for (int i = 0; i < obstacleNum; i++)
@@ -166,12 +171,12 @@ void levelInit::OnShow()
         // Congratulations Pop Up
         if (point == obstacleNum)
         {
-            congrats = true;
+            setCongrats(true);
 
             break;
         }
     }
-    if (congrats == true) {
+    if (getCongrats() == true) {
         setPause(true);
         theMenu.ShowCongrats();
         selectArrow.ShowBitmap();
@@ -270,3 +275,25 @@ void levelInit::setToInit(bool flag)
 {
     isToInit = flag;
 }
+
+void levelInit::setRetry(bool flag)
+{
+    isRetry = flag;
+}
+
+bool levelInit::getRetry()
+{
+    return isRetry;
+}
+
+bool levelInit::getCongrats()
+{
+    return congrats;
+}
+
+void levelInit::setCongrats(bool flag)
+{
+    congrats = flag;
+}
+
+

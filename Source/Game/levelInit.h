@@ -29,12 +29,22 @@ namespace levels
     class levelInit
     {
     public:
-        vector<writeText> getText();
+        // Getter
         int getPoint();
+        bool getRetry();
         bool getPause();
+        bool getToInit();
+        bool getCongrats();
+        vector<writeText> getText();
+
+        // Setter
         void resetPoint();
         void addPoint();
         void setPause(bool flag);
+        void setToInit(bool flag);
+        void setRetry(bool flag);
+        void setCongrats(bool flag);
+
         void OnBeginState();
         void OnMove();
         void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
@@ -42,8 +52,6 @@ namespace levels
         void loadObject();
         void loadBackground();
         void moveObstacle();
-        void setToInit(bool flag);
-        bool getToInit();
     protected:
         int point = 0;
         bool isToInit = false;
@@ -61,6 +69,7 @@ namespace levels
         int pointSpeedDeficit = 0;
         int selector = 1;
         bool congrats = false;
+        bool isRetry = false;
         game_framework::CMovingBitmap background;
         game_framework::CMovingBitmap explosion;
         game_framework::CMovingBitmap selectArrow;

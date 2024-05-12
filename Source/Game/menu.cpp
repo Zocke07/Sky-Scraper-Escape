@@ -11,6 +11,8 @@ void menu::loadObject()
 
     gameOver.LoadBitmapByString({"Resources/GameOver.bmp"}, RGB(0, 100, 0));
     tryAgain.LoadBitmapByString({"Resources/TryAgain.bmp"}, RGB(0, 100, 0));
+
+    gamePaused.LoadBitmapByString({"Resources/GamePaused.bmp"}, RGB(0, 100, 0));
 }
 
 void menu::ShowCongrats()
@@ -31,4 +33,10 @@ void menu::ShowGameOver()
     tryAgain.ShowBitmap();
     mainMenu.SetTopLeft(407, 360);
     mainMenu.ShowBitmap();
+}
+
+void menu::ShowGamePaused()
+{
+    gamePaused.SetTopLeft(355, 250);
+    gamePaused.ShowBitmap();
 }

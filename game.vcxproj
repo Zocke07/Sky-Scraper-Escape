@@ -290,6 +290,7 @@
     <Content Include="Resources\Explosion1.bmp" />
     <Content Include="Resources\GAME.ico" />
     <Content Include="Resources\GameOver.bmp" />
+    <Content Include="Resources\GamePaused.bmp" />
     <Content Include="Resources\MainMenu.bmp" />
     <Content Include="Resources\NextLevel.bmp" />
     <Content Include="Resources\Plane.bmp" />

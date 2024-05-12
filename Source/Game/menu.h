@@ -9,6 +9,7 @@ namespace game_framework
         void loadObject();
         void ShowCongrats();
         void ShowGameOver();
+        void ShowGamePaused();
     private:
         CMovingBitmap congratulations;
         CMovingBitmap nextLevel;
@@ -16,5 +17,7 @@ namespace game_framework
 
         CMovingBitmap gameOver;
         CMovingBitmap tryAgain;
+
+        CMovingBitmap gamePaused;
     };
 }

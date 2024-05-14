@@ -9,6 +9,7 @@ using namespace std;
 
 namespace levels
 {
+    // Components needed to write the altitude and point
     struct theCoordinate
     {
         int x;
@@ -29,36 +30,42 @@ namespace levels
     class levelInit
     {
     public:
-        // Getter
-        int getPoint();
+        // Imitates mygame_run functions
+        void OnBeginState();  
+        void OnMove();
+        void OnInit();
+        void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
+        void OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags);
+        void OnLButtonDown(UINT nFlags, CPoint point);
+        void OnLButtonUp(UINT nFlags, CPoint point);
+        void OnMouseMove(UINT nFlags, CPoint point);
+        void OnRButtonDown(UINT nFlags, CPoint point);
+        void OnRButtonUp(UINT nFlags, CPoint point);
+        void OnShow();
+        
+        // To handle levels in the mygame_run
         bool isRetry();
         bool isPause();
-        bool getToInit();
-        bool isCongrats();
-        vector<writeText> getText();
+        bool isToInit();
+        
+        vector<writeText> getText(); // To write current current altitude and point
 
-        // Setter
-        void resetPoint();
-        void addPoint();
-        void setPause(bool flag);
-        void setToInit(bool flag);
-        void setRetry(bool flag);
-        void setCongrats(bool flag);
+        void setToInit(bool flag); // To go from level's run state to the init state
+        void setRetry(bool flag); // To refresh the level's run state
 
-        void OnBeginState();
-        void OnMove();
-        void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
-        void OnShow();
+        
+        // Additional main functions
         void loadBackground();
+        
     protected:
-        int point = 0;
-        bool isToInit = false;
-        bool pause = false;
-        bool congrats = false;
-        bool retry = false;
-        game_framework::CMovingBitmap background;
-        game_framework::CMovingBitmap explosion;
-        game_framework::flyObject character;
-        game_framework::menu theMenu;
+        int point = 0;  // Current level's point
+        bool toInit = false;    // Triggers GoToGameState(GAME_STATE_INIT)
+        bool pause = false;     // Pausing the game
+        bool congrats = false;  // If the level is finished
+        bool retry = false;     // Triggers GoToGameState(GAME_STATE_RUN)
+        game_framework::CMovingBitmap background;   // Background image
+        game_framework::CMovingBitmap explosion;    // Explosion image when character crashes
+        game_framework::flyObject character;    // The player
+        game_framework::menu theMenu;   // All in game menu handler
     };
 }

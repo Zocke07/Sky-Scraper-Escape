@@ -22,15 +22,20 @@ void levelInit::OnMove()
     character.movement();
 }
 
+void levelInit::OnInit()
+{
+    
+}
+
 void levelInit::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
     if (nChar == VK_ESCAPE)
     {
         if (this->isPause() == false) {
-            setPause(true);
+            pause = true;
         }
         else {
-            setPause(false);
+            pause = false;
         }
     }
     
@@ -44,35 +49,59 @@ void levelInit::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
         theMenu.OnKeyDown(nChar, nRepCnt, nFlags);
 
         // If the user choose to go to main menu, will go to init
-        isToInit = theMenu.GameOverChoose(nChar, nRepCnt, nFlags);
+        toInit = theMenu.GameOverChoose(nChar, nRepCnt, nFlags);
 
         // If not, will retry level
-        if (isToInit == false  && nChar == VK_RETURN)
+        if (toInit == false  && nChar == VK_RETURN)
         {
             setRetry(true);
         }
     }
 
-    if (isCongrats() == true) // When character reaches target point
+    if (congrats == true) // When character reaches target point
     {
         theMenu.OnKeyDown(nChar, nRepCnt, nFlags);
 
         // If the user choose to go to main menu, will go to init
-        isToInit = theMenu.CongratsChoose(nChar, nRepCnt, nFlags);
+        toInit = theMenu.CongratsChoose(nChar, nRepCnt, nFlags);
 
         // If not, will go to next stage
-        if (isToInit == false)
+        if (toInit == false)
         {
             // Currently no implementation yet
         }
     }
 }
 
-bool levelInit::getToInit()
+void levelInit::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-    return isToInit;
+    
 }
 
+void levelInit::OnLButtonDown(UINT nFlags, CPoint point)
+{
+    
+}
+
+void levelInit::OnLButtonUp(UINT nFlags, CPoint point)
+{
+    
+}
+
+void levelInit::OnMouseMove(UINT nFlags, CPoint point)
+{
+    
+}
+
+void levelInit::OnRButtonDown(UINT nFlags, CPoint point)
+{
+    
+}
+
+void levelInit::OnRButtonUp(UINT nFlags, CPoint point)
+{
+    
+}
 
 void levelInit::OnShow()
 {
@@ -85,15 +114,49 @@ void levelInit::OnShow()
         explosion.ShowBitmap();
     }
     
-    if (isPause() == true && character.isCollide() == false && isCongrats() == false)
+    if (isPause() == true && character.isCollide() == false && congrats == false)
     {
         theMenu.ShowGamePaused();
     }
     
-    if (isCongrats() == true) {
-        setPause(true);
+    if (congrats == true) {
+        pause = true;
         theMenu.ShowCongrats();
     }
+}
+
+
+bool levelInit::isRetry()
+{
+    return retry;
+}
+
+bool levelInit::isPause()
+{
+    return pause;
+}
+
+bool levelInit::isToInit()
+{
+    return toInit;
+}
+
+std::vector<writeText> levelInit::getText()
+{
+    vector<writeText> texts;
+    texts.push_back({"Altitude: " + to_string(670-character.GetTop()-80), {20, 50}, RGB(0, 0, 0), 20});
+    texts.push_back({"Point   : " + to_string(point), {20, 70}, RGB(0, 0, 0), 20});
+    return texts;
+}
+
+void levelInit::setToInit(bool flag)
+{
+    toInit = flag;
+}
+
+void levelInit::setRetry(bool flag)
+{
+    retry = flag;
 }
     
 void levelInit::loadBackground()
@@ -103,63 +166,3 @@ void levelInit::loadBackground()
 
     explosion.LoadBitmapByString({"Resources/Explosion1.bmp"}, RGB(0, 100, 0));
 }
-
-std::vector<writeText> levelInit::getText()
-{
-    vector<writeText> texts;
-    texts.push_back({"Altitude: " + to_string(670-character.GetTop()-80), {20, 50}, RGB(0, 0, 0), 20});
-    texts.push_back({"Point   : " + to_string(getPoint()), {20, 70}, RGB(0, 0, 0), 20});
-    return texts;
-}
-
-int levelInit::getPoint()
-{
-    return point;
-}
-
-bool levelInit::isPause()
-{
-    return pause;
-}
-
-void levelInit::setPause(bool flag)
-{
-    pause = flag;
-}
-
-void levelInit::resetPoint()
-{
-    point = 0;
-}
-
-void levelInit::addPoint()
-{
-    point += 1;
-}
-
-void levelInit::setToInit(bool flag)
-{
-    isToInit = flag;
-}
-
-void levelInit::setRetry(bool flag)
-{
-    retry = flag;
-}
-
-bool levelInit::isRetry()
-{
-    return retry;
-}
-
-bool levelInit::isCongrats()
-{
-    return congrats;
-}
-
-void levelInit::setCongrats(bool flag)
-{
-    congrats = flag;
-}
-
-

@@ -26,24 +26,23 @@ void level1::OnShow()
         cloud[i].ShowBitmap();
     }
     
-    
     for (int i = 0; i < obstacleNum; i++)
     {
         // Temp Overlap Implementation
         if (game_framework::CMovingBitmap::IsOverlap(character, cloud[i]) || game_framework::CMovingBitmap::IsOverlap(character, building[i]))
         {
             character.setCollide(true);
-            setPause(true);
+            pause = true;
         }
 		
         if (building[i].GetLeft() >= (character.GetLeft()-128-pointSpeedDeficit) && building[i].GetLeft() <= (character.GetLeft() - 126+pointSpeedDeficit)) {
-            addPoint();
+            point += 1;
         }
         
         // Congratulations Pop Up
         if (point == obstacleNum)
         {
-            setCongrats(true);
+            congrats = true;
             break;
         }
 

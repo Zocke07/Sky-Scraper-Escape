@@ -34,13 +34,16 @@ void CGameStateRun::OnMove()							// Moving game element
 {
 	if (currentLevel == 1)
 	{
-		theLevel1.OnMove();
+		if (theLevel1.isPause() == false)
+		{
+			theLevel1.OnMove();
+		}
 		if (theLevel1.getToInit() == true)
 		{
 			theLevel1.setToInit(false);
 			GotoGameState(GAME_STATE_INIT);
 		}
-		if (theLevel1.getRetry() == true)
+		if (theLevel1.isRetry() == true)
 		{
 			theLevel1.setRetry(false);
 			GotoGameState(GAME_STATE_RUN);

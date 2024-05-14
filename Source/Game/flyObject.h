@@ -13,9 +13,9 @@ namespace game_framework
         bool isJumping();
         void setCollide(bool flag);
         void setJumping(bool flag);
-        void gravity();
-        void jump();
         void getCurrentJump();
+        void movement();
+        void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
     private:
         bool jumping;
         bool collide;

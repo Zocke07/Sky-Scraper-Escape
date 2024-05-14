@@ -13,6 +13,10 @@ void menu::loadObject()
     tryAgain.LoadBitmapByString({"Resources/TryAgain.bmp"}, RGB(0, 100, 0));
 
     gamePaused.LoadBitmapByString({"Resources/GamePaused.bmp"}, RGB(0, 100, 0));
+
+    selector = 1;
+    selectArrow.LoadBitmapByString({"Resources/SelectionArrow.bmp"}, RGB(0, 100, 0));
+    selectArrow.SetTopLeft(300, 312);
 }
 
 void menu::ShowCongrats()
@@ -23,6 +27,8 @@ void menu::ShowCongrats()
     nextLevel.ShowBitmap();
     mainMenu.SetTopLeft(405, 366);
     mainMenu.ShowBitmap();
+    
+    selectArrow.ShowBitmap();
 }
 
 void menu::ShowGameOver()
@@ -33,10 +39,58 @@ void menu::ShowGameOver()
     tryAgain.ShowBitmap();
     mainMenu.SetTopLeft(407, 360);
     mainMenu.ShowBitmap();
+    
+    selectArrow.ShowBitmap();
 }
 
 void menu::ShowGamePaused()
 {
     gamePaused.SetTopLeft(355, 250);
     gamePaused.ShowBitmap();
+}
+
+void menu::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+    if (nChar == VK_DOWN) // Move arrow down
+    {
+        if (selector < 2)
+        {
+            selector += 1;
+            selectArrow.SetTopLeft(selectArrow.GetLeft(), selectArrow.GetTop() + 66);
+        }
+    }
+    else if (nChar == VK_UP) // Move arrow up
+    {
+        if (selector > 1)
+        {
+            selector -= 1;
+            selectArrow.SetTopLeft(selectArrow.GetLeft(), selectArrow.GetTop() - 66);
+        }
+    }
+}
+
+bool menu::GameOverChoose(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+    if (selectArrow.GetTop() == 312 && nChar == VK_RETURN) // Try again
+    {
+        return false;
+    }
+    if (selectArrow.GetTop() == 378 && nChar == VK_RETURN) // Back to menu
+    {
+        return true;
+    }
+    return false;
+}
+
+bool menu::CongratsChoose(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+    if (selectArrow.GetTop() == 312 && nChar == VK_RETURN) // Go to next stage button
+    {
+        return false;
+    }
+    if (selectArrow.GetTop() == 378 && nChar == VK_RETURN) // Go to main menu button
+    {
+        return true;
+    }
+    return false;
 }

@@ -10,6 +10,9 @@ namespace game_framework
         void ShowCongrats();
         void ShowGameOver();
         void ShowGamePaused();
+        void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
+        bool GameOverChoose(UINT nChar, UINT nRepCnt, UINT nFlags);
+        bool CongratsChoose(UINT nChar, UINT nRepCnt, UINT nFlags);
     private:
         CMovingBitmap congratulations;
         CMovingBitmap nextLevel;
@@ -19,5 +22,10 @@ namespace game_framework
         CMovingBitmap tryAgain;
 
         CMovingBitmap gamePaused;
+
+        CMovingBitmap selectArrow;
+
+        int selector = 1;
+
     };
 }

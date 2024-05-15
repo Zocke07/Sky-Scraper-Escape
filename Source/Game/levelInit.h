@@ -31,17 +31,17 @@ namespace levels
     {
     public:
         // Imitates mygame_run functions
-        void OnBeginState();  
-        void OnMove();
-        void OnInit();
-        void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
-        void OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags);
-        void OnLButtonDown(UINT nFlags, CPoint point);
-        void OnLButtonUp(UINT nFlags, CPoint point);
-        void OnMouseMove(UINT nFlags, CPoint point);
-        void OnRButtonDown(UINT nFlags, CPoint point);
-        void OnRButtonUp(UINT nFlags, CPoint point);
-        void OnShow();
+        virtual void OnBeginState();  
+        virtual void OnMove();
+        virtual void OnInit();
+        virtual void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
+        virtual void OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags);
+        virtual void OnLButtonDown(UINT nFlags, CPoint point);
+        virtual void OnLButtonUp(UINT nFlags, CPoint point);
+        virtual void OnMouseMove(UINT nFlags, CPoint point);
+        virtual void OnRButtonDown(UINT nFlags, CPoint point);
+        virtual void OnRButtonUp(UINT nFlags, CPoint point);
+        virtual void OnShow();
         
         // To handle levels in the mygame_run
         bool isRetry();

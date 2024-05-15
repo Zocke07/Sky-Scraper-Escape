@@ -6,9 +6,9 @@ namespace levels
     class level1 : public levelInit
     {
     public:
-        void OnBeginState();
-        void OnShow();
-        void OnMove();
+        void OnBeginState() override;
+        void OnShow() override;
+        void OnMove() override;
         void loadObject();
         void moveObstacle();
     private:

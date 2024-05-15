@@ -41,7 +41,12 @@
 #pragma once
 #include "flyObject.h"
 #include "level1.h"
-#include "levelInit.h"
+#include "level2.h"
+#include "level3.h"
+#include "level4.h"
+#include "level5.h"
+#include "level6.h"
+#include "level7.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -96,12 +101,21 @@ namespace game_framework {
 		void OnLButtonUp(UINT nFlags, CPoint point) override;	// Handling mouse movements
 		void OnMouseMove(UINT nFlags, CPoint point) override;	// Handling mouse movements 
 		void OnRButtonDown(UINT nFlags, CPoint point) override;  // Handling mouse movements
-		void OnRButtonUp(UINT nFlags, CPoint point) override;	// Handling mouse 
+		void OnRButtonUp(UINT nFlags, CPoint point) override;	// Handling mouse movements
 	protected:
 		void OnMove() override;									// Moving game element
 		void OnShow() override;									// Shows this state of the game's screen
 	private:
 		levels::level1 theLevel1;
+		levels::level2 theLevel2;
+		levels::level3 theLevel3;
+		levels::level4 theLevel4;
+		levels::level5 theLevel5;
+		levels::level6 theLevel6;
+		levels::level7 theLevel7;
+		std::vector<levels::levelInit*> allLevels = {&theLevel1, &theLevel2, &theLevel3, &theLevel4, &theLevel5, &theLevel6, &theLevel7};
+
+		levels::levelInit* current = allLevels[currentLevel - 1];
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

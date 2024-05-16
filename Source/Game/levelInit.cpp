@@ -66,9 +66,9 @@ void levelInit::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
         toInit = theMenu.CongratsChoose(nChar, nRepCnt, nFlags);
 
         // If not, will go to next stage
-        if (toInit == false)
+        if (toInit == false && nChar == VK_RETURN)
         {
-            // Currently no implementation yet
+            setNextLevel(true);
         }
     }
 }
@@ -141,6 +141,12 @@ bool levelInit::isToInit()
     return toInit;
 }
 
+bool levelInit::isNextlevel()
+{
+    return nextLevel;
+}
+
+
 std::vector<writeText> levelInit::getText()
 {
     vector<writeText> texts;
@@ -158,6 +164,12 @@ void levelInit::setRetry(bool flag)
 {
     retry = flag;
 }
+
+void levelInit::setNextLevel(bool flag)
+{
+    nextLevel = flag;
+}
+
     
 void levelInit::loadBackground()
 {

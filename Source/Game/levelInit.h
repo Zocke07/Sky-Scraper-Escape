@@ -47,22 +47,24 @@ namespace levels
         bool isRetry();
         bool isPause();
         bool isToInit();
+        bool isNextlevel();
         
         vector<writeText> getText(); // To write current current altitude and point
 
         void setToInit(bool flag); // To go from level's run state to the init state
         void setRetry(bool flag); // To refresh the level's run state
-
+        void setNextLevel(bool flag);
         
         // Additional main functions
         void loadBackground();
         
     protected:
         int point = 0;  // Current level's point
-        bool toInit = false;    // Triggers GoToGameState(GAME_STATE_INIT)
         bool pause = false;     // Pausing the game
         bool congrats = false;  // If the level is finished
-        bool retry = false;     // Triggers GoToGameState(GAME_STATE_RUN)
+        bool toInit = false;    // Triggers GoToGameState(GAME_STATE_INIT)
+        bool retry = false;     // Triggers GoToGameState(GAME_STATE_RUN) in the same level
+        bool nextLevel = false; // Triggers GoToGameState(GAME_STATE_RUN) to the next level
         game_framework::CMovingBitmap background;   // Background image
         game_framework::CMovingBitmap explosion;    // Explosion image when character crashes
         game_framework::flyObject character;    // The player

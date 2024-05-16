@@ -27,7 +27,8 @@ CGameStateRun::~CGameStateRun()
 
 void CGameStateRun::OnBeginState()
 {
-	theLevel1.OnBeginState();
+	current = allLevels[currentLevel - 1];
+	current->OnBeginState();
 }
 
 void CGameStateRun::OnMove()							// Moving game element
@@ -44,6 +45,12 @@ void CGameStateRun::OnMove()							// Moving game element
 	if (current->isRetry() == true)
 	{
 		current->setRetry(false);
+		GotoGameState(GAME_STATE_RUN);
+	}
+	if (current->isNextlevel() == true)
+	{
+		current->setNextLevel(false);
+		currentLevel += 1;
 		GotoGameState(GAME_STATE_RUN);
 	}
 }

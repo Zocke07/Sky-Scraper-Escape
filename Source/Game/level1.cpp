@@ -57,7 +57,7 @@ void level1::OnShow()
 void level1::OnMove()
 {
     levelInit::OnMove();
-
+    
     moveObstacle();
 }
 

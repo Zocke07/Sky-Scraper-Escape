@@ -29,6 +29,8 @@ void CGameStateRun::OnBeginState()
 {
 	current = allLevels[currentLevel - 1];
 	current->OnBeginState();
+
+	CAudio::Instance()->Play(1, true);
 }
 
 void CGameStateRun::OnMove()							// Moving game element
@@ -40,6 +42,8 @@ void CGameStateRun::OnMove()							// Moving game element
 	if (current->isToInit() == true)
 	{
 		currentLevel = 1;	// Reset player current level when going back to main menu
+		CAudio::Instance()->Stop(1);
+		
 		current->setToInit(false);
 		GotoGameState(GAME_STATE_INIT);
 	}
@@ -58,6 +62,8 @@ void CGameStateRun::OnMove()							// Moving game element
 
 void CGameStateRun::OnInit()  								// Game initial values and graphics settings
 {
+	CAudio::Instance()->Load(0, "Resources/JumpSound.wav");
+	CAudio::Instance()->Load(1, "Resources/GameMusic.wav");
 	current->OnInit();
 }
 

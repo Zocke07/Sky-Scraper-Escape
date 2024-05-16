@@ -1,6 +1,6 @@
 ﻿#pragma once
+#include "../Library/audio.h"
 #include "../Library/gameutil.h"
-
 namespace game_framework
 {
     class flyObject : public CMovingBitmap

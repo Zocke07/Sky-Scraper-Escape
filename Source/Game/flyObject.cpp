@@ -52,6 +52,7 @@ void flyObject::movement()
 
     // Jumping Mechanism
     if (this->isJumping() == true){
+        
         if (this->GetTop() > maxJumpHeight && this->GetTop() > currentJump)
         {
             this->SetTopLeft(this->GetLeft(), this->GetTop() - gravityConst);
@@ -68,6 +69,8 @@ void flyObject::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
     if (nChar == VK_SPACE)
     {
+        CAudio::Instance()->Play(0, false);
+        
         this->getCurrentJump();
         this->setJumping(true);
     }

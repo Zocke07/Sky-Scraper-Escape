@@ -39,7 +39,7 @@ void levelInit::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
         }
     }
     
-    if (character.isCollide() == false)
+    if (character.isCollide() == false && congrats == false)
     {
         character.OnKeyDown(nChar, nRepCnt, nFlags);
     }
@@ -145,7 +145,6 @@ bool levelInit::isNextlevel()
 {
     return nextLevel;
 }
-
 
 std::vector<writeText> levelInit::getText()
 {

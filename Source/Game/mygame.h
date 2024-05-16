@@ -115,7 +115,7 @@ namespace game_framework {
 		levels::level7 theLevel7;
 		std::vector<levels::levelInit*> allLevels = {&theLevel1, &theLevel2, &theLevel3, &theLevel4, &theLevel5, &theLevel6, &theLevel7};
 
-		levels::levelInit* current = allLevels[0];
+		levels::levelInit* current = allLevels[currentLevel - 1];
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

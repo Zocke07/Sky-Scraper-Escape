@@ -39,6 +39,7 @@ void CGameStateRun::OnMove()							// Moving game element
 	}
 	if (current->isToInit() == true)
 	{
+		currentLevel = 1;	// Reset player current level when going back to main menu
 		current->setToInit(false);
 		GotoGameState(GAME_STATE_INIT);
 	}

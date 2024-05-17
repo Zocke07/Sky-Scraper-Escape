@@ -59,6 +59,13 @@ namespace levels
         void loadBackground();
         
     protected:
+		int xMax = 1193;
+		int yMax = 652;
+		int obstacleXDimension = 103;
+		int obstacleYDimension = 667;
+		int obstacleMovementConst = 3;
+		int obstacleSpeed = 0;
+		int time = 0;
         int point = 0;  // Current level's point
         bool pause = false;     // Pausing the game
         bool congrats = false;  // If the level is finished

@@ -127,9 +127,11 @@ namespace game_framework {
 	class CGameStateOver : public CGameState {
 	public:
 		CGameStateOver(CGame *g);
+
 		void OnBeginState() override;							// Set variables required for each replay
 		void OnInit() override;
 	protected:
+
 		void OnMove() override;									// Moving game element
 		void OnShow() override;									// Shows this state of the game's screen
 	private:

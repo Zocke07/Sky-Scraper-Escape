@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "../Library/audio.h"
 #include "../Library/gameutil.h"
-namespace game_framework
+namespace game_framework\
 {
     class flyObject : public CMovingBitmap
     {
@@ -19,7 +19,7 @@ namespace game_framework
     private:
         bool jumping;
         bool collide;
-        int currentJump = 0;
+        int currentJump;
         int gravityConst = 4;
         int maxJumpHeight = 0;
         int jumpConst = 50;

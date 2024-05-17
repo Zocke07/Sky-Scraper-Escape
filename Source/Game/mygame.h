@@ -116,6 +116,7 @@ namespace game_framework {
 		std::vector<levels::levelInit*> allLevels = {&theLevel1, &theLevel2, &theLevel3, &theLevel4, &theLevel5, &theLevel6, &theLevel7};
 
 		levels::levelInit* current = allLevels[currentLevel - 1];
+		bool musicPlayed = false;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "levelInit.h"
+#include "obstacle.h"
 
 namespace levels
 {
@@ -23,8 +24,8 @@ namespace levels
         int counter = 0;
         int obstacleNum = 1;
         int time = 0;
-        vector<game_framework::CMovingBitmap> building = vector<game_framework::CMovingBitmap>(obstacleNum);
-        vector<game_framework::CMovingBitmap> cloud = vector<game_framework::CMovingBitmap>(obstacleNum);
+        vector<game_framework::obstacle> building = vector<game_framework::obstacle>(obstacleNum);
+        vector<game_framework::obstacle> cloud = vector<game_framework::obstacle>(obstacleNum);
     };
 }
 

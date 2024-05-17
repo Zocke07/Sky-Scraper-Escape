@@ -30,7 +30,11 @@ void CGameStateRun::OnBeginState()
 	current = allLevels[currentLevel - 1];
 	current->OnBeginState();
 
-	CAudio::Instance()->Play(1, true);
+	if (musicPlayed == false)
+	{
+		CAudio::Instance()->Play(1, true);
+		musicPlayed = true;
+	}
 }
 
 void CGameStateRun::OnMove()							// Moving game element
@@ -43,6 +47,7 @@ void CGameStateRun::OnMove()							// Moving game element
 	{
 		currentLevel = 1;	// Reset player current level when going back to main menu
 		CAudio::Instance()->Stop(1);
+		musicPlayed = false;
 		
 		current->setToInit(false);
 		GotoGameState(GAME_STATE_INIT);

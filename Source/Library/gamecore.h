@@ -155,6 +155,7 @@ namespace game_framework {
 		virtual void OnShow() = 0;								// Shows this state's game screen
 		CGame *game;
 		CMovingBitmap loadingBitmap;
+		int currentLevel = 1;											// Shows current game's level
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

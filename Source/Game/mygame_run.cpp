@@ -3,6 +3,7 @@
 #include <mmsystem.h>
 #include <ddraw.h>
 #include <experimental/filesystem>
+#include <string>
 
 #include "config.h"
 #include "../Library/audio.h"
@@ -26,271 +27,96 @@ CGameStateRun::~CGameStateRun()
 
 void CGameStateRun::OnBeginState()
 {
-	point = 0;
-	pointSpeedDeficit = 0;
-	obstacleSpeed = 0;
-	obstacleDistance = 1193;
-	pathDifference = 0;
-	isPause = false;
-	congrats = false;
-	selector = 1;
-	counter = 1;
-	time = 0;
-	character.init();
-	load_background();
-	load_object();
-	character.load();
+	current = allLevels[currentLevel - 1];
+	current->OnBeginState();
+
+	if (musicPlayed == false)
+	{
+		CAudio::Instance()->Play(1, true);
+		musicPlayed = true;
+	}
 }
 
 void CGameStateRun::OnMove()							// Moving game element
 {
-	if (isPause == false)
+	if (current->isPause() == false)
 	{
-
-		character.gravity();
-		character.jump();
-		moveObstacle();
+		current->OnMove();
+	}
+	if (current->isToInit() == true)
+	{
+		currentLevel = 1;	// Reset player current level when going back to main menu
+		CAudio::Instance()->Stop(1);
+		musicPlayed = false;
+		
+		current->setToInit(false);
+		GotoGameState(GAME_STATE_INIT);
+	}
+	if (current->isRetry() == true)
+	{
+		current->setRetry(false);
+		GotoGameState(GAME_STATE_RUN);
+	}
+	if (current->isNextlevel() == true)
+	{
+		current->setNextLevel(false);
+		currentLevel += 1;
+		GotoGameState(GAME_STATE_RUN);
 	}
 }
 
 void CGameStateRun::OnInit()  								// Game initial values and graphics settings
 {
+	CAudio::Instance()->Load(0, "Resources/JumpSound.wav");
+	CAudio::Instance()->Load(1, "Resources/GameMusic.wav");
+	current->OnInit();
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-
-	if (character.isCollide() == false)
-	{
-		if (nChar == VK_SPACE)
-		{
-
-			character.getCurrentJump();
-			character.setJumping(true);
-		}
-	}
-
-	else if (character.isCollide() == true) // When plane crashes
-	{
-		if (nChar == VK_DOWN) // Move arrow down
-		{
-			if (selector < 2)
-			{
-				selector += 1;
-				selectArrow.SetTopLeft(selectArrow.GetLeft(), selectArrow.GetTop() + 40);
-			}
-		}
-		else if (nChar == VK_UP) // Move arrow up
-		{
-			if (selector > 1) {
-				selector -= 1;
-				selectArrow.SetTopLeft(selectArrow.GetLeft(), selectArrow.GetTop() - 40);
-			}
-		}
-		
-		if (selectArrow.GetTop() == 360 && nChar == VK_RETURN) // Try again
-		{
-			selectArrow.SetTopLeft(390, 360);
-			GotoGameState(GAME_STATE_RUN);
-		}
-		
-		else if (selectArrow.GetTop() == 400 && nChar == VK_RETURN) // Back to menu
-		{
-			selectArrow.SetTopLeft(390, 360);
-			GotoGameState(GAME_STATE_INIT);
-		}
-	}
-	if (congrats == true) // When plane reaches target point
-	{
-		if (nChar == VK_DOWN) // Move arrow down
-		{
-			if (selector < 2)
-			{
-				selector += 1;
-				selectArrow.SetTopLeft(selectArrow.GetLeft(), selectArrow.GetTop() + 40);
-			}
-		}
-		else if (nChar == VK_UP) // Move arrow up
-		{
-			if (selector > 1) {
-				selector -= 1;
-				selectArrow.SetTopLeft(selectArrow.GetLeft(), selectArrow.GetTop() - 40);
-			}
-		}
-		if (selectArrow.GetTop() == 360 && nChar == VK_RETURN) // Go to next stage button
-		{
-			/*
-			selectArrow.SetTopLeft(390, 360);
-			GotoGameState(GAME_STATE_RUN);
-			*/
-		}
-		
-		else if (selectArrow.GetTop() == 400 && nChar == VK_RETURN) // Go to main menu button
-		{
-			selectArrow.SetTopLeft(390, 360);
-			GotoGameState(GAME_STATE_INIT);
-		}
-	}
-	
-	if (nChar == VK_ESCAPE)
-	{
-		if (isPause == false) {
-			isPause = true;
-		}
-		else {
-			isPause = false;
-		}
-	}
-
+	current->OnKeyDown(nChar, nRepCnt, nFlags);
 }
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
+	current->OnKeyUp(nChar, nRepCnt, nFlags);
 }
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // Handling mouse movements
 {
+	current->OnLButtonDown(nFlags, point);
 }
 
 void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// Handling mouse movements
 {
+	current->OnLButtonUp(nFlags, point);
 }
 
 void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// Handling mouse movements
 {
+	current->OnMouseMove(nFlags, point);
 }
 
 void CGameStateRun::OnRButtonDown(UINT nFlags, CPoint point)  // Handling mouse movements
 {
+	current->OnRButtonDown(nFlags, point);
 }
 
 void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// Handling mouse movements
 {
+	current->OnRButtonUp(nFlags, point);
 }
 
 void CGameStateRun::OnShow()
 {
-	background.ShowBitmap();
-
-	character.ShowBitmap();
-
-	for (int i = 0; i < obstacleNum; i++)
-	{
-		building[i].ShowBitmap();
-		cloud[i].ShowBitmap();
-	}
-
-
-	drawText("Altitude:" + std::to_string(670-character.GetTop()-80), 20, 50, 20, {0, 0, 0});
-	drawText("Point:" + std::to_string(point), 20, 70, 20, {0, 0, 0});
-
-	// Temp Overlap Implementation
-	for (int i = 0; i < obstacleNum; i++)
-	{
-
-		if (CMovingBitmap::IsOverlap(character, cloud[i]) || CMovingBitmap::IsOverlap(character, building[i]))
-		{
-
-			explosion.SetTopLeft(character.GetLeft() + 60, character.GetTop());
-			explosion.ShowBitmap();
-			// GotoGameState(GAME_STATE_OVER);
-
-			character.setCollide(true);
-			isPause = true;
-		}
-		
-		if (building[i].GetLeft() >= (character.GetLeft()-128-pointSpeedDeficit) && building[i].GetLeft() <= (character.GetLeft() - 126+pointSpeedDeficit)) {
-			point += 1;
-		}
-
-		// Game Over Menu
-
-		if (character.isCollide() == true)
-		{
-			drawText("GAME OVER", 490, 320, 32, {255, 255, 255});
-			drawText("Try again", 540, 360, 24, {255, 255, 255});
-			drawText("Back to Main Menu", 490, 400, 24, {255, 255, 255});
-			selectArrow.ShowBitmap();
-		}
-
-		// Congratulations Pop Up
-		if (point == obstacleNum)
-		{
-			congrats = true;
-
-			break;
-		}
-	}
-	if (congrats == true) {
-		isPause = true;
-		drawText("Congratulations", 490, 320, 32, { 255, 255, 255 });
-		drawText("Next stage", 540, 360, 24, { 255, 255, 255 });
-		drawText("Back to Main Menu", 490, 400, 24, { 255, 255, 255 });
-		selectArrow.ShowBitmap();
-	}
-}
-
-void CGameStateRun::load_background()
-{
-	background.LoadBitmap("Resources/Background.bmp");
-	background.SetTopLeft(0, 0);
-}
-
-void CGameStateRun::load_object()
-{
-
-	explosion.LoadBitmapByString({"Resources/Explosion1.bmp"}, RGB(0, 100, 0));
-
-	selectArrow.LoadBitmapByString({"Resources/SelectionArrow.bmp"}, RGB(0, 100, 0));
-	selectArrow.SetTopLeft(390, 360);
-	
-	for (int i = 0; i < obstacleNum; i++)
-	{
-		pathLocation = (std::rand() % 20 + 5) * 20;
-		pathHeight = (std::rand() % 4 + 8) * 20;
-		pathDifference = abs(pathDifference - pathLocation);
-
-		if (i > 0) {
-			obstacleDistance += (pathDifference-pathHeight/10);
-		}
-		building[i].LoadBitmapByString({"Resources/Building1.bmp"}, RGB(0, 100, 0));
-		building[i].SetTopLeft(obstacleDistance, 652 - pathLocation + pathHeight/2);
-
-		cloud[i].LoadBitmapByString({"Resources/Cloud1.bmp"}, RGB(0, 100, 0));
-		cloud[i].SetTopLeft(obstacleDistance, 0 - pathLocation - pathHeight/2);
-
-		pathDifference = pathLocation;
-	}
-}
-
-void CGameStateRun::moveObstacle()
-{
-	time += 1;
-	if (time % 90 == 0 && counter < obstacleNum)
-	{
-		counter += 1;
-	}
-	if (time % 180 == 0)
-	{
-		obstacleSpeed += accelerationConst;
-	}
-	if (time % 330 == 0)
-	{
-		pointSpeedDeficit += accelerationConst;
-	}
-	for (int i = 0; i < counter; i++)
-	{
-
-		cloud[i].SetTopLeft(cloud[i].GetLeft() - obstacleMovementConst - obstacleSpeed, cloud[i].GetTop());
-		building[i].SetTopLeft(building[i].GetLeft() - obstacleMovementConst - obstacleSpeed, building[i].GetTop());
-	}
-}
-
-void CGameStateRun::drawText(string text, int x, int y, int size, vector<int> rgbValue) {
-
+	current->OnShow();
+	vector<levels::writeText> texts = current->getText();
 	CDC* pDC = CDDraw::GetBackCDC();
-
-	CTextDraw::ChangeFontLog(pDC, size, "·L³n¥¿¶ÂÅé", RGB(rgbValue[0], rgbValue[1], rgbValue[2]));
-	CTextDraw::Print(pDC, x, y, text);
+	for(levels::writeText t: texts)
+	{
+		CTextDraw::ChangeFontLog(pDC, t.size, "Courier New", t.color,620);
+		CTextDraw::Print(pDC, (int)t.position.x, (int)t.position.y, t.text);
+	}
+	CTextDraw::Print(pDC, 20, 90, "Level   : " + to_string(currentLevel));
 	CDDraw::ReleaseBackCDC();
 }

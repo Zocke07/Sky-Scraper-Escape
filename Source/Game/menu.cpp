@@ -14,9 +14,7 @@ void menu::loadObject()
 
     gamePaused.LoadBitmapByString({"Resources/GamePaused.bmp"}, RGB(0, 100, 0));
 
-    selector = 1;
     selectArrow.LoadBitmapByString({"Resources/SelectionArrow.bmp"}, RGB(0, 100, 0));
-    selectArrow.SetTopLeft(300, 312);
 }
 
 void menu::ShowCongrats()
@@ -28,7 +26,7 @@ void menu::ShowCongrats()
     mainMenu.SetTopLeft(405, 366);
     mainMenu.ShowBitmap();
     
-    selectArrow.ShowBitmap();
+    ShowMenuSelectArrow();
 }
 
 void menu::ShowGameOver()
@@ -40,7 +38,7 @@ void menu::ShowGameOver()
     mainMenu.SetTopLeft(407, 360);
     mainMenu.ShowBitmap();
     
-    selectArrow.ShowBitmap();
+    ShowMenuSelectArrow();
 }
 
 void menu::ShowGamePaused()
@@ -49,22 +47,43 @@ void menu::ShowGamePaused()
     gamePaused.ShowBitmap();
 }
 
+void menu::ShowMenuSelectArrow()
+{
+    /*
+     Arrow position:
+     original (x, y) = (300, 312)
+     When moving down, y + 66
+     When moving up, y - 66
+    */
+    
+    if (menuSelector == 1)
+    {
+        selectArrow.SetTopLeft(300, 312);
+        selectArrow.ShowBitmap();
+    }
+    else if (menuSelector == 2)
+    {
+        selectArrow.SetTopLeft(300, 378);
+        selectArrow.ShowBitmap();
+    }
+    
+}
+
+
 void menu::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
     if (nChar == VK_DOWN) // Move arrow down
     {
-        if (selector < 2)
+        if (menuSelector < 2)
         {
-            selector += 1;
-            selectArrow.SetTopLeft(selectArrow.GetLeft(), selectArrow.GetTop() + 66);
+            menuSelector += 1;
         }
     }
     else if (nChar == VK_UP) // Move arrow up
     {
-        if (selector > 1)
+        if (menuSelector > 1)
         {
-            selector -= 1;
-            selectArrow.SetTopLeft(selectArrow.GetLeft(), selectArrow.GetTop() - 66);
+            menuSelector -= 1;
         }
     }
 }
@@ -73,10 +92,12 @@ bool menu::GameOverChoose(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
     if (selectArrow.GetTop() == 312 && nChar == VK_RETURN) // Try again
     {
+        menuSelector = 1;   // Reset arrow position
         return false;
     }
     if (selectArrow.GetTop() == 378 && nChar == VK_RETURN) // Back to menu
     {
+        menuSelector = 1;   // Reset arrow position
         return true;
     }
     return false;
@@ -86,10 +107,12 @@ bool menu::CongratsChoose(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
     if (selectArrow.GetTop() == 312 && nChar == VK_RETURN) // Go to next stage button
     {
+        menuSelector = 1;   // Reset arrow position
         return false;
     }
     if (selectArrow.GetTop() == 378 && nChar == VK_RETURN) // Go to main menu button
     {
+        menuSelector = 1;   // Reset arrow position
         return true;
     }
     return false;

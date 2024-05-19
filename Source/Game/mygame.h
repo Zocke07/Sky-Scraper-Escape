@@ -71,17 +71,14 @@ namespace game_framework {
 		void OnBeginState() override;							// Set variables required for each replay
 		void OnKeyUp(UINT, UINT, UINT) override; 				// Handle keyboard Up action
 		void OnLButtonDown(UINT nFlags, CPoint point) override;  // Handling mouse movements
-		void load_background();
-		void load_icons();
-		void draw_text();
 	protected:
 		void OnShow() override;									// Shows this state of the game's screen
 	private:
-		int selector = 1;
 		CMovingBitmap logo;								// The logo of csie
 		CMovingBitmap background;
-		CMovingBitmap title;
-		CMovingBitmap selectArrow;
+		menu theMenu;
+		bool toRun = false;
+		bool MainMenu = true;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

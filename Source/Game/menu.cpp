@@ -5,6 +5,12 @@ using namespace game_framework;
 
 void menu::loadObject()
 {
+    title.LoadBitmapByString({"Resources/Title.bmp"}, RGB(0, 100, 0));
+    playGame.LoadBitmapByString({"Resources/PlayGame.bmp"}, RGB(0, 100, 0));
+    selectLevel.LoadBitmapByString({"Resources/SelectLevel.bmp"}, RGB(0, 100, 0));
+
+    levelSelections.LoadBitmapByString({"Resources/ChooseLevels.bmp"}, RGB(0, 100, 0));
+    
     congratulations.LoadBitmapByString({"Resources/Congrats.bmp"}, RGB(0, 100, 0));
     nextLevel.LoadBitmapByString({"Resources/NextLevel.bmp"}, RGB(0, 100, 0));
     mainMenu.LoadBitmapByString({"Resources/MainMenu.bmp"}, RGB(0, 100, 0));
@@ -47,6 +53,25 @@ void menu::ShowGamePaused()
     gamePaused.ShowBitmap();
 }
 
+void menu::ShowMainMenu()
+{
+    title.SetTopLeft(340, 190);
+    title.ShowBitmap();
+    playGame.SetTopLeft(411, 300);
+    playGame.ShowBitmap();
+    selectLevel.SetTopLeft(411, 361);
+    selectLevel.ShowBitmap();
+
+    ShowMenuSelectArrow();
+}
+
+void menu::ShowSelectLevels()
+{
+    levelSelections.SetTopLeft(340, 300);
+    levelSelections.ShowBitmap();
+}
+
+
 void menu::ShowMenuSelectArrow()
 {
     /*
@@ -66,8 +91,13 @@ void menu::ShowMenuSelectArrow()
         selectArrow.SetTopLeft(300, 378);
         selectArrow.ShowBitmap();
     }
-    
 }
+
+bool menu::LevelChoose(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+    return true;
+}
+
 
 
 void menu::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -87,6 +117,22 @@ void menu::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
         }
     }
 }
+
+bool menu::MainMenuChoose(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+    if (selectArrow.GetTop() == 312 && nChar == VK_SPACE) // Play Game
+    {
+        menuSelector = 1;   // Reset arrow position
+        return true;
+    }
+    if (selectArrow.GetTop() == 378 && nChar == VK_SPACE) // Select Level
+    {
+        menuSelector = 1;   // Reset arrow position
+        return false;
+    }
+    return false;
+}
+
 
 bool menu::GameOverChoose(UINT nChar, UINT nRepCnt, UINT nFlags)
 {

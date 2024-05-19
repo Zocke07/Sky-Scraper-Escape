@@ -25,8 +25,9 @@ void CGameStateInit::OnInit()
 	ShowInitProgress(0, "Start Initialize...");	// The initial loading progress is 0%
 	//
 	// Start loading data
-	load_background();
-	load_icons();
+	background.LoadBitmapByString({"Resources/background.bmp"});
+	background.SetTopLeft(0, 0);
+	theMenu.loadObject();
 	//
 	Sleep(1000);				// Slow down to see the progress clearly. Please delete this Sleep for the actual game
 	//
@@ -40,28 +41,23 @@ void CGameStateInit::OnBeginState()
 
 void CGameStateInit::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	if (nChar == VK_DOWN)
+	if (MainMenu == true)
 	{
-		if (selector < 2)
+		theMenu.OnKeyDown(nChar, nRepCnt, nFlags);
+
+		// If the user choose to Play Game, will go to state run
+		toRun = theMenu.MainMenuChoose(nChar, nRepCnt, nFlags);
+
+		if (toRun == true)
 		{
-			selector += 1;
-			selectArrow.SetTopLeft(selectArrow.GetLeft(), selectArrow.GetTop() + 40);
+			currentLevel = 1;
+			GotoGameState(GAME_STATE_RUN);
 		}
-	}
-	else if (nChar == VK_UP) {
-		if (selector > 1) {
-			selector -= 1;
-			selectArrow.SetTopLeft(selectArrow.GetLeft(), selectArrow.GetTop() - 40);
+		// If not, will choose level
+		else if (toRun == false && nChar == VK_SPACE)
+		{
+			MainMenu = false;
 		}
-	}
-	// For now, only play button works
-	if (selectArrow.GetTop() == 450 && nChar == VK_SPACE) // Play Button
-	{
-		GotoGameState(GAME_STATE_RUN);
-	}
-	else if (selectArrow.GetTop() == 450 && nChar == VK_SPACE) // Select Level Button
-	{
-		
 	}
 }
 
@@ -73,34 +69,13 @@ void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 void CGameStateInit::OnShow()
 {
 	background.ShowBitmap();
-	title.ShowBitmap();
-	draw_text();
-	selectArrow.ShowBitmap();
-}
-
-void CGameStateInit::load_background()
-{
-	background.LoadBitmapByString({"Resources/background.bmp"});
-	background.SetTopLeft(0, 0);
-}
-
-void CGameStateInit::load_icons()
-{
-	title.LoadBitmapByString({"Resources/Title.bmp"}, RGB(0, 100, 0));
-	title.SetTopLeft(356, 200);
-	selectArrow.LoadBitmapByString({"Resources/SelectionArrow.bmp"}, RGB(0, 100, 0));
-	selectArrow.SetTopLeft(400, 450);
-}
-
-void CGameStateInit::draw_text()
-{
-	CDC *pDC = CDDraw::GetBackCDC();
-
-	CTextDraw::ChangeFontLog(pDC, 24, "Arial", RGB(255, 255, 255));
-	CTextDraw::Print(pDC, 340, 400, "Use arrow up, arrow down, and space to select");
-	CTextDraw::ChangeFontLog(pDC, 36, "Arial", RGB(255, 255, 255));
-	CTextDraw::Print(pDC, 500, 448, "Play");
-	CTextDraw::Print(pDC, 500, 488, "Select Level");
-
-	CDDraw::ReleaseBackCDC();
+	
+	if (MainMenu == true)
+	{
+		theMenu.ShowMainMenu();
+	}
+	else
+	{
+		theMenu.ShowSelectLevels();
+	}
 }

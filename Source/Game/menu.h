@@ -10,10 +10,16 @@ namespace game_framework
         void ShowCongrats();
         void ShowGameOver();
         void ShowGamePaused();
+        void ShowMainMenu();
+        void ShowSelectLevels();
         void ShowMenuSelectArrow();
+        void ShowLevelSelectArrow();
+        
         void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
+        bool MainMenuChoose(UINT nChar, UINT nRepCnt, UINT nFlags);
         bool GameOverChoose(UINT nChar, UINT nRepCnt, UINT nFlags);
         bool CongratsChoose(UINT nChar, UINT nRepCnt, UINT nFlags);
+        bool LevelChoose(UINT nChar, UINT nRepCnt, UINT nFlags);
     private:
         // Congratulations pop up
         CMovingBitmap congratulations;
@@ -27,15 +33,22 @@ namespace game_framework
 
         // Init menu
         CMovingBitmap title;
+        CMovingBitmap playGame;
+        CMovingBitmap selectLevel;
+
+        // Level Selection
+        CMovingBitmap levelSelections;
         
         // Game paused pop up
         CMovingBitmap gamePaused;
 
         // The selector for each pop up
         CMovingBitmap selectArrow;
+        CMovingBitmap selectLevelArrow;
 
         // To indicate the select arrow state
         int menuSelector = 1;
+        int levelSelector = 1;
 
     };
 }

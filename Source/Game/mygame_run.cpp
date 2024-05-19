@@ -2,6 +2,7 @@
 #include "../Core/Resource.h"
 #include <mmsystem.h>
 #include <ddraw.h>
+#include <iostream>
 #include <experimental/filesystem>
 #include <string>
 

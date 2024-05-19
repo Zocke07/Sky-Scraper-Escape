@@ -2,6 +2,8 @@
 #include "../Core/Resource.h"
 #include <mmsystem.h>
 #include <ddraw.h>
+#include <iostream>
+
 #include "../Library/audio.h"
 #include "../Library/gameutil.h"
 #include "../Library/gamecore.h"
@@ -43,13 +45,14 @@ void CGameStateInit::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	if (MainMenu == true)
 	{
-		theMenu.OnKeyDown(nChar, nRepCnt, nFlags);
+		theMenu.OnKeyDownVertical(nChar, nRepCnt, nFlags);
 
 		// If the user choose to Play Game, will go to state run
 		toRun = theMenu.MainMenuChoose(nChar, nRepCnt, nFlags);
 
 		if (toRun == true)
 		{
+			toRun = false;
 			currentLevel = 1;
 			GotoGameState(GAME_STATE_RUN);
 		}
@@ -57,6 +60,23 @@ void CGameStateInit::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 		else if (toRun == false && nChar == VK_SPACE)
 		{
 			MainMenu = false;
+		}
+	}
+	else
+	{
+		theMenu.OnKeyDownHorizontal(nChar, nRepCnt, nFlags);
+
+		currentLevel = theMenu.LevelChoose(nChar, nRepCnt, nFlags);
+
+		if (currentLevel == 0 && nChar == VK_SPACE)
+		{
+			currentLevel = 1; // Reset level
+			MainMenu = true; // Go to main menu
+		}
+		else if (currentLevel > 0 && currentLevel < 8 && nChar == VK_SPACE)
+		{
+			GotoGameState(GAME_STATE_RUN);
+			MainMenu = true;
 		}
 	}
 }

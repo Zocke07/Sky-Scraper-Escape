@@ -10,6 +10,7 @@ void menu::loadObject()
     selectLevel.LoadBitmapByString({"Resources/SelectLevel.bmp"}, RGB(0, 100, 0));
 
     levelSelections.LoadBitmapByString({"Resources/ChooseLevels.bmp"}, RGB(0, 100, 0));
+    back.LoadBitmapByString({"Resources/Back.bmp"}, RGB(0, 100, 0));
     
     congratulations.LoadBitmapByString({"Resources/Congrats.bmp"}, RGB(0, 100, 0));
     nextLevel.LoadBitmapByString({"Resources/NextLevel.bmp"}, RGB(0, 100, 0));
@@ -21,6 +22,7 @@ void menu::loadObject()
     gamePaused.LoadBitmapByString({"Resources/GamePaused.bmp"}, RGB(0, 100, 0));
 
     selectArrow.LoadBitmapByString({"Resources/SelectionArrow.bmp"}, RGB(0, 100, 0));
+    selectLevelArrow.LoadBitmapByString({"Resources/LevelArrow.bmp"}, RGB(0, 100, 0));
 }
 
 void menu::ShowCongrats()
@@ -69,6 +71,10 @@ void menu::ShowSelectLevels()
 {
     levelSelections.SetTopLeft(340, 300);
     levelSelections.ShowBitmap();
+    back.SetTopLeft(150, 300);
+    back.ShowBitmap();
+
+    ShowLevelSelectArrow();
 }
 
 
@@ -93,14 +99,51 @@ void menu::ShowMenuSelectArrow()
     }
 }
 
-bool menu::LevelChoose(UINT nChar, UINT nRepCnt, UINT nFlags)
+void menu::ShowLevelSelectArrow()
 {
-    return true;
+    if (levelSelector == 0)
+    {
+        selectLevelArrow.SetTopLeft(210, 200);
+        selectLevelArrow.ShowBitmap();
+    }
+    else if (levelSelector == 1)
+    {
+        selectLevelArrow.SetTopLeft(360, 200);
+        selectLevelArrow.ShowBitmap();
+    }
+    else if (levelSelector == 2)
+    {
+        selectLevelArrow.SetTopLeft(473, 200);
+        selectLevelArrow.ShowBitmap();
+    }
+    else if (levelSelector == 3)
+    {
+        selectLevelArrow.SetTopLeft(588, 200);
+        selectLevelArrow.ShowBitmap();
+    }
+    else if (levelSelector == 4)
+    {
+        selectLevelArrow.SetTopLeft(703, 200);
+        selectLevelArrow.ShowBitmap();
+    }
+    else if (levelSelector == 5)
+    {
+        selectLevelArrow.SetTopLeft(818, 200);
+        selectLevelArrow.ShowBitmap();
+    }
+    else if (levelSelector == 6)
+    {
+        selectLevelArrow.SetTopLeft(933, 200);
+        selectLevelArrow.ShowBitmap();
+    }
+    else if (levelSelector == 7)
+    {
+        selectLevelArrow.SetTopLeft(1048, 200);
+        selectLevelArrow.ShowBitmap();
+    }
 }
 
-
-
-void menu::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+void menu::OnKeyDownVertical(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
     if (nChar == VK_DOWN) // Move arrow down
     {
@@ -114,6 +157,24 @@ void menu::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
         if (menuSelector > 1)
         {
             menuSelector -= 1;
+        }
+    }
+}
+
+void menu::OnKeyDownHorizontal(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+    if (nChar == VK_RIGHT)
+    {
+        if (levelSelector < 7)
+        {
+            levelSelector += 1;
+        }
+    }
+    else if (nChar == VK_LEFT)
+    {
+        if (levelSelector > 0)
+        {
+            levelSelector -= 1;
         }
     }
 }
@@ -132,7 +193,6 @@ bool menu::MainMenuChoose(UINT nChar, UINT nRepCnt, UINT nFlags)
     }
     return false;
 }
-
 
 bool menu::GameOverChoose(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
@@ -162,4 +222,49 @@ bool menu::CongratsChoose(UINT nChar, UINT nRepCnt, UINT nFlags)
         return true;
     }
     return false;
+}
+
+int menu::LevelChoose(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+    if (selectLevelArrow.GetLeft() == 210 && nChar == VK_SPACE)
+    {
+        levelSelector = 0;   // Reset arrow position
+        return 0;
+    }
+    if (selectLevelArrow.GetLeft() == 360 && nChar == VK_SPACE)
+    {
+        levelSelector = 0;   // Reset arrow position
+        return 1;
+    }
+    if (selectLevelArrow.GetLeft() == 473 && nChar == VK_SPACE)
+    {
+        levelSelector = 0;   // Reset arrow position
+        return 2;
+    }
+    if (selectLevelArrow.GetLeft() == 588 && nChar == VK_SPACE)
+    {
+        levelSelector = 0;   // Reset arrow position
+        return 3;
+    }
+    if (selectLevelArrow.GetLeft() == 703 && nChar == VK_SPACE)
+    {
+        levelSelector = 0;   // Reset arrow position
+        return 4;
+    }
+    if (selectLevelArrow.GetLeft() == 818 && nChar == VK_SPACE)
+    {
+        levelSelector = 0;   // Reset arrow position
+        return 5;
+    }
+    if (selectLevelArrow.GetLeft() == 933 && nChar == VK_SPACE)
+    {
+        levelSelector = 0;   // Reset arrow position
+        return 6;
+    }
+    if (selectLevelArrow.GetLeft() == 1048 && nChar == VK_SPACE)
+    {
+        levelSelector = 0;   // Reset arrow position
+        return 7;
+    }
+    return -1;
 }

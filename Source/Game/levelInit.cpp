@@ -46,7 +46,7 @@ void levelInit::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 
     else if (character.isCollide() == true) // When character crashes
     {
-        theMenu.OnKeyDown(nChar, nRepCnt, nFlags);
+        theMenu.OnKeyDownVertical(nChar, nRepCnt, nFlags);
 
         // If the user choose to go to main menu, will go to init
         toInit = theMenu.GameOverChoose(nChar, nRepCnt, nFlags);
@@ -60,7 +60,7 @@ void levelInit::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 
     if (congrats == true) // When character reaches target point
     {
-        theMenu.OnKeyDown(nChar, nRepCnt, nFlags);
+        theMenu.OnKeyDownVertical(nChar, nRepCnt, nFlags);
 
         // If the user choose to go to main menu, will go to init
         toInit = theMenu.CongratsChoose(nChar, nRepCnt, nFlags);

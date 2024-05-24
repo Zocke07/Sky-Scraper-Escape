@@ -1,6 +1,6 @@
 ﻿#include "stdafx.h"
 #include "level1.h"
-
+//init
 using namespace levels;
 
 void level1::OnBeginState()

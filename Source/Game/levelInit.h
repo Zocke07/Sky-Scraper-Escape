@@ -1,10 +1,10 @@
 ﻿#pragma once
 #include <string>
 #include <vector>
-
 #include "menu.h"
 #include "flyObject.h"
 
+#define obstacleNum 20
 using namespace std;
 
 namespace levels
@@ -62,12 +62,24 @@ namespace levels
         void loadBackground();
         
     protected:
+		int xMax = 1193;
+		int yMax = 652;
+		int obstacleXDimension = 103;
+		int obstacleYDimension = 667;
+		int obstacleMovementConst = 3;
+		int obstacleSpeed = 0;
+		int accelerationConst = 0;
+		int pathHeight[obstacleNum];
+		int pathLocation[obstacleNum];
+		int obstacleDistance[obstacleNum];
+		int time = 0;
         int point = 0;  // Current level's point
-        bool chooseLevel = false;
+		int pointSpeedDeficit = 0;
+		int pathDifference = 0;        bool chooseLevel = false;
         int chosenLevel = 0;
         bool MainMenu = true;
         bool toRun = false;
-        bool pause = false;     // Pausing the game
+    	bool pause = false;     // Pausing the game
         bool congrats = false;  // If the level is finished
         bool toInit = false;    // Triggers GoToGameState(GAME_STATE_INIT)
         bool retry = false;     // Triggers GoToGameState(GAME_STATE_RUN) in the same level

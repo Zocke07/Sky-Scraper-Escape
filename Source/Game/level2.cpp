@@ -65,8 +65,8 @@ void level2::loadObject()
 	{
 		pathLocation[i] = (std::rand() % 20 + 5) * 20;
 		pathHeight[i] = (std::rand() % 4 + 8) * 20;
-		if (i > 0) {
-			obstacleDistance[i] = abs(pathLocation[i - 1] - pathLocation[i]) - (pathHeight[i] / 10) + obstacleXDimension;
+		if (i > 0 && accelerationConst != 0) {
+			obstacleDistance[i] = abs(pathLocation[i - 1] - pathLocation[i]) - (pathHeight[i] / 10) + obstacleXDimension + i*80;
 		}
 		else {
 			obstacleDistance[i] = 0;

@@ -1,10 +1,10 @@
 ﻿#pragma once
 #include <string>
 #include <vector>
-
 #include "menu.h"
 #include "flyObject.h"
 
+#define obstacleNum 20
 using namespace std;
 
 namespace levels
@@ -65,8 +65,14 @@ namespace levels
 		int obstacleYDimension = 667;
 		int obstacleMovementConst = 3;
 		int obstacleSpeed = 0;
+		int accelerationConst = 0;
+		int pathHeight[obstacleNum];
+		int pathLocation[obstacleNum];
+		int obstacleDistance[obstacleNum];
 		int time = 0;
         int point = 0;  // Current level's point
+		int pointSpeedDeficit = 0;
+		int pathDifference = 0;
         bool pause = false;     // Pausing the game
         bool congrats = false;  // If the level is finished
         bool toInit = false;    // Triggers GoToGameState(GAME_STATE_INIT)

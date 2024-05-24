@@ -146,6 +146,17 @@ bool levelInit::isNextlevel()
     return nextLevel;
 }
 
+bool levelInit::isChooseLevel()
+{
+    return chooseLevel;
+}
+
+int levelInit::getChosenLevel()
+{
+    return chosenLevel;
+}
+
+
 std::vector<writeText> levelInit::getText()
 {
     vector<writeText> texts;
@@ -167,6 +178,11 @@ void levelInit::setRetry(bool flag)
 void levelInit::setNextLevel(bool flag)
 {
     nextLevel = flag;
+}
+
+void levelInit::setChooseLevel(bool flag)
+{
+    chooseLevel = flag;
 }
 
     

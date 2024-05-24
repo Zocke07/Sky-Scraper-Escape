@@ -29,7 +29,6 @@ void CGameStateInit::OnInit()
 	// Start loading data
 	background.LoadBitmapByString({"Resources/background.bmp"});
 	background.SetTopLeft(0, 0);
-	theMenu.loadObject();
 	//
 	Sleep(1000);				// Slow down to see the progress clearly. Please delete this Sleep for the actual game
 	//
@@ -39,46 +38,12 @@ void CGameStateInit::OnInit()
 
 void CGameStateInit::OnBeginState()
 {
+	GotoGameState(GAME_STATE_RUN);
 }
 
 void CGameStateInit::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	if (MainMenu == true)
-	{
-		theMenu.OnKeyDownVertical(nChar, nRepCnt, nFlags);
 
-		// If the user choose to Play Game, will go to state run
-		toRun = theMenu.MainMenuChoose(nChar, nRepCnt, nFlags);
-
-		if (toRun == true)
-		{
-			toRun = false;
-			currentLevel = 1;
-			GotoGameState(GAME_STATE_RUN);
-		}
-		// If not, will choose level
-		else if (toRun == false && nChar == VK_SPACE)
-		{
-			MainMenu = false;
-		}
-	}
-	else
-	{
-		theMenu.OnKeyDownHorizontal(nChar, nRepCnt, nFlags);
-
-		currentLevel = theMenu.LevelChoose(nChar, nRepCnt, nFlags);
-
-		if (currentLevel == 0 && nChar == VK_SPACE)
-		{
-			currentLevel = 1; // Reset level
-			MainMenu = true; // Go to main menu
-		}
-		else if (currentLevel > 0 && currentLevel < 8 && nChar == VK_SPACE)
-		{
-			GotoGameState(GAME_STATE_RUN);
-			MainMenu = true;
-		}
-	}
 }
 
 void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
@@ -89,13 +54,4 @@ void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 void CGameStateInit::OnShow()
 {
 	background.ShowBitmap();
-	
-	if (MainMenu == true)
-	{
-		theMenu.ShowMainMenu();
-	}
-	else
-	{
-		theMenu.ShowSelectLevels();
-	}
 }

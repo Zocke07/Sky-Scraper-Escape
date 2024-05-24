@@ -47,6 +47,7 @@
 #include "level5.h"
 #include "level6.h"
 #include "level7.h"
+#include "mainMenu.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -103,6 +104,7 @@ namespace game_framework {
 		void OnMove() override;									// Moving game element
 		void OnShow() override;									// Shows this state of the game's screen
 	private:
+		levels::mainMenu theMainMenu;
 		levels::level1 theLevel1;
 		levels::level2 theLevel2;
 		levels::level3 theLevel3;
@@ -110,9 +112,9 @@ namespace game_framework {
 		levels::level5 theLevel5;
 		levels::level6 theLevel6;
 		levels::level7 theLevel7;
-		std::vector<levels::levelInit*> allLevels = {&theLevel1, &theLevel2, &theLevel3, &theLevel4, &theLevel5, &theLevel6, &theLevel7};
+		std::vector<levels::levelInit*> allLevels = {&theMainMenu, &theLevel1, &theLevel2, &theLevel3, &theLevel4, &theLevel5, &theLevel6, &theLevel7};
 
-		levels::levelInit* current = allLevels[currentLevel - 1];
+		levels::levelInit* current = allLevels[currentLevel];
 		bool musicPlayed = false;
 	};
 

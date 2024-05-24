@@ -48,18 +48,25 @@ namespace levels
         bool isPause();
         bool isToInit();
         bool isNextlevel();
+        bool isChooseLevel();
+        int getChosenLevel();
         
         vector<writeText> getText(); // To write current current altitude and point
 
         void setToInit(bool flag); // To go from level's run state to the init state
         void setRetry(bool flag); // To refresh the level's run state
         void setNextLevel(bool flag);
+        void setChooseLevel(bool flag);
         
         // Additional main functions
         void loadBackground();
         
     protected:
         int point = 0;  // Current level's point
+        bool chooseLevel = false;
+        int chosenLevel = 0;
+        bool MainMenu = true;
+        bool toRun = false;
         bool pause = false;     // Pausing the game
         bool congrats = false;  // If the level is finished
         bool toInit = false;    // Triggers GoToGameState(GAME_STATE_INIT)

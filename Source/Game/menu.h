@@ -22,6 +22,8 @@ namespace game_framework
         bool CongratsChoose(UINT nChar, UINT nRepCnt, UINT nFlags);
         int LevelChoose(UINT nChar, UINT nRepCnt, UINT nFlags);
     private:
+        CMovingBitmap background;
+        
         // Congratulations pop up
         CMovingBitmap congratulations;
         CMovingBitmap nextLevel;

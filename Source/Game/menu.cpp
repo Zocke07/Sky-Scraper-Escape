@@ -5,6 +5,8 @@ using namespace game_framework;
 
 void menu::loadObject()
 {
+    
+    
     title.LoadBitmapByString({"Resources/Title.bmp"}, RGB(0, 100, 0));
     playGame.LoadBitmapByString({"Resources/PlayGame.bmp"}, RGB(0, 100, 0));
     selectLevel.LoadBitmapByString({"Resources/SelectLevel.bmp"}, RGB(0, 100, 0));

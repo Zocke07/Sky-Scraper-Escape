@@ -251,6 +251,7 @@
     <ClCompile Include="Source\Game\level6.cpp" />
     <ClCompile Include="Source\Game\level7.cpp" />
     <ClCompile Include="Source\Game\levelInit.cpp" />
+    <ClCompile Include="Source\Game\mainMenu.cpp" />
     <ClCompile Include="Source\Game\menu.cpp" />
     <ClCompile Include="Source\Game\flyObject.cpp" />
     <ClCompile Include="Source\Game\mygame_initialize.cpp" />
@@ -277,6 +278,7 @@
     <ClInclude Include="Source\Game\level6.h" />
     <ClInclude Include="Source\Game\level7.h" />
     <ClInclude Include="Source\Game\levelInit.h" />
+    <ClInclude Include="Source\Game\mainMenu.h" />
     <ClInclude Include="Source\Game\menu.h" />
     <ClInclude Include="Source\Game\flyObject.h" />
     <ClInclude Include="Source\Game\mygame.h" />
@@ -297,8 +299,10 @@
     <Image Include="resources\Toolbar.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\Back.bmp" />
     <Content Include="Resources\Background.bmp" />
     <Content Include="Resources\Building1.bmp" />
+    <Content Include="Resources\ChooseLevels.bmp" />
     <Content Include="Resources\Cloud1.bmp" />
     <Content Include="Resources\Congrats.bmp" />
     <Content Include="Resources\Explosion1.bmp" />
@@ -307,10 +311,13 @@
     <Content Include="Resources\GameOver.bmp" />
     <Content Include="Resources\GamePaused.bmp" />
     <Content Include="Resources\JumpSound.wav" />
+    <Content Include="Resources\LevelArrow.bmp" />
     <Content Include="Resources\MainMenu.bmp" />
     <Content Include="Resources\NextLevel.bmp" />
     <Content Include="Resources\Plane.bmp" />
+    <Content Include="Resources\PlayGame.bmp" />
     <Content Include="Resources\SelectionArrow.bmp" />
+    <Content Include="Resources\SelectLevel.bmp" />
     <Content Include="Resources\Title.bmp" />
     <Content Include="Resources\TryAgain.bmp" />
   </ItemGroup>

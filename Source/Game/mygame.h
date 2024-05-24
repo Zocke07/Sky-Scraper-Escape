@@ -47,6 +47,7 @@
 #include "level5.h"
 #include "level6.h"
 #include "level7.h"
+#include "mainMenu.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -71,17 +72,14 @@ namespace game_framework {
 		void OnBeginState() override;							// Set variables required for each replay
 		void OnKeyUp(UINT, UINT, UINT) override; 				// Handle keyboard Up action
 		void OnLButtonDown(UINT nFlags, CPoint point) override;  // Handling mouse movements
-		void load_background();
-		void load_icons();
-		void draw_text();
 	protected:
 		void OnShow() override;									// Shows this state of the game's screen
 	private:
-		int selector = 1;
 		CMovingBitmap logo;								// The logo of csie
 		CMovingBitmap background;
-		CMovingBitmap title;
-		CMovingBitmap selectArrow;
+		menu theMenu;
+		bool toRun = false;
+		bool MainMenu = true;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -106,6 +104,7 @@ namespace game_framework {
 		void OnMove() override;									// Moving game element
 		void OnShow() override;									// Shows this state of the game's screen
 	private:
+		levels::mainMenu theMainMenu;
 		levels::level1 theLevel1;
 		levels::level2 theLevel2;
 		levels::level3 theLevel3;
@@ -113,9 +112,9 @@ namespace game_framework {
 		levels::level5 theLevel5;
 		levels::level6 theLevel6;
 		levels::level7 theLevel7;
-		std::vector<levels::levelInit*> allLevels = {&theLevel1, &theLevel2, &theLevel3, &theLevel4, &theLevel5, &theLevel6, &theLevel7};
+		std::vector<levels::levelInit*> allLevels = {&theMainMenu, &theLevel1, &theLevel2, &theLevel3, &theLevel4, &theLevel5, &theLevel6, &theLevel7};
 
-		levels::levelInit* current = allLevels[currentLevel - 1];
+		levels::levelInit* current = allLevels[currentLevel];
 		bool musicPlayed = false;
 	};
 

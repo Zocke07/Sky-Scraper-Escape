@@ -75,13 +75,14 @@ namespace levels
 		int time = 0;
         int point = 0;  // Current level's point
 		int pointSpeedDeficit = 0;
-		int pathDifference = 0;        bool chooseLevel = false;
-        int chosenLevel = 0;
-        bool MainMenu = true;
-        bool toRun = false;
+		int pathDifference = 0;
+    	bool chooseLevel = false; // Used in mygame_run if player come from choosing level
+        int chosenLevel = 0;	// Used in main menu level selection, later to be passed to mygame_run
+        bool MainMenu = true;	// Used in main menu to show main menu or choose levels
+        bool toRun = false;		// Used in main menu to see whether Play Game or not
     	bool pause = false;     // Pausing the game
         bool congrats = false;  // If the level is finished
-        bool toInit = false;    // Triggers GoToGameState(GAME_STATE_INIT)
+        bool toInit = false;    // Triggers main menu
         bool retry = false;     // Triggers GoToGameState(GAME_STATE_RUN) in the same level
         bool nextLevel = false; // Triggers GoToGameState(GAME_STATE_RUN) to the next level
         game_framework::CMovingBitmap background;   // Background image

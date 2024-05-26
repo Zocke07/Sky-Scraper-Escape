@@ -31,11 +31,11 @@ void levelInit::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
     if (nChar == VK_ESCAPE)
     {
-        if (this->isPause() == false) {
-            pause = true;
+        if (this->isPause() == true && congrats == false && character.isCollide() == false) {
+            pause = false;
         }
         else {
-            pause = false;
+            pause = true;
         }
     }
     

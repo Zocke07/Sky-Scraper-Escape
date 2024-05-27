@@ -29,6 +29,10 @@ void level1::OnShow()
 	{
 		if (game_framework::CMovingBitmap::IsOverlap(character, cloud[i]) || game_framework::CMovingBitmap::IsOverlap(character, building[i]))
 		{
+			if (character.isCheat() == true)
+			{
+				continue;
+			}
 			character.setCollide(true);
 			pause = true;
 		}

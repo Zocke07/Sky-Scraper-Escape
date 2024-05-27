@@ -162,6 +162,10 @@ std::vector<writeText> levelInit::getText()
     vector<writeText> texts;
     texts.push_back({"Altitude: " + to_string(670-character.GetTop()-80), {20, 50}, RGB(0, 0, 0), 20});
     texts.push_back({"Point   : " + to_string(point), {20, 70}, RGB(0, 0, 0), 20});
+    if (character.isCheat() == true)
+    {
+        texts.push_back({"Cheat Mode is ON" , {20, 110}, RGB(0, 0, 0), 20});
+    }
     return texts;
 }
 

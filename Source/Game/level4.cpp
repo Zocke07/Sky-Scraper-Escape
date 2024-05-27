@@ -29,8 +29,12 @@ void level4::OnShow()
 	{
 		if (game_framework::CMovingBitmap::IsOverlap(character, cloud[i]) || game_framework::CMovingBitmap::IsOverlap(character, building[i]))
 		{
-			character.setCollide(true);
-			pause = true;
+			if (character.isCheat() == true)
+			{
+				continue;
+			}
+				character.setCollide(true);
+				pause = true;
 		}
 
 		if (building[i].GetLeft() >= (character.GetLeft() - 128 - pointSpeedDeficit) && building[i].GetLeft() <= (character.GetLeft() - 126 + pointSpeedDeficit)) {

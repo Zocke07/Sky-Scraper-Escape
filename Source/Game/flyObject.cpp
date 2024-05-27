@@ -9,6 +9,7 @@ void flyObject::init()
 {
     jumping = false;
     collide = false;
+    cheat = false;
 }
 
 void flyObject::load()
@@ -74,4 +75,27 @@ void flyObject::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
         this->getCurrentJump();
         this->setJumping(true);
     }
+
+    if (nChar == 0x43) // Press C for cheat mode
+    {
+        if (cheat == true)
+        {
+            cheat = false;
+        }
+        else
+        {
+            cheat = true;
+        }
+    }
 }
+
+bool flyObject::isCheat()
+{
+    return cheat;
+}
+
+void flyObject::setCheat(bool flag)
+{
+    cheat = flag;
+}
+

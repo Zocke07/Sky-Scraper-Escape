@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "levelInit.h"
-#include "obstacle.h"
 
 namespace levels
 {
@@ -14,7 +13,7 @@ namespace levels
 		void moveObstacle();
 	private:
 		bool obstacleDirection[obstacleNum];
-		vector<game_framework::obstacle> building = vector<game_framework::obstacle>(obstacleNum);
-		vector<game_framework::obstacle> cloud = vector<game_framework::obstacle>(obstacleNum);
+		vector<game_framework::CMovingBitmap> building = vector<game_framework::CMovingBitmap>(obstacleNum);
+		vector<game_framework::CMovingBitmap> cloud = vector<game_framework::CMovingBitmap>(obstacleNum);
 	};
 }

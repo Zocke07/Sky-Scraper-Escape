@@ -16,7 +16,10 @@ namespace game_framework\
         void getCurrentJump();
         void movement();
         void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
+        bool isCheat();
+        void setCheat(bool flag);
     private:
+        bool cheat;
         bool jumping;
         bool collide;
         int currentJump;

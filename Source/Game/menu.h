@@ -20,6 +20,7 @@ namespace game_framework
         bool MainMenuChoose(UINT nChar, UINT nRepCnt, UINT nFlags);
         bool GameOverChoose(UINT nChar, UINT nRepCnt, UINT nFlags);
         bool CongratsChoose(UINT nChar, UINT nRepCnt, UINT nFlags);
+        bool PauseChoose(UINT nChar, UINT nRepCnt, UINT nFlags);
         int LevelChoose(UINT nChar, UINT nRepCnt, UINT nFlags);
     private:
         CMovingBitmap background;
@@ -45,6 +46,7 @@ namespace game_framework
         
         // Game paused pop up
         CMovingBitmap gamePaused;
+        CMovingBitmap continueImg;
 
         // The selector for each pop up
         CMovingBitmap selectArrow;

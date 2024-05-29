@@ -39,7 +39,7 @@ void levelInit::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
         }
     }
     
-    if (character.isCollide() == false && congrats == false)
+    if (character.isCollide() == false && congrats == false && pause == false)
     {
         character.OnKeyDown(nChar, nRepCnt, nFlags);
     }

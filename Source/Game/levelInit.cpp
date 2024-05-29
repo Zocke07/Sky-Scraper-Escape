@@ -31,7 +31,7 @@ void levelInit::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
     if (nChar == VK_ESCAPE)
     {
-        if (this->isPause() == true && congrats == false && character.isCollide() == false) {
+        if (pause == true && congrats == false && character.isCollide() == false) {
             pause = false;
         }
         else {
@@ -58,7 +58,7 @@ void levelInit::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
         }
     }
 
-    if (congrats == true) // When character reaches target point
+    else if (congrats == true) // When character reaches target point
     {
         theMenu.OnKeyDownVertical(nChar, nRepCnt, nFlags);
 
@@ -69,6 +69,20 @@ void levelInit::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
         if (toInit == false && nChar == VK_RETURN)
         {
             setNextLevel(true);
+        }
+    }
+
+    if (pause == true && character.isCollide() == false && congrats == false)
+    {
+        theMenu.OnKeyDownVertical(nChar, nRepCnt, nFlags);
+
+        // If the user choose to go to main menu, will go to init
+        toInit = theMenu.PauseChoose(nChar, nRepCnt, nFlags);
+
+        // If not, will go back to play the game
+        if (toInit == false && nChar == VK_RETURN)
+        {
+            pause = false;
         }
     }
 }
@@ -112,16 +126,6 @@ void levelInit::OnShow()
     {
         explosion.SetTopLeft(character.GetLeft() + 60, character.GetTop());
         explosion.ShowBitmap();
-    }
-    
-    if (isPause() == true && character.isCollide() == false && congrats == false)
-    {
-        theMenu.ShowGamePaused();
-    }
-    
-    if (congrats == true) {
-        pause = true;
-        theMenu.ShowCongrats();
     }
 }
 

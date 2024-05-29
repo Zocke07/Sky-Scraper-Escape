@@ -5,8 +5,6 @@ using namespace game_framework;
 
 void menu::loadObject()
 {
-    
-    
     title.LoadBitmapByString({"Resources/Title.bmp"}, RGB(0, 100, 0));
     playGame.LoadBitmapByString({"Resources/PlayGame.bmp"}, RGB(0, 100, 0));
     selectLevel.LoadBitmapByString({"Resources/SelectLevel.bmp"}, RGB(0, 100, 0));
@@ -22,6 +20,7 @@ void menu::loadObject()
     tryAgain.LoadBitmapByString({"Resources/TryAgain.bmp"}, RGB(0, 100, 0));
 
     gamePaused.LoadBitmapByString({"Resources/GamePaused.bmp"}, RGB(0, 100, 0));
+    continueImg.LoadBitmapByString({"Resources/Continue.bmp"}, RGB(0, 100, 0));
 
     selectArrow.LoadBitmapByString({"Resources/SelectionArrow.bmp"}, RGB(0, 100, 0));
     selectLevelArrow.LoadBitmapByString({"Resources/LevelArrow.bmp"}, RGB(0, 100, 0));
@@ -53,8 +52,14 @@ void menu::ShowGameOver()
 
 void menu::ShowGamePaused()
 {
-    gamePaused.SetTopLeft(355, 250);
+    gamePaused.SetTopLeft(355, 200);
     gamePaused.ShowBitmap();
+    continueImg.SetTopLeft(460, 294);
+    continueImg.ShowBitmap();
+    mainMenu.SetTopLeft(444, 360);
+    mainMenu.ShowBitmap();
+
+    ShowMenuSelectArrow();
 }
 
 void menu::ShowMainMenu()
@@ -214,6 +219,21 @@ bool menu::GameOverChoose(UINT nChar, UINT nRepCnt, UINT nFlags)
 bool menu::CongratsChoose(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
     if (selectArrow.GetTop() == 312 && nChar == VK_RETURN) // Go to next stage button
+    {
+        menuSelector = 1;   // Reset arrow position
+        return false;
+    }
+    if (selectArrow.GetTop() == 378 && nChar == VK_RETURN) // Go to main menu button
+    {
+        menuSelector = 1;   // Reset arrow position
+        return true;
+    }
+    return false;
+}
+
+bool menu::PauseChoose(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+    if (selectArrow.GetTop() == 312 && nChar == VK_RETURN) // Go back to game
     {
         menuSelector = 1;   // Reset arrow position
         return false;

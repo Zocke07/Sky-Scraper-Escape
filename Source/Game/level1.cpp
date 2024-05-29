@@ -24,9 +24,9 @@ void level1::OnShow()
 		cloud[i].ShowBitmap();
 	}
 
-	// Temp Overlap Implementation
 	for (int i = 0; i < obstacleNum; i++)
 	{
+		// Plane Crash Implementation
 		if (game_framework::CMovingBitmap::IsOverlap(character, cloud[i]) || game_framework::CMovingBitmap::IsOverlap(character, building[i]))
 		{
 			if (character.isCheat() == true)
@@ -35,24 +35,36 @@ void level1::OnShow()
 			}
 			character.setCollide(true);
 			pause = true;
+			break;
 		}
-
+		// Add point if passes obstacle
 		if (building[i].GetLeft() >= (character.GetLeft() - 128 - pointSpeedDeficit) && building[i].GetLeft() <= (character.GetLeft() - 126 + pointSpeedDeficit)) {
 			point += 1;
 		}
-
-		// Congratulations Pop Up
+		// If already passed all obstacle
 		if (point == obstacleNum)
 		{
 			congrats = true;
+			pause = true;
 			break;
 		}
+	}
+	// Below pop-ups needs to be put here (on every level) so that the menu is shown on the very front
 
-		// Game Over Pop Up (Needs to be put here so that the menu is shown on the very front)
-		if (character.isCollide() == true)
-		{
-			theMenu.ShowGameOver();
-		}
+	// Game Over Pop Up
+	if (character.isCollide() == true)
+	{
+		theMenu.ShowGameOver();
+	}
+	// Congrats Pop Up
+	if (congrats == true)
+	{
+		theMenu.ShowCongrats();
+	}
+	// Pausing Game Pop Up
+	if (pause == true && character.isCollide() == false && congrats == false)
+	{
+		theMenu.ShowGamePaused();
 	}
 }
 

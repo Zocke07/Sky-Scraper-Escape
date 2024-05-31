@@ -7,9 +7,12 @@ flyObject::flyObject() {}
 
 void flyObject::init()
 {
+    reverseGravity = false;
     jumping = false;
     collide = false;
     cheat = false;
+    gravityConst = 4;
+    jumpConst = 50;
 }
 
 void flyObject::load()
@@ -41,26 +44,52 @@ void flyObject::setJumping(bool flag)
 
 void flyObject::getCurrentJump()
 {
-    currentJump = this->GetTop() - jumpConst;
+    if (reverseGravity == false)
+    {
+        currentJump = this->GetTop() - jumpConst;
+    }
+    else
+    {
+        currentJump = this->GetTop() + jumpConst;
+    }
 }
 
 void flyObject::movement()
 {
-    // Gravity Mechanism
-    if (this->GetTop() < 590 && this->isJumping() == false) {
-        this->SetTopLeft(this->GetLeft(), this->GetTop() + gravityConst);
-    }
+    applyGravity();
+    appplyJump();
+}
 
-    // Jumping Mechanism
-    if (this->isJumping() == true){
-        
-        if (this->GetTop() > maxJumpHeight && this->GetTop() > currentJump)
-        {
-            this->SetTopLeft(this->GetLeft(), this->GetTop() - gravityConst);
+void flyObject::applyGravity()
+{
+    if (this->isJumping() == false) {
+        if (reverseGravity == true) {
+            if (this->GetTop() > 0) {
+                this->SetTopLeft(this->GetLeft(), this->GetTop() - gravityConst);
+            }
+        } else {
+            if (this->GetTop() < 590) {
+                this->SetTopLeft(this->GetLeft(), this->GetTop() + gravityConst);
+            }
         }
-        else
-        {
-            this->setJumping(false);
+    }
+}
+
+void flyObject::appplyJump()
+{
+    if (this->isJumping() == true) {
+        if (reverseGravity == true) {
+            if (this->GetTop() < 670 && this->GetTop() < currentJump) {
+                this->SetTopLeft(this->GetLeft(), this->GetTop() + gravityConst);
+            } else {
+                this->setJumping(false);
+            }
+        } else {
+            if (this->GetTop() > maxJumpHeight && this->GetTop() > currentJump) {
+                this->SetTopLeft(this->GetLeft(), this->GetTop() - gravityConst);
+            } else {
+                this->setJumping(false);
+            }
         }
     }
 }
@@ -97,5 +126,15 @@ bool flyObject::isCheat()
 void flyObject::setCheat(bool flag)
 {
     cheat = flag;
+}
+
+void flyObject::setReverseGravity(bool flag)
+{
+    reverseGravity = flag;
+}
+
+bool flyObject::isReverseGravity()
+{
+    return reverseGravity;
 }
 

@@ -123,6 +123,5 @@ void level1::moveObstacle()
 				building[i].SetTopLeft(building[i].GetLeft() - obstacleMovementConst - obstacleSpeed, building[i].GetTop());
 			}
 		}
-
 	}
 }

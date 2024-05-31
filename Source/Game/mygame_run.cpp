@@ -119,7 +119,13 @@ void CGameStateRun::OnShow()
 	current->OnShow();
 	if (currentLevel > 0)
 	{
-		vector<levels::writeText> texts = current->getText();
+		vector<levels::writeText> texts;
+		if (currentLevel != 3){
+			texts = current->getText(0,0,0);
+		}
+		else {
+			texts = current->getText(255,255,255);
+		}
 		CDC* pDC = CDDraw::GetBackCDC();
 		for(levels::writeText t: texts)
 		{

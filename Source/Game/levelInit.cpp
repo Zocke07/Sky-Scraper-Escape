@@ -161,14 +161,14 @@ int levelInit::getChosenLevel()
 }
 
 
-std::vector<writeText> levelInit::getText()
+std::vector<writeText> levelInit::getText(int r, int g, int b)
 {
     vector<writeText> texts;
-    texts.push_back({"Altitude: " + to_string(670-character.GetTop()-80), {20, 50}, RGB(0, 0, 0), 20});
-    texts.push_back({"Point   : " + to_string(point), {20, 70}, RGB(0, 0, 0), 20});
+    texts.push_back({"Altitude: " + to_string(670-character.GetTop()-80), {20, 50}, RGB(r,g,b), 20});
+    texts.push_back({"Point   : " + to_string(point), {20, 70}, RGB(r,g,b), 20});
     if (character.isCheat() == true)
     {
-        texts.push_back({"Cheat Mode is ON" , {20, 110}, RGB(0, 0, 0), 20});
+        texts.push_back({"Cheat Mode is ON" , {20, 110}, RGB(r,g,b), 20});
     }
     return texts;
 }

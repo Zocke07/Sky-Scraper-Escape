@@ -18,10 +18,15 @@ namespace game_framework\
         void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
         bool isCheat();
         void setCheat(bool flag);
+        void applyGravity();
+        void appplyJump();
+        void setReverseGravity(bool flag);
+        bool isReverseGravity();
     private:
         bool cheat;
         bool jumping;
         bool collide;
+        bool reverseGravity;
         int currentJump;
         int gravityConst = 4;
         int maxJumpHeight = 0;

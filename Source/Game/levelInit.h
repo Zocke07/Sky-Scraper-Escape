@@ -51,7 +51,7 @@ namespace levels
         bool isChooseLevel();
         int getChosenLevel();
         
-        vector<writeText> getText(); // To write current current altitude and point
+        virtual vector<writeText> getText(); // To write current current altitude and point
 
         void setToInit(bool flag); // To go from level's run state to the init state
         void setRetry(bool flag); // To refresh the level's run state

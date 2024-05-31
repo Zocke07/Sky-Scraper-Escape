@@ -146,19 +146,19 @@ void level5::changeGravity()
 }
 
 
-std::vector<writeText> level5::getText()
+std::vector<writeText> level5::getText(int r, int g, int b)
 {
-    vector<writeText> texts = levelInit::getText();
+    vector<writeText> texts = levelInit::getText(r, g, b);
     
     if (character.isReverseGravity() == false)
     {
-        texts.push_back({"Current gravity   : normal", {20, 150}, RGB(0, 0, 0), 20});
+        texts.push_back({"Current gravity   : normal", {20, 150}, RGB(r, g, b), 20});
     }
     else
     {
-        texts.push_back({"Current gravity   : reverse", {20, 150}, RGB(0, 0, 0), 20});
+        texts.push_back({"Current gravity   : reverse", {20, 150}, RGB(r, g, b), 20});
     }
-    texts.push_back({"Gravity change in : " + to_string(gravityTimer/30), {20, 170}, RGB(0, 0, 0), 20});
+    texts.push_back({"Gravity change in : " + to_string(gravityTimer/30), {20, 170}, RGB(r, g, b), 20});
 
     return texts;
 }

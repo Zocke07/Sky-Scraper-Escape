@@ -3,11 +3,16 @@
 
 namespace levels
 {
-    class level7 : public levelInit
-    {
-    public:
-        void OnBeginState() override;
-        void OnShow() override;
-        void OnMove() override;
-    };
+	class level7 : public levelInit
+	{
+	public:
+		void OnBeginState() override;
+		void OnShow() override;
+		void OnMove() override;
+		void loadObject();
+		void moveObstacle();
+	private:
+		vector<game_framework::CMovingBitmap> building = vector<game_framework::CMovingBitmap>(obstacleNum);
+		vector<game_framework::CMovingBitmap> cloud = vector<game_framework::CMovingBitmap>(obstacleNum);
+	};
 }

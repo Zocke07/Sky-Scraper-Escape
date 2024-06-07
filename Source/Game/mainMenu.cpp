@@ -40,7 +40,7 @@ void mainMenu::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
             setNextLevel(true);
         }
         // If not, will choose level
-        else if (toRun == false && nChar == VK_SPACE)
+        else if (toRun == false && nChar == VK_RETURN)
         {
             MainMenu = false;
         }
@@ -51,11 +51,11 @@ void mainMenu::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 
         chosenLevel = theMenu.LevelChoose(nChar, nRepCnt, nFlags);
 
-        if (chosenLevel == 0 && nChar == VK_SPACE)
+        if (chosenLevel == 0 && nChar == VK_RETURN)
         {
             MainMenu = true; // Go to main menu
         }
-        else if (chosenLevel > 0 && chosenLevel < 8 && nChar == VK_SPACE)
+        else if (chosenLevel > 0 && chosenLevel < 8 && nChar == VK_RETURN)
         {
             setChooseLevel(true);
             MainMenu = true;

@@ -188,12 +188,12 @@ void menu::OnKeyDownHorizontal(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 bool menu::MainMenuChoose(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-    if (selectArrow.GetTop() == 312 && nChar == VK_SPACE) // Play Game
+    if (selectArrow.GetTop() == 312 && nChar == VK_RETURN) // Play Game
     {
         menuSelector = 1;   // Reset arrow position
         return true;
     }
-    if (selectArrow.GetTop() == 378 && nChar == VK_SPACE) // Select Level
+    if (selectArrow.GetTop() == 378 && nChar == VK_RETURN) // Select Level
     {
         menuSelector = 1;   // Reset arrow position
         return false;
@@ -248,42 +248,42 @@ bool menu::PauseChoose(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 int menu::LevelChoose(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-    if (selectLevelArrow.GetLeft() == 210 && nChar == VK_SPACE)
+    if (selectLevelArrow.GetLeft() == 210 && nChar == VK_RETURN)
     {
         levelSelector = 0;   // Reset arrow position
         return 0;
     }
-    if (selectLevelArrow.GetLeft() == 360 && nChar == VK_SPACE)
+    if (selectLevelArrow.GetLeft() == 360 && nChar == VK_RETURN)
     {
         levelSelector = 0;   // Reset arrow position
         return 1;
     }
-    if (selectLevelArrow.GetLeft() == 473 && nChar == VK_SPACE)
+    if (selectLevelArrow.GetLeft() == 473 && nChar == VK_RETURN)
     {
         levelSelector = 0;   // Reset arrow position
         return 2;
     }
-    if (selectLevelArrow.GetLeft() == 588 && nChar == VK_SPACE)
+    if (selectLevelArrow.GetLeft() == 588 && nChar == VK_RETURN)
     {
         levelSelector = 0;   // Reset arrow position
         return 3;
     }
-    if (selectLevelArrow.GetLeft() == 703 && nChar == VK_SPACE)
+    if (selectLevelArrow.GetLeft() == 703 && nChar == VK_RETURN)
     {
         levelSelector = 0;   // Reset arrow position
         return 4;
     }
-    if (selectLevelArrow.GetLeft() == 818 && nChar == VK_SPACE)
+    if (selectLevelArrow.GetLeft() == 818 && nChar == VK_RETURN)
     {
         levelSelector = 0;   // Reset arrow position
         return 5;
     }
-    if (selectLevelArrow.GetLeft() == 933 && nChar == VK_SPACE)
+    if (selectLevelArrow.GetLeft() == 933 && nChar == VK_RETURN)
     {
         levelSelector = 0;   // Reset arrow position
         return 6;
     }
-    if (selectLevelArrow.GetLeft() == 1048 && nChar == VK_SPACE)
+    if (selectLevelArrow.GetLeft() == 1048 && nChar == VK_RETURN)
     {
         levelSelector = 0;   // Reset arrow position
         return 7;

@@ -79,7 +79,7 @@ void flyObject::appplyJump()
 {
     if (this->isJumping() == true) {
         if (reverseGravity == true) {
-            if (this->GetTop() < 670 && this->GetTop() < currentJump) {
+            if (this->GetTop() < 600 && this->GetTop() < currentJump) {
                 this->SetTopLeft(this->GetLeft(), this->GetTop() + gravityConst);
             } else {
                 this->setJumping(false);
@@ -93,7 +93,6 @@ void flyObject::appplyJump()
         }
     }
 }
-
 
 void flyObject::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {

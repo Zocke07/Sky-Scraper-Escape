@@ -84,19 +84,22 @@ void level7::loadObject()
 			pathLocation[i] = (std::rand() % 20 + 5) * 20;
 		}
 		else {
-			pathLocation[i] = pathLocation[i - 1] + 20;
-		}
-		//pathLocation[i] = (std::rand() % 20 + 5) * 20;
-		pathHeight[i] = 250;
-		if (i > 0) {
-			obstacleDistance[i] = abs(pathLocation[i - 1] - pathLocation[i]) - (pathHeight[i] / 10) + obstacleXDimension;
-			if (accelerationConst != 0) {
-				obstacleDistance[i] += i * 80;
+			// Determine Up or Down
+			int direction = std::rand() % 2;
+			if (pathLocation[i - 1] > 600) {
+				direction = 0;
+			}
+			else if (pathLocation[i - 1] < 60){
+				direction = 1;
+			}
+			if (direction == 0) {
+				pathLocation[i] = pathLocation[i - 1] - 40;
+			}
+			else {
+				pathLocation[i] = pathLocation[i - 1] + 40;
 			}
 		}
-		else {
-			obstacleDistance[i] = 0;
-		}
+		pathHeight[i] = 250;
 
 		building[i].LoadBitmapByString({ "Resources/Building1.bmp" }, RGB(0, 100, 0));
 		building[i].SetTopLeft(xMax, yMax - pathLocation[i] + pathHeight[i] / 2);

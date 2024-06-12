@@ -7,6 +7,7 @@ void level7::OnBeginState()
 {
 	levelInit::OnBeginState();
 
+	gravityTimer = 180;
 	accelerationConst = 0;
 	pointSpeedDeficit = 0;
 	obstacleSpeed = 0;
@@ -73,33 +74,24 @@ void level7::OnMove()
 	levelInit::OnMove();
 
 	moveObstacle();
+	changeGravity();
 }
-
 
 void level7::loadObject()
 {
 	for (int i = 0; i < obstacleNum; i++)
 	{
-		if (i == 0) {
-			pathLocation[i] = (std::rand() % 20 + 5) * 20;
+		pathLocation[i] = (std::rand() % 20 + 5) * 20 - 50;
+		pathHeight[i] = (std::rand() % 4 + 8) * 20 + 100;
+		if (i > 0) {
+			obstacleDistance[i] = abs(pathLocation[i - 1] - pathLocation[i]) - (pathHeight[i] / 10) + obstacleXDimension;
+			if (accelerationConst != 0) {
+				obstacleDistance[i] += i * 80;
+			}
 		}
 		else {
-			// Determine Up or Down
-			int direction = std::rand() % 2;
-			if (pathLocation[i - 1] > 600) {
-				direction = 0;
-			}
-			else if (pathLocation[i - 1] < 60){
-				direction = 1;
-			}
-			if (direction == 0) {
-				pathLocation[i] = pathLocation[i - 1] - 40;
-			}
-			else {
-				pathLocation[i] = pathLocation[i - 1] + 40;
-			}
+			obstacleDistance[i] = 0;
 		}
-		pathHeight[i] = 250;
 
 		building[i].LoadBitmapByString({ "Resources/Building1.bmp" }, RGB(0, 100, 0));
 		building[i].SetTopLeft(xMax, yMax - pathLocation[i] + pathHeight[i] / 2);
@@ -121,16 +113,52 @@ void level7::moveObstacle()
 		pointSpeedDeficit += accelerationConst;
 	}
 
-	for (int i = 0; i < obstacleNum; i++) {
+	for (int i = 0; i < obstacleNum; i++)
+	{
 		if (i == 0) {
 			cloud[i].SetTopLeft(cloud[i].GetLeft() - obstacleMovementConst - obstacleSpeed, cloud[i].GetTop());
 			building[i].SetTopLeft(building[i].GetLeft() - obstacleMovementConst - obstacleSpeed, building[i].GetTop());
 		}
 		else {
-			if ((building[i - 1].GetLeft() + obstacleXDimension) <= xMax) {
+			if ((building[i - 1].GetLeft() + obstacleXDimension) <= xMax - obstacleDistance[i]) {
 				cloud[i].SetTopLeft(cloud[i].GetLeft() - obstacleMovementConst - obstacleSpeed, cloud[i].GetTop());
 				building[i].SetTopLeft(building[i].GetLeft() - obstacleMovementConst - obstacleSpeed, building[i].GetTop());
 			}
 		}
 	}
+}
+
+void level7::changeGravity()
+{
+	gravityTimer -= 1;
+	if (gravityTimer == 0)
+	{
+		if (character.isReverseGravity() == false)
+		{
+			character.setReverseGravity(true);
+		}
+		else
+		{
+			character.setReverseGravity(false);
+		}
+		gravityTimer = 180;
+	}
+}
+
+
+std::vector<writeText> level7::getText(int r, int g, int b)
+{
+	vector<writeText> texts = levelInit::getText(r, g, b);
+
+	if (character.isReverseGravity() == false)
+	{
+		texts.push_back({ "Current gravity   : normal", {20, 150}, RGB(r, g, b), 20 });
+	}
+	else
+	{
+		texts.push_back({ "Current gravity   : reverse", {20, 150}, RGB(r, g, b), 20 });
+	}
+	texts.push_back({ "Gravity change in : " + to_string(gravityTimer / 30), {20, 170}, RGB(r, g, b), 20 });
+
+	return texts;
 }

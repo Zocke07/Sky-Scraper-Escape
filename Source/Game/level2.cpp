@@ -5,19 +5,18 @@ using namespace levels;
 
 void level2::OnBeginState()
 {
-    levelInit::OnBeginState();
+	levelInit::OnBeginState();
 
-	accelerationConst = 1;
+	accelerationConst = 0;
 	pointSpeedDeficit = 0;
 	obstacleSpeed = 0;
 	time = 0;
 	loadObject();
-    
 }
 
 void level2::OnShow()
 {
-    levelInit::OnShow();
+	levelInit::OnShow();
 
 	for (int i = 0; i < obstacleNum; i++)
 	{
@@ -71,26 +70,36 @@ void level2::OnShow()
 
 void level2::OnMove()
 {
-    levelInit::OnMove();
+	levelInit::OnMove();
 
 	moveObstacle();
 }
+
 
 void level2::loadObject()
 {
 	for (int i = 0; i < obstacleNum; i++)
 	{
-		pathLocation[i] = (std::rand() % 20 + 5) * 20;
-		pathHeight[i] = (std::rand() % 4 + 8) * 20;
-		if (i > 0) {
-			obstacleDistance[i] = abs(pathLocation[i - 1] - pathLocation[i]) - (pathHeight[i] / 10) + obstacleXDimension;
-			if (accelerationConst != 0) {
-				obstacleDistance[i] += i * 80;
-			}
+		if (i == 0) {
+			pathLocation[i] = (std::rand() % 20 + 5) * 20;
 		}
 		else {
-			obstacleDistance[i] = 0;
+			// Determine Up or Down
+			int direction = std::rand() % 2;
+			if (pathLocation[i - 1] > 600) {
+				direction = 0;
+			}
+			else if (pathLocation[i - 1] < 60) {
+				direction = 1;
+			}
+			if (direction == 0) {
+				pathLocation[i] = pathLocation[i - 1] - 40;
+			}
+			else {
+				pathLocation[i] = pathLocation[i - 1] + 40;
+			}
 		}
+		pathHeight[i] = 250;
 
 		building[i].LoadBitmapByString({ "Resources/Building1.bmp" }, RGB(0, 100, 0));
 		building[i].SetTopLeft(xMax, yMax - pathLocation[i] + pathHeight[i] / 2);
@@ -118,11 +127,10 @@ void level2::moveObstacle()
 			building[i].SetTopLeft(building[i].GetLeft() - obstacleMovementConst - obstacleSpeed, building[i].GetTop());
 		}
 		else {
-			if ((building[i - 1].GetLeft() + obstacleXDimension) <= xMax - obstacleDistance[i]) {
+			if ((building[i - 1].GetLeft() + obstacleXDimension) <= xMax) {
 				cloud[i].SetTopLeft(cloud[i].GetLeft() - obstacleMovementConst - obstacleSpeed, cloud[i].GetTop());
 				building[i].SetTopLeft(building[i].GetLeft() - obstacleMovementConst - obstacleSpeed, building[i].GetTop());
 			}
 		}
-
 	}
 }

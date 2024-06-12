@@ -7,11 +7,12 @@ void level4::OnBeginState()
 {
 	levelInit::OnBeginState();
 
-	accelerationConst = 0;
+	accelerationConst = 1;
 	pointSpeedDeficit = 0;
 	obstacleSpeed = 0;
 	time = 0;
 	loadObject();
+
 }
 
 void level4::OnShow()
@@ -75,17 +76,14 @@ void level4::OnMove()
 	moveObstacle();
 }
 
-
 void level4::loadObject()
 {
 	for (int i = 0; i < obstacleNum; i++)
 	{
 		pathLocation[i] = (std::rand() % 20 + 5) * 20;
-		//exclusive algorithm for level 4
-		pathHeight[i] = (std::rand() % 4 + 8) * 24;
-		//exclusive algorithm for level 4
+		pathHeight[i] = (std::rand() % 4 + 8) * 20;
 		if (i > 0) {
-			obstacleDistance[i] = abs(pathLocation[i - 1] - pathLocation[i]) + (pathHeight[i] / 2) + obstacleXDimension;
+			obstacleDistance[i] = abs(pathLocation[i - 1] - pathLocation[i]) - (pathHeight[i] / 10) + obstacleXDimension;
 			if (accelerationConst != 0) {
 				obstacleDistance[i] += i * 80;
 			}
@@ -99,14 +97,6 @@ void level4::loadObject()
 
 		cloud[i].LoadBitmapByString({ "Resources/Cloud1.bmp" }, RGB(0, 100, 0));
 		cloud[i].SetTopLeft(xMax, 0 - pathLocation[i] - pathHeight[i] / 2);
-
-		//true= moveup, false= movedown
-		if (i % 2 == 0) {
-			obstacleDirection[i] = true;
-		}
-		else {
-			obstacleDirection[i] = false;
-		}
 	}
 }
 
@@ -124,38 +114,13 @@ void level4::moveObstacle()
 
 	for (int i = 0; i < obstacleNum; i++) {
 		if (i == 0) {
-			if (obstacleDirection[i] == true) {
-				cloud[i].SetTopLeft(cloud[i].GetLeft() - obstacleMovementConst - obstacleSpeed, cloud[i].GetTop() + 1);
-				building[i].SetTopLeft(building[i].GetLeft() - obstacleMovementConst - obstacleSpeed, building[i].GetTop() + 1);
-				if (building[i].GetTop() == yMax - pathLocation[i] + pathHeight[i]) {
-					obstacleDirection[i] = false;
-				}
-			}
-			else {
-				cloud[i].SetTopLeft(cloud[i].GetLeft() - obstacleMovementConst - obstacleSpeed, cloud[i].GetTop() - 1);
-				building[i].SetTopLeft(building[i].GetLeft() - obstacleMovementConst - obstacleSpeed, building[i].GetTop() - 1);
-				if (building[i].GetTop() == yMax - pathLocation[i]) {
-					obstacleDirection[i] = true;
-				}
-			}
-				
+			cloud[i].SetTopLeft(cloud[i].GetLeft() - obstacleMovementConst - obstacleSpeed, cloud[i].GetTop());
+			building[i].SetTopLeft(building[i].GetLeft() - obstacleMovementConst - obstacleSpeed, building[i].GetTop());
 		}
 		else {
 			if ((building[i - 1].GetLeft() + obstacleXDimension) <= xMax - obstacleDistance[i]) {
-				if (obstacleDirection[i] == true) {
-					cloud[i].SetTopLeft(cloud[i].GetLeft() - obstacleMovementConst - obstacleSpeed, cloud[i].GetTop() + 1);
-					building[i].SetTopLeft(building[i].GetLeft() - obstacleMovementConst - obstacleSpeed, building[i].GetTop() + 1);
-					if (building[i].GetTop() == yMax - pathLocation[i] + pathHeight[i]) {
-						obstacleDirection[i] = false;
-					}
-				}
-				else {
-					cloud[i].SetTopLeft(cloud[i].GetLeft() - obstacleMovementConst - obstacleSpeed, cloud[i].GetTop() - 1);
-					building[i].SetTopLeft(building[i].GetLeft() - obstacleMovementConst - obstacleSpeed, building[i].GetTop() - 1);
-					if (building[i].GetTop() == yMax - pathLocation[i]) {
-						obstacleDirection[i] = true;
-					}
-				}
+				cloud[i].SetTopLeft(cloud[i].GetLeft() - obstacleMovementConst - obstacleSpeed, cloud[i].GetTop());
+				building[i].SetTopLeft(building[i].GetLeft() - obstacleMovementConst - obstacleSpeed, building[i].GetTop());
 			}
 		}
 

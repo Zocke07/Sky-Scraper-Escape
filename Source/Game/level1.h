@@ -16,4 +16,3 @@ namespace levels
         vector<game_framework::CMovingBitmap> cloud = vector<game_framework::CMovingBitmap>(obstacleNum);
     };
 }
-

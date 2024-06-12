@@ -57,10 +57,11 @@ void level7::OnShow()
 	{
 		theMenu.ShowGameOver();
 	}
-	// Congrats Pop Up
+	// Congrats Pop Up (Last Level)
 	if (congrats == true)
 	{
-		theMenu.ShowCongrats();
+		endGame = true;
+		theMenu.ShowEndMenu();
 	}
 	// Pausing Game Pop Up
 	if (pause == true && character.isCollide() == false && congrats == false)

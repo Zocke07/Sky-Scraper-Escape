@@ -85,6 +85,7 @@ namespace levels
         bool toInit = false;    // Triggers main menu
         bool retry = false;     // Triggers GoToGameState(GAME_STATE_RUN) in the same level
         bool nextLevel = false; // Triggers GoToGameState(GAME_STATE_RUN) to the next level
+    	bool endGame = false;	// If player finished last level
         game_framework::CMovingBitmap background;   // Background image
         game_framework::CMovingBitmap explosion;    // Explosion image when character crashes
         game_framework::flyObject character;    // The player

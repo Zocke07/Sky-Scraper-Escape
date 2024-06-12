@@ -1,8 +1,6 @@
 ﻿#include "stdafx.h"
 #include "levelInit.h"
 
-#include "level1.h"
-
 using namespace levels;
 
 void levelInit::OnBeginState()
@@ -58,6 +56,11 @@ void levelInit::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
         }
     }
 
+    else if (congrats == true && endGame == true)   // When last level is finished
+    {
+        toInit = theMenu.EndChoose(nChar, nRepCnt, nFlags);
+    }
+    
     else if (congrats == true) // When character reaches target point
     {
         theMenu.OnKeyDownVertical(nChar, nRepCnt, nFlags);

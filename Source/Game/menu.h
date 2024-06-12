@@ -13,7 +13,9 @@ namespace game_framework
         void ShowMainMenu();
         void ShowSelectLevels();
         void ShowMenuSelectArrow();
+        void ShowEndMenuSelectArrow();
         void ShowLevelSelectArrow();
+        void ShowEndMenu();
         
         void OnKeyDownVertical(UINT nChar, UINT nRepCnt, UINT nFlags);
         void OnKeyDownHorizontal(UINT nChar, UINT nRepCnt, UINT nFlags);
@@ -21,6 +23,7 @@ namespace game_framework
         bool GameOverChoose(UINT nChar, UINT nRepCnt, UINT nFlags);
         bool CongratsChoose(UINT nChar, UINT nRepCnt, UINT nFlags);
         bool PauseChoose(UINT nChar, UINT nRepCnt, UINT nFlags);
+        bool EndChoose(UINT nChar, UINT nRepCnt, UINT nFlags);
         int LevelChoose(UINT nChar, UINT nRepCnt, UINT nFlags);
     private:
         CMovingBitmap background;

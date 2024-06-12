@@ -106,6 +106,12 @@ void menu::ShowMenuSelectArrow()
     }
 }
 
+void menu::ShowEndMenuSelectArrow()
+{
+    selectArrow.SetTopLeft(300, 318);
+    selectArrow.ShowBitmap();
+}
+
 void menu::ShowLevelSelectArrow()
 {
     if (levelSelector == 0)
@@ -149,6 +155,17 @@ void menu::ShowLevelSelectArrow()
         selectLevelArrow.ShowBitmap();
     }
 }
+
+void menu::ShowEndMenu()
+{
+    congratulations.SetTopLeft(340, 180);
+    congratulations.ShowBitmap();
+    mainMenu.SetTopLeft(400, 300);
+    mainMenu.ShowBitmap();
+    
+    ShowEndMenuSelectArrow();
+}
+
 
 void menu::OnKeyDownVertical(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
@@ -246,6 +263,16 @@ bool menu::PauseChoose(UINT nChar, UINT nRepCnt, UINT nFlags)
     return false;
 }
 
+bool menu::EndChoose(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+    if (nChar == VK_RETURN)
+    {
+        return true;
+    }
+    return false;
+}
+
+
 int menu::LevelChoose(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
     if (selectLevelArrow.GetLeft() == 210 && nChar == VK_RETURN)
@@ -290,3 +317,4 @@ int menu::LevelChoose(UINT nChar, UINT nRepCnt, UINT nFlags)
     }
     return -1;
 }
+

@@ -1,9 +1,9 @@
 ﻿#include "stdafx.h"
-#include "mainMenu.h"
+#include "levelSelect.h"
 
 using namespace levels;
 
-void mainMenu::OnBeginState()
+void levelSelect::OnBeginState()
 {
     levelInit::OnBeginState();
 
@@ -11,7 +11,7 @@ void mainMenu::OnBeginState()
 }
 
 
-void mainMenu::OnShow()
+void levelSelect::OnShow()
 {
     background.ShowBitmap();
     if (MainMenu == true)
@@ -25,7 +25,7 @@ void mainMenu::OnShow()
 }
 
 
-void mainMenu::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+void levelSelect::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
     if (MainMenu == true)
     {

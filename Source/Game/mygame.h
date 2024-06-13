@@ -47,7 +47,7 @@
 #include "level5.h"
 #include "level6.h"
 #include "level7.h"
-#include "mainMenu.h"
+#include "levelSelect.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -104,7 +104,7 @@ namespace game_framework {
 		void OnMove() override;									// Moving game element
 		void OnShow() override;									// Shows this state of the game's screen
 	private:
-		levels::mainMenu theMainMenu;
+		levels::levelSelect theMainMenu;
 		levels::level1 theLevel1;
 		levels::level2 theLevel2;
 		levels::level3 theLevel3;

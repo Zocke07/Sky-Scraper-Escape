@@ -3,7 +3,7 @@
 
 namespace levels
 {
-    class mainMenu : public levelInit
+    class levelSelect : public levelInit
     {
     public:
         void OnBeginState() override;

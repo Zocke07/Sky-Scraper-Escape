@@ -251,7 +251,7 @@
     <ClCompile Include="Source\Game\level6.cpp" />
     <ClCompile Include="Source\Game\level7.cpp" />
     <ClCompile Include="Source\Game\levelInit.cpp" />
-    <ClCompile Include="Source\Game\mainMenu.cpp" />
+    <ClCompile Include="Source\Game\levelSelect.cpp" />
     <ClCompile Include="Source\Game\menu.cpp" />
     <ClCompile Include="Source\Game\flyObject.cpp" />
     <ClCompile Include="Source\Game\mygame_initialize.cpp" />
@@ -277,7 +277,7 @@
     <ClInclude Include="Source\Game\level6.h" />
     <ClInclude Include="Source\Game\level7.h" />
     <ClInclude Include="Source\Game\levelInit.h" />
-    <ClInclude Include="Source\Game\mainMenu.h" />
+    <ClInclude Include="Source\Game\levelSelect.h" />
     <ClInclude Include="Source\Game\menu.h" />
     <ClInclude Include="Source\Game\flyObject.h" />
     <ClInclude Include="Source\Game\mygame.h" />
